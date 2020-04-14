@@ -2,7 +2,7 @@
 title: "EpiMod: examples of usage"
 author: "Beccuti Marco, Castagno Paolo, Pernice Simone"
 output: 
-  html_document:
+  pdf_document:
     fig_caption: yes
     toc: true
     toc_depth: 3
