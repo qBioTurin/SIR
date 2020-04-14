@@ -36,17 +36,16 @@ How to start
 
 Before starting the analysis we have to install (1) GreatSPN GUI, (2)
 docker, and (3) the R package **devtools** for installing *EPIMOD*.
-First, from
-[install.GreatSPN](http://www.di.unito.it/~amparore/mc4cslta/editor.html)
-it is possible to download and install the GreatSPN editor tool, a Java
-Graphic UserInterface (GUI) based on Java Swing Class which allows to
-draw models using the Petri Net formalisms. Then, the user must have
-docker installed on its computer for exploiting the *epimod*’s docker
-images (for more information on the docker installation see:
-[install.docker](https://docs.docker.com/engine/installation/)), and to
-have authorization to execute docker commands reported in the command
-page of function install docker. To do this the following commands must
-be executed.
+GreatSPN GUI, the graphical editor for drawing Petri Nets formalisms, is
+available online ([link to install
+GreatSPN](http://www.di.unito.it/~amparore/mc4cslta/editor.html)), and
+it can be installed following the steps showed therein. Then, the user
+must have docker installed on its computer for exploiting the *epimod*’s
+docker images (for more information on the docker installation see:
+[link to install docker](https://docs.docker.com/engine/installation/)),
+and to have authorization to execute docker commands reported in the
+command page of function install docker. To do this the following
+commands must be executed.
 
 1.  Create the docker group.
 
@@ -87,28 +86,27 @@ All the *epimod* functions print the following information:
 Cases of study
 ==============
 
-In this section we provide an example of *epimod* usage through a simple
-case study. In details, the SIR model is the simple case of disease
-diffusion that we have chosen and in the following subsections show how
-to use *epimod* to model, analyze and study this case. We refer to
-(Keeling and Rohani 2011) for all the details.
+In this section we show the steps necessary to model, study and analyze
+a simple case study. To this aim, we choose to study the diffusion of a
+disease following the SIR dynamics. We refer to (Keeling and Rohani
+2011) for all the details.
 
 ### SIR model
 
-The S-I-R model simulates a scenario of a disease spreading in which the
-population is categorized into three groups: (1) *Susceptible*,
-individuals unexposed to the disease, (2) *Infected*, individuals
-currently infected by the disease, and (3) *Recovered*, individuals
-which were successfully recovered by the infection. To consider the
-simplest case, we ignore the population demography (i.e., births and
-deaths of individuals are omitted), thus we consider only two possible
-events: the infection (passage from *Susceptible* to *Infected*), and
-the recovery (passage from *Infected* to *Recovered*). We are also
-assuming to neglect complex pattern of contacts, by considering an
-homogeneous mixing. From a mathematical point of view, the system
-behaviors can be investigated by exploiting the deterministic approach
-(Kurtz 1970) which approximates its dynamics through a system of
-ordinary differential equations (ODEs):
+The S-I-R models the diffusion of an infection in a population assuming
+three possible states (or compartments) in which any invidual in the
+population may move. Specifically, (1) *Susceptible*, individuals
+unexposed to the disease, (2) *Infected*, individuals currently infected
+by the disease, and (3) *Recovered*, individuals which were successfully
+recovered by the infection. To consider the simplest case, we ignore the
+population demography (i.e., births and deaths of individuals are
+omitted), thus we consider only two possible events: the infection
+(passage from *Susceptible* to *Infected*), and the recovery (passage
+from *Infected* to *Recovered*). We are also assuming to neglect complex
+pattern of contacts, by considering an homogeneous mixing. From a
+mathematical point of view, the system behaviors can be investigated by
+exploiting the deterministic approach (Kurtz 1970) which approximates
+its dynamics through a system of ordinary differential equations (ODEs):
 
 where:
 
@@ -122,9 +120,15 @@ where:
 ### Model generation
 
 The first step is the model construction. Starting with the GreatSPN
-editor tool, a Java Graphic User Interface (GUI) based on Java Swing
-Class , it is possible to draw the model using the PN formalism and its
-generalizations.
+editor tool it is possible to draw the model using the PN formalism and
+its generalizations. We recall that the Petri Nets are bipartite graphs
+in which we have two type of nodes, places and transitions. Graphically,
+places are represented as circles and those are the variables of our
+systems. On the other hand, transitions are depicted as rectangles and
+are the possible events happening in the system. Variables and events
+(i.e., places and transitions) are connected through arcs, showing what
+variable(s) is (are) affected by a specific event. For more details we
+refer to (Marsan et al. 1995).
 
 Therefore, as represented in figure , we add one place for each variable
 of the system (i.e., S, I, and R represent the susceptible, infected,
@@ -132,7 +136,7 @@ and recovered individuals respectively), and one transition for each
 possible event (i.e., *Infection* and *Recovery*). Finally, we save the
 PN model as a file with extension *.PNPRO* .
 
-<img src="./SIRPNPRO.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model."  />
+<img src="./Images/SIRPNPRO.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model."  />
 <p class="caption">
  Petri Net representation of the SIR model.
 </p>
@@ -145,48 +149,30 @@ graphical editor, in this case called *SIR.PNPRO*, and automatically
 derives the processes.
 
 
-    model_generation(net_fname = "./SIR.PNPRO")
-    #> docker run --privileged=true  --user=1000:1000 --cidfile=dockerID --volume /home/pernice/GIT/ModelliEpimod/SIR/Files/generation:/home/ -d qbioturin/epimod-generation:latest unfolding2 /home/SIR -long-names
-    #> 
-    #> 
-    #> Docker ID is:
-    #>  b2071d054728 
-    #> ..
-    #> 
-    #> 
-    #> Docker exit status: 0 
-    #> 
-    #> docker run --privileged=true  --user=1000:1000 --cidfile=dockerID --volume /home/pernice/GIT/ModelliEpimod/SIR/Files/generation:/home/ -d qbioturin/epimod-generation:latest PN2ODE.sh /home/SIR -M
-    #> 
-    #> 
-    #> Docker ID is:
-    #>  20132083c5f8 
-    #> ...
-    #> 
-    #> 
-    #> Docker exit status: 0
+    model_generation(net_fname = "./Net/SIR.PNPRO")
 
 The binary file *SIR.solver* is generated in which the derived processes
 and the library used for their simulation are packaged.
 
-Notice that *model\_generation()* might take as input parameter the C++
+Notice that *model\_generation()* might take as input parameter a C++
 file defining the functions characterizing the behavior of general
 transitions (Pernice et al. 2019), namely *functions\_fname*. For
 instance, if we want to define the transition *Infection* as a general
-transition then we have firstly to set, through the GreatSPN GUI tool,
-the transition as *General* and name the corresponding rate name as
-**FN:NameGeneralFN**, where in this case the *NameGeneralFN* is
-**InfectionFunction**. An example is shown in figure .
+transition then we have to set the transition as *General* and name the
+corresponding rate name as **FN:NameGeneralFN**, where in this case the
+*NameGeneralFN* is **InfectionFunction**. As showed in figure , where
+the transition type is set to *General* and the delay (i.e., the rate)
+to **FN:InfectionFunction**.
 
-<img src="./SIRPNPRO_FNen.png" alt="\label{fig:SIR_PN_general} Petri Net representation of the SIR model, modelling the Infection transition as a general transition."  />
+<img src="./Images/SIRPNPRO_FNen.png" alt="\label{fig:SIR_PN_general} Petri Net representation of the SIR model, modelling the Infection transition as a general transition."  />
 <p class="caption">
  Petri Net representation of the SIR model, modelling the Infection
 transition as a general transition.
 </p>
 
-Successively, we to define the C++ file, for instance *transition.cpp*,
-storing the general transition definition, which has to be structured as
-follow:
+Then, we have to properly define a C++ function implementing the
+specific behavior of the transition and save it, for instance in a file
+named *transition.cpp*, which has to be structured as follow:
 
 
     static double Infection_rate = 1.428;
@@ -218,24 +204,20 @@ follow:
 where the fixed input parameters are:
 
 -   **double \*Value**: marking of the Petri Net at time *time*;
--   **map &lt;string,int&gt;& NumTrans**: map which associates the
-    transition name with the corresponding index position in the
-    *NameTrans* vector;
--   **map &lt;string,int&gt;& NumPlaces**: map which associates the
-    place name with the corresponding index position in the *Value*
+-   **map &lt;string,int&gt;& NumTrans**: association between the
+    transition name and the corresponding index of the *NameTrans*
     vector;
--   **const vector<string> & NameTrans**: vector of the transition
-    names;
--   **const struct InfTr\* Trans**: structure generated by GreatSPN, in
-    which, given a transition index *T*, it is possible to obtain its
-    input places (*Trans\[T\].InPlaces*), and considering the *k* input
-    place with *Trans\[T\].InPlaces\[k\].Id* and
-    *Trans\[T\].InPlaces\[k\].Card* it is possible to obtain the
-    corresponding place index position in the *Value* vector and the arc
-    (linking the *k* place with the *T* transition) molteplicity,
-    respectively. For instance, with
-    *Value\[Trans\[T\].InPlaces\[k\].Id\]* it is possible to obtain the
-    marking of the *k*-th input place of *T*-th transition;
+-   **map &lt;string,int&gt;& NumPlaces**: association between the
+    place’s name and the corresponding index of the *Value* vector;
+-   **const vector<string> & NameTrans**: transition names;
+-   **const struct InfTr\* Trans**: array of *InfTr* structures
+    (implemented in GreatSPN) which is indexed using the transition
+    index. The structure *InfTr* has the following fileds: (1)
+    *InPlaces*: the input places to a transition, which is characterized
+    by the input place index position in the *Value* vector
+    (*Trans\[T\].InPlaces\[k\].Id*) and the arc (linking the *k* place
+    with the *T* transition) molteplicity
+    (*Trans\[T\].InPlaces\[k\].Card*). (2) ….
 -   **const int T**: index of the firing transition;
 -   **const double& time** : time.
 
@@ -247,8 +229,8 @@ Finally, the process can be derived be the *model\_generation()*
 function as follow.
 
 
-    model_generation(net_fname = "./SIR_generalFN.PNPRO",
-                     functions_fname = "./transition.cpp")
+    model_generation(net_fname = "./Net/SIR_generalFN.PNPRO",
+                     functions_fname = "./Cpp/transition.cpp")
 
 ### Sensitivity analysis
 
@@ -283,13 +265,13 @@ In details, the function *sensitivity\_analysis()* takes in input
     initial marking), and *g* for a rate associated with general
     transitions (Pernice et al. 2019) (the user must define a file name
     coherently with the one used in the general transitions file); (2)
-    the name of the transition or place which is varying (this must
-    correspond to name used in the PN draw in GreatSPN editor), if the
-    complete initial marking is considered (i.e., with tag *i*) then
-    *init* should be inserted; (3) the function used for sampling the
-    value of the variable considered, it could be either R function or
-    user-defined function (in this case it has to be implemented into
-    the R script passed from the *functions\_fname* input parameter).
+    the name of the transition which is varying (this must correspond to
+    name used in the PN draw in GreatSPN editor), if the complete
+    initial marking is considered (i.e., with tag *i*) then by default
+    the name *init* is used; (3) the function used for sampling the
+    value of the variable considered, it could be either a R function or
+    an user-defined function (in this case it has to be implemented into
+    the R script passed through the *functions\_fname* input parameter).
     Let us note that the output of this function must have size equal to
     the length of the varying parameter, that is 1 when tags *p* or *g*
     are used, and the size of the marking (number of places) when *i* is
@@ -347,11 +329,10 @@ parameter).
     equal to the number of places plus one corresponding to the time,
     and number of rows equals to number of time steps defined
     previously. Finally, it must return the column (or a combination of
-    columns, see Sec. [Sensitivity Analysis
-    Pertussis](#subsec:PRCCpertussis) ) corresponding to the place (or
-    combination of places) for which the PRCCs have to be calculated for
-    each time step. An example is given in *Target.R*, where the PRCCs
-    are calculated with respect to place *I* (infected individuals).
+    columns) corresponding to the place (or combination of places) for
+    which the PRCCs have to be calculated for each time step. An example
+    is given in *Target.R*, where the PRCCs are calculated with respect
+    to place *I* (infected individuals).
 
 <!-- -->
 
@@ -365,17 +346,22 @@ parameter).
     the simulations’ result. In *reference\_data.csv* we report the SIR
     evolution starting with 10000 susceptible, one infected and zero
     recovered, with a recovery and infection rates equals to 0.1428 and
-    1.428 respectively.
+    1.428 respectively. Notice that the **reference\_data**’s rows must
+    be the variable time serie, and so the colums the corresponding
+    values at a specific time.
 
 <!-- -->
 
-    #>           Time         S        I          R
-    #> TimeStep1  0.0 10000.000 1.000000 0.00000000
-    #> TimeStep2  0.1  9999.848 1.137136 0.01524425
-    #> TimeStep3  0.2  9999.674 1.293078 0.03257922
-    #> TimeStep4  0.3  9999.477 1.470399 0.05229125
-    #> TimeStep5  0.4  9999.253 1.672030 0.07470625
-    #> TimeStep6  0.5  9998.998 1.901306 0.10019506
+    #>      TimeStep1    TimeStep2    TimeStep3    TimeStep4    TimeStep5    TimeStep6
+    #> Time         0 1.000000e-01 2.000000e-01 3.000000e-01 4.000000e-01    0.5000000
+    #> S        10000 9.999848e+03 9.999674e+03 9.999477e+03 9.999253e+03 9998.9984994
+    #> I            1 1.137136e+00 1.293078e+00 1.470399e+00 1.672030e+00    1.9013056
+    #> R            0 1.524425e-02 3.257922e-02 5.229125e-02 7.470625e-02    0.1001951
+    #>         TimeStep7
+    #> Time    0.6000000
+    #> S    9998.7088095
+    #> I       2.1620116
+    #> R       0.1291789
 
 1.  **distance\_measure\_fname**: the R file storing the function to
     compute the distance (or error) between the model output and the
@@ -406,23 +392,15 @@ and can be omitted.
 
     ## Simple version where only the transition rates vary.
     sensitivity<-sensitivity_analysis(n_config = 200,
-                                      parameters_fname = "Functions_list.csv", 
-                                      solver_fname = "SIR.solver",
-                                      reference_data = "reference_data.csv",
-                                      distance_measure_fname = "msqd.R" ,
-                                      target_value_fname = "Target.R" ,
+                                      parameters_fname = "Input/Functions_list.csv", 
+                                      solver_fname = "Net/SIR.solver",
+                                      reference_data = "Input/reference_data.csv",
+                                      distance_measure_fname = "Rfunction/msqd.R" ,
+                                      target_value_fname = "Rfunction/Target.R" ,
                                       f_time = 7*10, # weeks
-                                      s_time = 1 # days      
+                                      s_time = 1, # days      
+                                      parallel_processors = 24
                                       )
-    #> docker run --privileged=true  --user=1000:1000 --cidfile=dockerID --volume /home/pernice/GIT/ModelliEpimod/SIR/Files:/home/docker/data -d qbioturin/epimod-sensitivity:latest Rscript /usr/local/lib/R/site-library/epimod/R_scripts/sensitivity.mngr.R /home/docker/data/results_sensitivity_analysis/params_SIR-sensitivity.RDS
-    #> 
-    #> 
-    #> Docker ID is:
-    #>  489fab3d1332 
-    #> ...
-    #> 
-    #> 
-    #> Docker exit status: 0
 
 Hence, considering the SIR model we can run the *sensitivity\_analysis*
 varying the *Infection* and *Recovery* transitions rates in order to
@@ -467,7 +445,7 @@ plot we can observe that lower squared errors are obtained when
 reduce the search space associated with the two parameters around these
 two values.
 
-<img src="./Files/results_sensitivity_analysis/prcc_SIR-sensitivity.pdf" alt="\label{fig:prcc} PRCC for the I place over time."  />
+<img src="./Results/results_sensitivity_analysis/prcc_SIR-sensitivity.pdf" alt="\label{fig:prcc} PRCC for the I place over time."  />
 <p class="caption">
  PRCC for the I place over time.
 </p>
@@ -486,9 +464,10 @@ hereafter:
 
     ## Version where only the PRCC is calculated
     sensitivity<-sensitivity_analysis(n_config = 100,
-                                      parameters_fname = "Functions_list.csv", 
-                                      solver_fname = "SIR.solver",
-                                      target_value_fname = "Target.R" ,
+                                      parameters_fname = "Input/Functions_list.csv", 
+                                      functions_fname = "Rfunction/Functions.R",
+                                      solver_fname = "Net/SIR.solver",
+                                      target_value_fname = "Rfunction/Target.R" ,
                                       parallel_processors = 1,
                                       f_time = 7*10, # weeks
                                       s_time = 1 # days
@@ -496,10 +475,11 @@ hereafter:
 
     ## Version where only the ranking is calculated
     sensitivity<-sensitivity_analysis(n_config = 100,
-                                      parameters_fname = "Functions_list.csv", 
-                                      solver_fname = "SIR.solver",
-                                      reference_data = "reference_data.csv",
-                                      distance_measure_fname = "msqd.R" ,
+                                      parameters_fname = "Input/Functions_list.csv", 
+                                      functions_fname = "Rfunction/Functions.R",
+                                      solver_fname = "Net/SIR.solver",
+                                      reference_data = "Input/reference_data.csv",
+                                      distance_measure_fname = "Rfunction/msqd.R" ,
                                       parallel_processors = 1,
                                       f_time = 7*10, # weeks
                                       s_time = 1 # days
@@ -509,12 +489,12 @@ hereafter:
     ## the PRCC and the ranking are considered, and the initial conditions vary too.
 
     sensitivity<-sensitivity_analysis(n_config = 100,
-                                      parameters_fname = "Functions_list2.csv", 
-                                      functions_fname = "Functions.R",
-                                      solver_fname = "SIR.solver",
-                                      reference_data = "reference_data.csv",
-                                      distance_measure_fname = "msqd.R" ,
-                                      target_value_fname = "Target.R" ,
+                                      parameters_fname = "Input/Functions_list2.csv", 
+                                      functions_fname = "Rfunction/Functions.R",
+                                      solver_fname = "Net/SIR.solver",
+                                      reference_data = "Input/reference_data.csv",
+                                      distance_measure_fname = "Rfunction/msqd.R" ,
+                                      target_value_fname = "Rfunction/Target.R" ,
                                       parallel_processors = 2,
                                       f_time = 7*10, # weeks
                                       s_time = 1 # days
@@ -524,14 +504,17 @@ hereafter:
 
 Let us consider the example of the SIR model where the *Infection*
 transition is defined as general transition, with the porpoise to
-varying the *Infection\_rate* constant of the corresponding MA law.
-Generally, since all the transition constants are used in the file C++,
-then we need to define an R function into the **functions\_fname** which
-returns the values that have to be used into the file C++. Therefore, we
-have to modify the *Functions\_list* csv as follow in order to associate
-with the general transition *Infection* the R function,
-*InfectionValuesGeneration*, which generates the values exploited by the
-respective function defined in the C++ file, called *trasition.cpp*.
+varying the *Infection\_rate* constant of the corresponding Mass Action
+law. Generally, in order to define the rate of a transition it is
+required to provide some inputs and, hence, we need to define an R
+function (in the **functions\_fname** file) which provides all the input
+parameters necessary to the C++ function.
+
+Therefore, we have to modify the *Functions\_list* csv as follow in
+order to associate with the general transition *Infection* the R
+function, *InfectionValuesGeneration*, which generates the values
+exploited by the respective function defined in the C++ file, called
+*trasition.cpp*.
 
     #>   Tag       Name                   Function Parameter1 Parameter2 Parameter3
     #> 1   p   Recovery                      runif        n=1    min = 0      max=1
@@ -584,7 +567,8 @@ only the first time that the function is called.
         }
         else
         {
-            std::cerr<<"\nUnable to open " << fname << ": file do not exists\": file do not exists\n";
+            std::cerr<<"\nUnable to open " << fname << 
+                    ": file do not exists\": file do not exists\n";
             exit(EXIT_FAILURE);
         }
     }
@@ -628,8 +612,9 @@ The aim of this phase is to optimize the fit of the simulated behavior
 to the reference data by adjusting the parameters associated with both
 Recovery and Infection transitions. This step is performed by the
 function *model\_calibration()*, characterized by the solution of an
-optimization problem in which the input distance function with respect
-to a reference data is minimized.
+optimization problem in which the distance between the simulated data
+and the reference data is minimized, according to the definition of
+distance provided by the user (**distance\_fname**)
 
 The function input parameters are very similar to those introduced for
 the *sensitivity\_analysis()*, we have just to modify the
@@ -652,9 +637,8 @@ For instance, to calibrate the transition rates associated with
 have to be defined, returning just the corresponding value from the
 vector *x*, where *x\[1\]= “Recovery rate”*, *x\[2\]= “Infection rate”*,
 since we do not want to change the vector generated from the
-optimization algorithm (see Sec. [Calibration Analysis
-Pertussis](#subsec:calibrationPertussis)). The order of values in *x* is
-given by the order of the parameters in **parameters\_fname**.
+optimization algorithm. The order of values in *x* is given by the order
+of the parameters in **parameters\_fname**.
 
 
     recovery<-function(x)
@@ -673,12 +657,11 @@ parameters value, and the control parameters of the optimization (see
 the R package GenSa (Yang Xiang et al. 2012)).
 
 
-    model_calibration(out_fname = "calibration",
-                      parameters_fname = "Functions_list_Calibration.csv",
-                      functions_fname = "FunctionCalibration.R",
-                      solver_fname = "SIR.solver",
-                      reference_data = "reference_data.csv",
-                      distance_measure_fname = "msqd.R" ,
+    model_calibration(parameters_fname = "Input/Functions_list_Calibration.csv",
+                      functions_fname = "Rfunction/FunctionCalibration.R",
+                      solver_fname = "Net/SIR.solver",
+                      reference_data = "Input/reference_data.csv",
+                      distance_measure_fname = "Rfunction/msqd.R" ,
                       f_time = 7*10, # weeks
                       s_time = 1, # days
                       # Vectors to control the optimization
@@ -687,16 +670,6 @@ the R package GenSa (Yang Xiang et al. 2012)).
                       lb_v = c(0.1, 0.0001),
                       max.call = 50
                       )
-    #> docker run --privileged=true  --user=1000:1000 --cidfile=dockerID --volume /home/pernice/GIT/ModelliEpimod/SIR/Files:/home/docker/data -d qbioturin/epimod-calibration:latest Rscript /usr/local/lib/R/site-library/epimod/R_scripts/calibration.mngr.R /home/docker/data/results_model_calibration/params_calibration.RDS
-    #> 
-    #> 
-    #> Docker ID is:
-    #>  e8d10d34fe2f 
-    #> ...
-    #> 
-    #> 
-    #> Docker exit status: 0
-    #> [1] 0
 
 <img src="ReadME_files/figure-markdown_strict/unnamed-chunk-27-1.png" alt="\label{fig:I_traces_cal} Trajectories considering the I place."  />
 <p class="caption">
@@ -764,10 +737,10 @@ trajectory.
 
 
     model_analysis(out_fname = "model_analysis",
-                   solver_fname = "SIR.solver",
+                   solver_fname = "Net/SIR.solver",
+                   parameters_fname = "Results/Functions_list_ModelAnalysis.csv",
                    f_time = 7*10, # weeks
-                   s_time = 1,
-                   parameters_fname = "Functions_list_ModelAnalysis.csv"
+                   s_time = 1
                    )
 
 References
@@ -778,6 +751,10 @@ in Humans and Animals*. Princeton University Press.
 
 Kurtz, T. G. 1970. “Solutions of Ordinary Differential Equations as
 Limits of Pure Jump Markov Processes.” *J. Appl. Probab.* 1 (7): 49–58.
+
+Marsan, M. Ajmone, G. Balbo, G. Conte, S. Donatelli, and G.
+Franceschinis. 1995. *Modelling with Generalized Stochastic Petri Nets*.
+New York, NY, USA: J. Wiley.
 
 Pernice, S., M. Pennisi, G. Romano, A. Maglione, S. Cutrupi, F.
 Pappalardo, G. Balbo, M. Beccuti, F. Cordero, and R. A. Calogero. 2019.
