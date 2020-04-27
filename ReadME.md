@@ -225,7 +225,7 @@ Notice that the function name has to correspond to the rate name
 associated with the general transition, in this case
 *InfectionFunction*.
 
-Finally, the process can be derived be the *model\_generation()*
+Finally, the process can be derived by the *model\_generation()*
 function as follow.
 
 
