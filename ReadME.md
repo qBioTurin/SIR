@@ -108,6 +108,12 @@ mathematical point of view, the system behaviors can be investigated by
 exploiting the deterministic approach (Kurtz 1970) which approximates
 its dynamics through a system of ordinary differential equations (ODEs):
 
+    \begin{align} \label{eq:odesSIR}
+        \frac{dS}{dt} &= -\dfrac{\beta}{N} S I,\nonumber \\
+        \frac{dI}{dt} &= \dfrac{\beta}{N} S I - \gamma I,\\
+        \frac{dR}{dt} &= \gamma I, \nonumber
+    \end{align}
+
 where:
 
 -   *S*, *I*, *R* are the number of susceptible, infected, and recovered
@@ -225,7 +231,7 @@ Notice that the function name has to correspond to the rate name
 associated with the general transition, in this case
 *InfectionFunction*.
 
-Finally, the process can be derived by the *model\_generation()*
+Finally, the process can be derived be the *model\_generation()*
 function as follow.
 
 

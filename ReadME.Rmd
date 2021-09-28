@@ -115,13 +115,9 @@ The S-I-R models the diffusion of an infection in a population assuming three po
 To consider the simplest case, we ignore the population demography (i.e., births and deaths of individuals are omitted), thus we consider only two possible events: the infection (passage from  *Susceptible* to  *Infected*), and the recovery (passage from  *Infected* to  *Recovered*). We are also assuming to neglect complex pattern of contacts, by considering an homogeneous mixing.
 From a mathematical point of view, the system behaviors can be investigated by exploiting the deterministic approach [@Ku70] which approximates its dynamics through a system of ordinary differential equations (ODEs):
 
-
-\begin{align} \label{eq:odesSIR}
-    \frac{dS}{dt} &= -\dfrac{\beta}{N} S I,\nonumber \\
-    \frac{dI}{dt} &= \dfrac{\beta}{N} S I - \gamma I,\\
-    \frac{dR}{dt} &= \gamma I, \nonumber
-\end{align}
-
+```{r , echo = FALSE, message=FALSE, fig.align='center', fig.pos='H'}
+knitr::include_graphics("./Images/equation1.png")
+```
 
 where:
 
