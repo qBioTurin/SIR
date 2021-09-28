@@ -1,7 +1,7 @@
 
 library(epimod)
 
-downloadContainers()
+#downloadContainers()
 
 
 model_generation(net_fname = "./Net/SIR.PNPRO")

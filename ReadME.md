@@ -108,11 +108,7 @@ mathematical point of view, the system behaviors can be investigated by
 exploiting the deterministic approach (Kurtz 1970) which approximates
 its dynamics through a system of ordinary differential equations (ODEs):
 
-    \begin{align} \label{eq:odesSIR}
-        \frac{dS}{dt} &= -\dfrac{\beta}{N} S I,\nonumber \\
-        \frac{dI}{dt} &= \dfrac{\beta}{N} S I - \gamma I,\\
-        \frac{dR}{dt} &= \gamma I, \nonumber
-    \end{align}
+<img src="./Images/equation1.png" width="302" style="display: block; margin: auto;" />
 
 where:
 
