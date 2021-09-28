@@ -12,3 +12,8 @@ init_generation<-function(min_init , max_init)
     return( c(p_1, 1,0) )
 }
 
+
+infection_generation<-function(inf.rate)
+{
+  return( inf.rate )
+}

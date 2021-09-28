@@ -1,6 +1,6 @@
 
 static double Flag = -1; 
-static double Infection_rate = 1.428;
+static double Infection_rate;
 
 void read_constant(string fname, double& Infection_rate)
 {
