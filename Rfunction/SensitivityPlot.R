@@ -2,9 +2,9 @@ library(ggplot2)
 
 load("./results_sensitivity_analysis/SIR-sensitivity.RData")
 load("./results_sensitivity_analysis/ranking_SIR-sensitivity.RData")
-reference <- as.data.frame(t(read.csv("Input/reference_data.csv",
+reference <- as.data.frame(read.csv("Input/reference_data.csv",
                                       header = FALSE,
-                                      sep = "")))
+                                      sep = ""))
 
 # Then, we read all the trajectories generated saving them in a list called
 # ListTraces. List that will be rewritten as a data frame in order to use ggplot.

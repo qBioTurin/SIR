@@ -19,7 +19,7 @@ sensitivity<-sensitivity_analysis(n_config = 100,
                                   reference_data = "Input/reference_data.csv",
                                   distance_measure_fname = "Rfunction/msqd.R" ,
                                   target_value_fname = "Rfunction/Target.R" ,
-                                  f_time = 7*10, # weeks
+                                  f_time = 7*3, # weeks
                                   s_time = 1, # days      
                                   parallel_processors = 2
                                   )
@@ -80,12 +80,12 @@ model_calibration(parameters_fname = "Input/Functions_list_Calibration.csv",
                   solver_fname = "Net/SIR.solver",
                   reference_data = "Input/reference_data.csv",
                   distance_measure_fname = "Rfunction/msqd.R" ,
-                  f_time = 7*10, # weeks
+                  f_time = 7*3, # weeks
                   s_time = 1, # days
                   # Vectors to control the optimization
-                  ini_v = c(0.15,0.00015),
-                  lb_v = c(0.1, 0.0001),
-                  ub_v = c(0.2, 0.0002),
+                  ini_v = c(0.4,0.0014),
+                  lb_v = c(0.3, 0.001),
+                  ub_v = c(0.6, 0.002),
                   max.time = 1
                 )
 
@@ -108,7 +108,7 @@ model_analysis(out_fname = "model_analysis",
                solver_fname = "Net/SIR.solver",
                parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
                solver_type = "LSODA",
-               f_time = 7*10, # weeks
+               f_time = 7*3, # weeks
                s_time = 1
                )
 

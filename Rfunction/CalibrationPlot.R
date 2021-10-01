@@ -3,9 +3,9 @@ library(ggplot2)
 
 load("./results_model_calibration/SIR-calibration_optim.RData")
 load("./results_model_calibration/SIR-calibration.RData")
-reference <- as.data.frame(t(read.csv("Input/reference_data.csv",
+reference <- as.data.frame(read.csv("Input/reference_data.csv",
                                       header = FALSE,
-                                      sep = "")))
+                                      sep = ""))
 calibration_optim_trace <-read.csv("./results_model_calibration/SIR-calibration_optim-trace.csv",sep = "")
 
 
