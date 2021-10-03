@@ -2,11 +2,11 @@
 <!-- This project file has been saved by the New GreatSPN Editor, v.100 --><project name="New project" version="121">
   <gspn name="PetriNet">
     <nodes>
-      <place marking="1000" name="S" x="6.0" y="3.0"/>
-      <place marking="1" name="I" x="16.0" y="3.0"/>
+      <place marking="997" name="S" x="6.0" y="3.0"/>
+      <place marking="3" name="I" x="16.0" y="3.0"/>
       <place name="R" x="30.0" y="3.0"/>
-      <transition delay="1.428" delay-x="-1.0" delay-y="2.0" name="Infection" nservers-x="0.5" type="EXP" x="10.55" y="3.0"/>
-      <transition delay="0.1428571" delay-x="-0.5" delay-y="2.0" name="Recovery" nservers-x="0.5" type="EXP" x="23.55" y="3.0"/>
+      <transition delay="0.4" delay-x="-1.0" delay-y="2.0" name="Infection" nservers-x="0.5" type="EXP" x="10.55" y="3.0"/>
+      <transition delay="0.04" delay-x="-0.5" delay-y="2.0" name="Recovery" nservers-x="0.5" type="EXP" x="23.55" y="3.0"/>
     </nodes>
     <edges>
       <arc head="Infection" kind="INPUT" tail="S"/>

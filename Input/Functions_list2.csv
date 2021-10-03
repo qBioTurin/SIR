@@ -1,3 +1,5 @@
-i; init; init_generation; min_init = 10000*.8; max_init = 10000
-p; Recovery; runif; n=1; min = 0; max=1
-p; Infection; runif; n=1; min = 1e-05; max=2e-04
+# Tag |Name      |Function      |Parameter1 |Parameter2  |Parameter3
+  p;   Recovery;  recovery.fun;  n=1;        min = 0.01;   max=0.1
+  p;   Infection; runif;         n=1;        min = 0.0001; max=0.001
+
+
