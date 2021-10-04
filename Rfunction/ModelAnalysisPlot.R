@@ -1,4 +1,4 @@
-
+library(dplyr)
 library(ggplot2)
 
 ModelAnalysisPlot=function(Ref = FALSE,Stoch = F){
@@ -23,11 +23,11 @@ ModelAnalysisPlot=function(Ref = FALSE,Stoch = F){
           legend.position="right",
           legend.key.size = unit(1.3, "cm"),
           legend.key.width = unit(1.3,"cm") )+
-    labs(x="Weeks", y="I")
+    labs(x="Days", y="I")
   
   plS<-ggplot( )+
     geom_line(data=trace,
-              aes(x=Time,y=S))+
+              aes(x=Time,y=S,group=ID))+
     theme(axis.text=element_text(size=18),
           axis.title=element_text(size=20,face="bold"),
           legend.text=element_text(size=18),
@@ -35,11 +35,11 @@ ModelAnalysisPlot=function(Ref = FALSE,Stoch = F){
           legend.position="right",
           legend.key.size = unit(1.3, "cm"),
           legend.key.width = unit(1.3,"cm") )+
-    labs(x="Weeks", y="S")
+    labs(x="Days", y="S")
   
   plR<-ggplot( )+
     geom_line(data=trace,
-              aes(x=Time,y=R))+
+              aes(x=Time,y=R,group=ID))+
     theme(axis.text=element_text(size=18),
           axis.title=element_text(size=20,face="bold"),
           legend.text=element_text(size=18),
@@ -47,7 +47,7 @@ ModelAnalysisPlot=function(Ref = FALSE,Stoch = F){
           legend.position="right",
           legend.key.size = unit(1.3, "cm"),
           legend.key.width = unit(1.3,"cm") )+
-    labs(x="Weeks", y="R")
+    labs(x="Days", y="R")
   
   if(Ref){
     
@@ -56,27 +56,27 @@ ModelAnalysisPlot=function(Ref = FALSE,Stoch = F){
                                         sep = ""))
     plI<-plI+
       geom_line(data=reference,
-                aes(x=V1,y=V3),
-                col="red",linetype="dashed")+
-      labs(x="Weeks", y="I",col="Distance")
+                aes(x=V1,y=V3,
+                col="Ref"),linetype="dashed")+
+      labs(x="Days", y="I",col="")
     
     plS<-plS+
       geom_line(data=reference,
-                aes(x=V1,y=V2),
-                col="red",linetype="dashed")+
-      labs(x="Weeks", y="S",col="Distance")
+                aes(x=V1,y=V2,
+                col="Ref"),linetype="dashed")+
+      labs(x="Days", y="S",col="")
     
     plR<-plR+
       geom_line(data=reference,
-                aes(x=V1,y=V4),
-                col="red",linetype="dashed")+
-      labs(x="Weeks", y="R",col="Distance")
+                aes(x=V1,y=V4,
+                col="Ref"),linetype="dashed")+
+      labs(x="Days", y="R",col="")
     
   }
   
   if(Stoch){
     plIdens<-ggplot(trace[trace$Time==max(trace$Time),])+
-      geom_boxplot(aes(I))+
+      geom_histogram(aes(I))+
       theme(axis.text=element_text(size=18),
             axis.title=element_text(size=20,face="bold"),
             legend.text=element_text(size=18),
@@ -86,7 +86,7 @@ ModelAnalysisPlot=function(Ref = FALSE,Stoch = F){
             legend.key.width = unit(1.3,"cm") )
     
     plSdens<-ggplot(trace[trace$Time==max(trace$Time),])+
-      geom_histogram(aes(S,group=ID))+
+      geom_histogram(aes(S))+
       theme(axis.text=element_text(size=18),
             axis.title=element_text(size=20,face="bold"),
             legend.text=element_text(size=18),
@@ -96,7 +96,7 @@ ModelAnalysisPlot=function(Ref = FALSE,Stoch = F){
             legend.key.width = unit(1.3,"cm") )
     
     plRdens<-ggplot(trace[trace$Time==max(trace$Time),])+
-      geom_histogram(aes(R,group=ID))+
+      geom_histogram(aes(R))+
       theme(axis.text=element_text(size=18),
             axis.title=element_text(size=20,face="bold"),
             legend.text=element_text(size=18),
@@ -104,6 +104,27 @@ ModelAnalysisPlot=function(Ref = FALSE,Stoch = F){
             legend.position="right",
             legend.key.size = unit(1.3, "cm"),
             legend.key.width = unit(1.3,"cm") )
+    
+    meanTrace <- trace %>% group_by(Time) %>%
+      summarise(S=mean(S),I=mean(I),R=mean(R))
+    
+    plI<-plI+
+      geom_line(data=meanTrace,
+                aes(x=Time,y=I,col="Mean"),
+                linetype="dashed")+
+      labs(x="Days", y="I",col="")
+    
+    plS<-plS+
+      geom_line(data=meanTrace,
+                aes(x=Time,y=S,col="Mean"),
+                linetype="dashed")+
+      labs(x="Days", y="S",col="")
+    
+    plR<-plR+
+      geom_line(data=meanTrace,
+                aes(x=Time,y=R,col="Mean"),
+                linetype="dashed")+
+      labs(x="Days", y="R",col="")
     
     return(list(plS = plS,plI = plI,plR = plR,
                 HistS = plSdens,HistI = plIdens,HistR = plRdens))

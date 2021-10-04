@@ -61,10 +61,12 @@ calibration_optim_trace <-read.csv("./results_model_calibration/SIR-calibration_
 load("./results_model_calibration/SIR-calibration_optim.RData")
 
 source("Rfunction/CalibrationPlot.R")
-plI
+plots <- calibration.plot(folder = "Results/results_model_calibration/")
+plots$plS
+plots$plI
+plots$plR
 
 ### Model Analysis
-
 
 model_analysis(out_fname = "model_analysis",
                solver_fname = "Net/SIR.solver",
@@ -78,3 +80,22 @@ source("Rfunction/ModelAnalysisPlot.R")
 AnalysisPlot = ModelAnalysisPlot(Ref = FALSE,Stoch = F)
 AnalysisPlot$plI
 AnalysisPlot$plS
+
+### Model Analysis
+
+model_analysis(out_fname = "model_analysis",
+               solver_fname = "Net/SIR.solver",
+               parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
+               solver_type = "SSA",
+               n_run = 1000,
+               parallel_processors = 2,
+               f_time = 100, # days
+               s_time = 1
+)
+
+source("Rfunction/ModelAnalysisPlot.R")
+AnalysisPlot = ModelAnalysisPlot(Ref = T,Stoch = T)
+AnalysisPlot$plI
+AnalysisPlot$HistI
+AnalysisPlot$plS
+AnalysisPlot$HistS

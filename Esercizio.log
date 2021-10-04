@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.3.4)  3 OCT 2021 13:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.3.4)  4 OCT 2021 12:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -695,28 +695,28 @@ Package pdftex.def Info: ./Images/equation1.png  used on input line 257.
 <./Images/SIRPNPRO.png, id=62, 841.64438pt x 476.53032pt>
 File: ./Images/SIRPNPRO.png Graphic file (type png)
 <use ./Images/SIRPNPRO.png>
-Package pdftex.def Info: ./Images/SIRPNPRO.png  used on input line 298.
+Package pdftex.def Info: ./Images/SIRPNPRO.png  used on input line 301.
 (pdftex.def)             Requested size: 328.83073pt x 186.18056pt.
 [3 <./Images/equation1.png>] [4 <./Images/SIRPNPRO.png>]
-<./Images/list1.png, id=82, 405.01312pt x 45.16875pt>
+<./Images/list1.png, id=83, 405.01312pt x 45.16875pt>
 File: ./Images/list1.png Graphic file (type png)
 <use ./Images/list1.png>
-Package pdftex.def Info: ./Images/list1.png  used on input line 389.
+Package pdftex.def Info: ./Images/list1.png  used on input line 392.
 (pdftex.def)             Requested size: 328.83131pt x 36.67262pt.
-<./Images/list2.png, id=83, 411.03563pt x 45.16875pt>
+<./Images/list2.png, id=84, 411.03563pt x 45.16875pt>
 File: ./Images/list2.png Graphic file (type png)
 <use ./Images/list2.png>
-Package pdftex.def Info: ./Images/list2.png  used on input line 398.
+Package pdftex.def Info: ./Images/list2.png  used on input line 401.
 (pdftex.def)             Requested size: 328.82895pt x 36.13503pt.
 [5 <./Images/list1.png> <./Images/list2.png>]
-<./Images/prcc_SIR-sensitivity.png, id=93, 714.41907pt x 719.68875pt>
+<./Images/prcc_SIR-sensitivity.png, id=94, 714.41907pt x 719.68875pt>
 File: ./Images/prcc_SIR-sensitivity.png Graphic file (type png)
 <use ./Images/prcc_SIR-sensitivity.png>
 Package pdftex.def Info: ./Images/prcc_SIR-sensitivity.png  used on input line 
-525.
+528.
 (pdftex.def)             Requested size: 645.7183pt x 650.48125pt.
 
-Overfull \hbox (175.96329pt too wide) in paragraph at lines 525--526
+Overfull \hbox (175.96329pt too wide) in paragraph at lines 528--529
  [][] 
  []
 
@@ -724,116 +724,138 @@ Overfull \hbox (175.96329pt too wide) in paragraph at lines 525--526
 Overfull \vbox (22.05124pt too high) has occurred while \output is active []
 
 [7 <./Images/prcc_SIR-sensitivity.png>]
-<Esercizio_files/figure-latex/unnamed-chunk-17-1.pdf, id=108, 417.56pt x 275.02
+<Esercizio_files/figure-latex/unnamed-chunk-17-1.pdf, id=109, 417.56pt x 275.02
 75pt>
 File: Esercizio_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type pd
 f)
 <use Esercizio_files/figure-latex/unnamed-chunk-17-1.pdf>
 Package pdftex.def Info: Esercizio_files/figure-latex/unnamed-chunk-17-1.pdf  u
-sed on input line 541.
+sed on input line 544.
 (pdftex.def)             Requested size: 417.58444pt x 275.04361pt.
-<Esercizio_files/figure-latex/unnamed-chunk-17-2.pdf, id=109, 417.56pt x 275.02
+<Esercizio_files/figure-latex/unnamed-chunk-17-2.pdf, id=110, 417.56pt x 275.02
 75pt>
 File: Esercizio_files/figure-latex/unnamed-chunk-17-2.pdf Graphic file (type pd
 f)
 <use Esercizio_files/figure-latex/unnamed-chunk-17-2.pdf>
 Package pdftex.def Info: Esercizio_files/figure-latex/unnamed-chunk-17-2.pdf  u
-sed on input line 543.
+sed on input line 546.
 (pdftex.def)             Requested size: 417.58444pt x 275.04361pt.
 [8 <./Esercizio_files/figure-latex/unnamed-chunk-17-1.pdf> <./Esercizio_files/f
 igure-latex/unnamed-chunk-17-2.pdf>]
-<Esercizio_files/figure-latex/unnamed-chunk-19-1.pdf, id=134, 417.56pt x 275.02
+<Esercizio_files/figure-latex/unnamed-chunk-19-1.pdf, id=135, 417.56pt x 275.02
 75pt>
 File: Esercizio_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (type pd
 f)
 <use Esercizio_files/figure-latex/unnamed-chunk-19-1.pdf>
 Package pdftex.def Info: Esercizio_files/figure-latex/unnamed-chunk-19-1.pdf  u
-sed on input line 566.
+sed on input line 569.
 (pdftex.def)             Requested size: 417.58444pt x 275.04361pt.
-<Esercizio_files/figure-latex/unnamed-chunk-19-2.pdf, id=135, 417.56pt x 275.02
+<Esercizio_files/figure-latex/unnamed-chunk-19-2.pdf, id=136, 417.56pt x 275.02
 75pt>
 File: Esercizio_files/figure-latex/unnamed-chunk-19-2.pdf Graphic file (type pd
 f)
 <use Esercizio_files/figure-latex/unnamed-chunk-19-2.pdf>
 Package pdftex.def Info: Esercizio_files/figure-latex/unnamed-chunk-19-2.pdf  u
-sed on input line 574.
+sed on input line 577.
 (pdftex.def)             Requested size: 417.58444pt x 275.04361pt.
-<Esercizio_files/figure-latex/unnamed-chunk-19-3.pdf, id=136, 417.56pt x 275.02
+<Esercizio_files/figure-latex/unnamed-chunk-19-3.pdf, id=137, 417.56pt x 275.02
 75pt>
 File: Esercizio_files/figure-latex/unnamed-chunk-19-3.pdf Graphic file (type pd
 f)
 <use Esercizio_files/figure-latex/unnamed-chunk-19-3.pdf>
 Package pdftex.def Info: Esercizio_files/figure-latex/unnamed-chunk-19-3.pdf  u
-sed on input line 582.
+sed on input line 585.
 (pdftex.def)             Requested size: 417.58444pt x 275.04361pt.
 [9 <./Esercizio_files/figure-latex/unnamed-chunk-19-1.pdf>]
-<Esercizio_files/figure-latex/unnamed-chunk-19-4.pdf, id=150, 417.56pt x 260.97
+<Esercizio_files/figure-latex/unnamed-chunk-19-4.pdf, id=151, 417.56pt x 260.97
 5pt>
 File: Esercizio_files/figure-latex/unnamed-chunk-19-4.pdf Graphic file (type pd
 f)
 <use Esercizio_files/figure-latex/unnamed-chunk-19-4.pdf>
 Package pdftex.def Info: Esercizio_files/figure-latex/unnamed-chunk-19-4.pdf  u
-sed on input line 590.
+sed on input line 593.
 (pdftex.def)             Requested size: 417.56532pt x 260.97833pt.
 [10 <./Esercizio_files/figure-latex/unnamed-chunk-19-2.pdf> <./Esercizio_files/
 figure-latex/unnamed-chunk-19-3.pdf>]
 
-LaTeX Warning: Reference `eq:odesSIR' on page 11 undefined on input line 600.
+LaTeX Warning: Reference `eq:odesSIR' on page 11 undefined on input line 603.
 
 [11 <./Esercizio_files/figure-latex/unnamed-chunk-19-4.pdf>]
-<Esercizio_files/figure-latex/unnamed-chunk-22-1.pdf, id=195, 417.56pt x 275.02
+<Esercizio_files/figure-latex/unnamed-chunk-22-1.pdf, id=197, 417.56pt x 275.02
 75pt>
 File: Esercizio_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (type pd
 f)
 <use Esercizio_files/figure-latex/unnamed-chunk-22-1.pdf>
 Package pdftex.def Info: Esercizio_files/figure-latex/unnamed-chunk-22-1.pdf  u
-sed on input line 664.
+sed on input line 667.
 (pdftex.def)             Requested size: 417.58444pt x 275.04361pt.
-<Esercizio_files/figure-latex/unnamed-chunk-22-2.pdf, id=196, 417.56pt x 275.02
+<Esercizio_files/figure-latex/unnamed-chunk-22-2.pdf, id=198, 417.56pt x 275.02
 75pt>
 File: Esercizio_files/figure-latex/unnamed-chunk-22-2.pdf Graphic file (type pd
 f)
 <use Esercizio_files/figure-latex/unnamed-chunk-22-2.pdf>
 Package pdftex.def Info: Esercizio_files/figure-latex/unnamed-chunk-22-2.pdf  u
-sed on input line 672.
+sed on input line 675.
 (pdftex.def)             Requested size: 417.58444pt x 275.04361pt.
-<Esercizio_files/figure-latex/unnamed-chunk-22-3.pdf, id=197, 417.56pt x 276.03
+<Esercizio_files/figure-latex/unnamed-chunk-22-3.pdf, id=199, 417.56pt x 276.03
 125pt>
 File: Esercizio_files/figure-latex/unnamed-chunk-22-3.pdf Graphic file (type pd
 f)
 <use Esercizio_files/figure-latex/unnamed-chunk-22-3.pdf>
 Package pdftex.def Info: Esercizio_files/figure-latex/unnamed-chunk-22-3.pdf  u
-sed on input line 680.
+sed on input line 683.
 (pdftex.def)             Requested size: 417.58444pt x 276.04741pt.
 [12 <./Esercizio_files/figure-latex/unnamed-chunk-22-1.pdf>] [13 <./Esercizio_f
 iles/figure-latex/unnamed-chunk-22-2.pdf> <./Esercizio_files/figure-latex/unnam
 ed-chunk-22-3.pdf>]
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
+770.
+(/home/pernice/.TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
+File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [14]
+<Esercizio_files/figure-latex/unnamed-chunk-27-1.pdf, id=248, 416.55624pt x 279
+.0425pt>
+File: Esercizio_files/figure-latex/unnamed-chunk-27-1.pdf Graphic file (type pd
+f)
+<use Esercizio_files/figure-latex/unnamed-chunk-27-1.pdf>
+Package pdftex.def Info: Esercizio_files/figure-latex/unnamed-chunk-27-1.pdf  u
+sed on input line 774.
+(pdftex.def)             Requested size: 416.56793pt x 279.05032pt.
+<Esercizio_files/figure-latex/unnamed-chunk-27-2.pdf, id=249, 416.55624pt x 279
+.0425pt>
+File: Esercizio_files/figure-latex/unnamed-chunk-27-2.pdf Graphic file (type pd
+f)
+<use Esercizio_files/figure-latex/unnamed-chunk-27-2.pdf>
+Package pdftex.def Info: Esercizio_files/figure-latex/unnamed-chunk-27-2.pdf  u
+sed on input line 782.
+(pdftex.def)             Requested size: 416.56793pt x 279.05032pt.
+[15 <./Esercizio_files/figure-latex/unnamed-chunk-27-1.pdf>]
 
 Package caption Warning: Unused \captionsetup[table] on input line 102.
 See the caption package documentation for explanation.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 759.
-[14]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 759.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 819.
+[16 <./Esercizio_files/figure-latex/unnamed-chunk-27-2.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 819.
 (./Esercizio.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 759.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 759.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 819.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 819.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 759.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 819.
  ) 
 Here is how much of TeX's memory you used:
- 13095 strings out of 494108
- 190979 string characters out of 6173321
+ 13155 strings out of 494108
+ 192481 string characters out of 6173321
  261817 words of memory out of 5000000
- 16912 multiletter control sequences out of 15000+600000
- 55272 words of font info for 58 fonts, out of 8000000 for 9000
+ 16960 multiletter control sequences out of 15000+600000
+ 55577 words of font info for 59 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 46i,6n,42p,1174b,441s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/home/pernice/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/home/pernic
-e/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/home/pernice/.TinyTeX/
-texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</home/pernice/.TinyTeX/texmf-dist/fon
+ 46i,6n,42p,1174b,442s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/home/pernice/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/home/perni
+ce/.TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/home/pernice/.TinyTeX/tex
+mf-dist/fonts/enc/dvips/lm/lm-mathit.enc}</home/pernice/.TinyTeX/texmf-dist/fon
 ts/type1/public/lm/lmbx10.pfb></home/pernice/.TinyTeX/texmf-dist/fonts/type1/pu
 blic/lm/lmbx12.pfb></home/pernice/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmm
 i10.pfb></home/pernice/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></ho
@@ -843,10 +865,10 @@ f-dist/fonts/type1/public/lm/lmri10.pfb></home/pernice/.TinyTeX/texmf-dist/font
 s/type1/public/lm/lmtk10.pfb></home/pernice/.TinyTeX/texmf-dist/fonts/type1/pub
 lic/lm/lmtt10.pfb></home/pernice/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt
 i10.pfb>
-Output written on Esercizio.pdf (14 pages, 1435226 bytes).
+Output written on Esercizio.pdf (16 pages, 1697245 bytes).
 PDF statistics:
- 340 PDF objects out of 1000 (max. 8388607)
- 265 compressed objects within 3 object streams
- 68 named destinations out of 1000 (max. 500000)
- 159 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 374 PDF objects out of 1000 (max. 8388607)
+ 291 compressed objects within 3 object streams
+ 74 named destinations out of 1000 (max. 500000)
+ 169 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -110,7 +110,7 @@ All the *epimod* functions print the following information:
 # Cases of study
 In this section we show the steps necessary to model, study and analyze a simple case study. To this aim, we choose to study the diffusion of a disease following the SIR dynamics. We refer to [@keeling2011modeling] for all the details.
 
-### SIR model
+## SIR model
 
 The S-I-R models the diffusion of an infection in a population assuming three possible states (or compartments) in which any invidual in the population may move. Specifically, (1) *Susceptible*, individuals unexposed to the disease, (2) *Infected*, individuals currently infected by the disease, and (3) *Recovered*, individuals which were successfully recovered by the infection.
 To consider the simplest case, we ignore the population demography (i.e., births and deaths of individuals are omitted), thus we consider only two possible events: the infection (passage from  *Susceptible* to  *Infected*), and the recovery (passage from  *Infected* to  *Recovered*). We are also assuming to neglect complex pattern of contacts, by considering an homogeneous mixing.
@@ -127,6 +127,7 @@ where:
 - $N$ is the constant population size;
 - $\gamma$ is the recovery rate, which determines the mean infectious period.
 
+## Model Analysis
 
 ###  Model generation
 
@@ -246,7 +247,7 @@ Plots$TrajI
 
 ```
 
-### With ranking
+#### With ranking
 ```{r, eval=FALSE}
 sensitivity<-sensitivity_analysis(n_config = 100,
                                   parameters_fname = "Input/Functions_list.csv", 
@@ -352,6 +353,27 @@ model_analysis(out_fname = "model_analysis",
 
 ```
 
+It is possible also to simluate the stochastich behaviuor of the system exploiting the  Gillespie algorithm, namely **SSA**, which is an exact stochastic method widely used to simulate chemical systems whose behaviour can be described by the Master equations.
+
+
+```{r, linewidth=80 }
+model_analysis(out_fname = "model_analysis",
+               solver_fname = "Net/SIR.solver",
+               parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
+               solver_type = "SSA",
+               n_run = 500,
+               parallel_processors = 2,
+               f_time = 100, # days
+               s_time = 1
+)
+```
+
+```{r, fig.height = 4, fig.width = 6, fig.align = "center", fig.pos='H', fig.cap=c(" Stochastic Trajectories considering the S place."," Stochastic Trajectories considering the I place."  ), echo = F}
+source("Rfunction/ModelAnalysisPlot.R")
+AnalysisPlot = ModelAnalysisPlot(Ref = T,Stoch = T)
+AnalysisPlot$plS
+AnalysisPlot$plI
+```
 
 # References
 
