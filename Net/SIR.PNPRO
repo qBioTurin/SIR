@@ -5,7 +5,7 @@
       <place marking="997" name="S" x="6.0" y="3.0"/>
       <place marking="3" name="I" x="16.0" y="3.0"/>
       <place name="R" x="30.0" y="3.0"/>
-      <transition delay="0.4" delay-x="-1.0" delay-y="2.0" name="Infection" nservers-x="0.5" type="EXP" x="10.55" y="3.0"/>
+      <transition delay="0.0004" delay-x="-1.0" delay-y="2.0" name="Infection" nservers-x="0.5" type="EXP" x="10.55" y="3.0"/>
       <transition delay="0.04" delay-x="-0.5" delay-y="2.0" name="Recovery" nservers-x="0.5" type="EXP" x="23.55" y="3.0"/>
     </nodes>
     <edges>

@@ -1,15 +1,9 @@
-#
-# init_generation<-function(optim_vector)
-# {
-#     return(c(optim_vector[1],1e-4,0))
-# }
-
-recovery<-function(x,n)
+fun.recovery<-function(x,n)
 {
-    return(x[1]*n)
+    return(x[1])
 }
 
-infection<-function(x,n)
+fun.infection<-function(x,n)
 {
-    return(x[2]*n)
+    return(x[2])
 }

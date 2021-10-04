@@ -1,14 +1,14 @@
 
 library(ggplot2)
 
-calibration.plot <- function(folder)
+calibration.plot <- function(folder,solver_name)
 {
-  load(paste0(folder,"SIR-calibration_optim.RData"))
-  load(paste0(folder,"SIR-calibration.RData"))
-  reference <- as.data.frame(read.csv("Input/reference_data.csv",
+  load(paste0(folder,solver_name,"-calibration_optim.RData"))
+  load(paste0(folder,solver_name,"-calibration.RData"))
+  reference <- as.data.frame(read.csv(paste0(folder,"reference_data.csv"),
                                       header = FALSE,
                                       sep = ""))
-  calibration_optim_trace <-read.csv(paste0(folder,"SIR-calibration_optim-trace.csv"),sep = "")
+  calibration_optim_trace <-read.csv(paste0(folder,solver_name,"-calibration_optim-trace.csv"),sep = "")
   
   
   # Then, we read all the trajectories generated saving them in a list called
@@ -23,8 +23,8 @@ calibration.plot <- function(folder)
   
   ListTraces<-lapply(id.traces,
                      function(x){
-                       trace.tmp=read.csv(paste0(folder,
-                         "SIR-calibration-",
+                       trace.tmp=read.csv(paste0(folder,solver_name,
+                         "-calibration-",
                          x,
                          ".trace"), sep = "")
                        trace.tmp=data.frame(trace.tmp,ID=calibration_optim_trace$distance[which(calibration_optim_trace$id==x)])
