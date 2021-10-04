@@ -4,35 +4,46 @@ library(epimod)
 #downloadContainers()
 
 start_time <- Sys.time()
-model_generation(net_fname = "./Net/SIR.PNPRO")
+model_generation("./Net/SIR.PNPRO")
 end_time <- Sys.time()-start_time
 
-###  Sensitivity analysis
 
-## Simple version where only the transition rates vary.
-# execution time 4 mins
+### Model Analysis
+### deterministic
 
-start_time <- Sys.time()
-sensitivity<-sensitivity_analysis(n_config = 500,
-                                  parameters_fname = "Input/Functions_list.csv", 
-                                  solver_fname = "Net/SIR.solver",
-                                  reference_data = "Input/reference_data.csv",
-                                  distance_measure_fname = "Rfunction/msqd.R" ,
-                                  target_value_fname = "Rfunction/Target.R" ,
-                                  f_time = 100, # days 
-                                  s_time = 1, # day      
-                                  parallel_processors = 2
-                                  )
-end_time <- Sys.time()-start_time
+model_analysis(out_fname = "model_analysis",
+               solver_fname = "Net/SIR.solver",
+               parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
+               solver_type = "LSODA",
+               f_time = 100, # days
+               s_time = 1
+)
 
-##############################
-## Let draw the trajectories
-##############################
-source("./Rfunction/SensitivityPlot.R")
-pl
-plS
-plI
-plR
+source("Rfunction/ModelAnalysisPlot.R")
+AnalysisPlot = ModelAnalysisPlot(Ref = FALSE,Stoch = F)
+AnalysisPlot$plI
+AnalysisPlot$plS
+
+### stochastic
+
+model_analysis(out_fname = "model_analysis",
+               solver_fname = "Net/SIR.solver",
+               parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
+               solver_type = "SSA",
+               n_run = 1000,
+               parallel_processors = 2,
+               f_time = 100, # days
+               s_time = 1
+)
+
+source("Rfunction/ModelAnalysisPlot.R")
+AnalysisPlot = ModelAnalysisPlot(Ref = T,Stoch = T)
+AnalysisPlot$plI
+AnalysisPlot$HistI
+AnalysisPlot$plS
+AnalysisPlot$HistS
+
+
 
 
 ### Calibration analysis
@@ -66,36 +77,31 @@ plots$plS
 plots$plI
 plots$plR
 
-### Model Analysis
 
-model_analysis(out_fname = "model_analysis",
-               solver_fname = "Net/SIR.solver",
-               parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
-               solver_type = "LSODA",
-               f_time = 100, # days
-               s_time = 1
-               )
 
-source("Rfunction/ModelAnalysisPlot.R")
-AnalysisPlot = ModelAnalysisPlot(Ref = FALSE,Stoch = F)
-AnalysisPlot$plI
-AnalysisPlot$plS
+###  Sensitivity analysis
 
-### Model Analysis
+## Simple version where only the transition rates vary.
+# execution time 4 mins
 
-model_analysis(out_fname = "model_analysis",
-               solver_fname = "Net/SIR.solver",
-               parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
-               solver_type = "SSA",
-               n_run = 1000,
-               parallel_processors = 2,
-               f_time = 100, # days
-               s_time = 1
+start_time <- Sys.time()
+sensitivity<-sensitivity_analysis(n_config = 500,
+                                  parameters_fname = "Input/Functions_list.csv", 
+                                  solver_fname = "Net/SIR.solver",
+                                  reference_data = "Input/reference_data.csv",
+                                  distance_measure_fname = "Rfunction/msqd.R" ,
+                                  target_value_fname = "Rfunction/Target.R" ,
+                                  f_time = 100, # days 
+                                  s_time = 1, # day      
+                                  parallel_processors = 2
 )
+end_time <- Sys.time()-start_time
 
-source("Rfunction/ModelAnalysisPlot.R")
-AnalysisPlot = ModelAnalysisPlot(Ref = T,Stoch = T)
-AnalysisPlot$plI
-AnalysisPlot$HistI
-AnalysisPlot$plS
-AnalysisPlot$HistS
+##############################
+## Let draw the trajectories
+##############################
+source("./Rfunction/SensitivityPlot.R")
+pl
+plS
+plI
+plR
