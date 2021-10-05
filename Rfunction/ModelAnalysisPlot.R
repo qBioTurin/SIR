@@ -56,21 +56,21 @@ ModelAnalysisPlot=function(Ref = FALSE,Stoch = F){
                                         sep = ""))
     plI<-plI+
       geom_line(data=reference,
-                aes(x=V1,y=V3,
+                aes(x=V1,y=V2,
                 col="Ref"),linetype="dashed")+
       labs(x="Days", y="I",col="")
     
-    plS<-plS+
-      geom_line(data=reference,
-                aes(x=V1,y=V2,
-                col="Ref"),linetype="dashed")+
-      labs(x="Days", y="S",col="")
-    
-    plR<-plR+
-      geom_line(data=reference,
-                aes(x=V1,y=V4,
-                col="Ref"),linetype="dashed")+
-      labs(x="Days", y="R",col="")
+    # plS<-plS+
+    #   geom_line(data=reference,
+    #             aes(x=V1,y=V2,
+    #             col="Ref"),linetype="dashed")+
+    #   labs(x="Days", y="S",col="")
+    # 
+    # plR<-plR+
+    #   geom_line(data=reference,
+    #             aes(x=V1,y=V4,
+    #             col="Ref"),linetype="dashed")+
+    #   labs(x="Days", y="R",col="")
     
   }
   

@@ -144,7 +144,7 @@ Having constructed the model, the generation of both the stochastic (the Continu
 
 ```{r, linewidth = 80,eval=FALSE}
 
-model_generation("./Net/SIR.PNPRO")
+model_generation("SIR.PNPRO")
 
 ``` 
 
@@ -157,8 +157,8 @@ A possible step is the model analysis, where the corresponding function *model_a
 
 ```{r, linewidth=80,eval=F }
 
-model_analysis(solver_fname = "Net/SIR.solver",
-               parameters_fname = "Results/Functions_list_ModelAnalysis.csv",
+model_analysis(solver_fname = "SIR.solver",
+               parameters_fname = "Functions_list_ModelAnalysis.csv",
                s_time = 1,
                f_time = 100 # days
                )
@@ -185,9 +185,8 @@ This function solves the system given a specific parameters configuration which 
 It is possible also to simulate the stochastic behavior of the system exploiting the  Gillespie algorithm, namely **SSA**, which is an exact stochastic method widely used to simulate chemical systems whose behavior can be described by the Master equations.
 
 ```{r, linewidth=80,eval=F }
-model_analysis(out_fname = "model_analysis",
-               solver_fname = "Net/SIR.solver",
-               parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
+model_analysis(solver_fname = "SIR.solver",
+               parameters_fname = "Functions_list_ModelAnalysis.csv",
                solver_type = "SSA",
                n_run = 500,
                parallel_processors = 2,
@@ -234,11 +233,11 @@ The aim of this phase is to optimize the fit of the simulated behavior to the re
 
 ```{r, linewidth = 80,eval=FALSE }
 
-model_calibration(solver_fname = "Net/SIR.solver",
-                  parameters_fname = "Input/Functions_list_Calibration.csv",
-                  functions_fname = "Rfunction/FunctionCalibration.R",
-                  reference_data = "Input/reference_data.csv",
-                  distance_measure_fname = "Rfunction/msqd.R" ,
+model_calibration(solver_fname = "SIR.solver",
+                  parameters_fname = "Functions_list_Calibration.csv",
+                  functions_fname = "FunctionCalibration.R",
+                  reference_data = "reference_data.csv",
+                  distance_measure_fname = "msqd.R" ,
                   f_time = 100, # days
                   s_time = 1, # day
                   # Vectors to control the optimization
@@ -277,17 +276,23 @@ fun.infection<-function(x)
 4. **reference_data**: a csv file storing the data to be compared with the simulations' result. In *reference_data.csv* we report the SIR evolution starting with 997 susceptible, three infected and zero recovered, with a recovery and infection rates equals to 0.04 and 0.0004 respectively. Notice that the **reference_data**'s rows must be the variable time serie, and so the columns the corresponding values at a specific time.
 ```{r, echo= FALSE}
 a<-read.csv("Input/reference_data.csv", header=FALSE,sep=" ")
-colnames(a) <- c("Time","S","I","R")
+colnames(a) <- c("Time","I")
 #row.names(a) <- paste0("TimeStep",1:length(a$Time))
+a[1:7,c(1,2)]
+```
+
+5. **distance_measure_fname**: the R file storing the function to compute the distance (or error) between the model output and the reference dataset itself. The function defining the distance takes in input only the reference data (defined in *reference_data.csv*) and the simulation output with the following structure:
+```{r, echo= FALSE}
+a<-read.csv("Results/results_model_calibration/SIR-calibration-10.trace", header=TRUE,sep=" ")
 a[1:7,]
 ```
 
-5. **distance_measure_fname**: the R file storing the function to compute the distance (or error) between the model output and the reference dataset itself. The function defining the distance takes in input only the reference data and the simulation's output (i.e. a trajectory); an example is given by *msqd.R* where a distance measure (based on the squared error distance) as function of the infected individuals is defined:
+an example is given by *msqd.R* where a distance measure (based on the squared error distance) as function of the infected individuals is defined:
 ```{r, linewidth = 80 }
 msqd<-function(reference, output)
 {
     reference[1,] -> times_ref
-    reference[3,] -> infect_ref
+    reference[2,] -> infect_ref
 
     # We will consider the same time points
     Infect <- output[which(output$Time %in% times_ref),"I"]
