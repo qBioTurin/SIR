@@ -3,7 +3,7 @@ library(ggplot2)
 
 ModelAnalysisPlot=function(solverName_path,Stoch = F,print=T){
   
-  trace <-read.csv(paste0(solverName_path,"-analysys-1.trace"),sep = "")
+  trace <-read.csv(solverName_path,sep = "")
   n_sim_tot<-table(trace$Time)
   n_sim <- n_sim_tot[1]
   time_delete<-as.numeric(names(n_sim_tot[n_sim_tot!=n_sim_tot[1]]))
