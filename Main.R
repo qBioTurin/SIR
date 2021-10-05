@@ -19,7 +19,7 @@ model_analysis(solver_fname = "Net/SIR.solver",
 )
 
 source("Rfunction/ModelAnalysisPlot.R")
-AnalysisPlot = ModelAnalysisPlot(solver_name = "SIR",Stoch = F)
+AnalysisPlot = ModelAnalysisPlot(solverName_path= "results_model_analysis/SIR",Stoch = F)
 AnalysisPlot$plI
 AnalysisPlot$plS
 
@@ -36,7 +36,7 @@ model_analysis(out_fname = "model_analysis",
 )
 
 source("Rfunction/ModelAnalysisPlot.R")
-AnalysisPlot = ModelAnalysisPlot(Ref = T,Stoch = T)
+AnalysisPlot = ModelAnalysisPlot(solverName_path = "./results_model_analysis/SIR",Stoch = T)
 AnalysisPlot$plI
 AnalysisPlot$HistI
 AnalysisPlot$plS
@@ -71,7 +71,7 @@ calibration_optim_trace <-read.csv("./results_model_calibration/SIR-calibration_
 load("./results_model_calibration/SIR-calibration_optim.RData")
 
 source("Rfunction/CalibrationPlot.R")
-plots <- calibration.plot(folder = "Results/results_model_calibration/")
+plots <- calibration.plot(solverName_path = "Results/results_model_calibration/SIR",reference_path = "Input/reference_data.csv")
 plots$plS
 plots$plI
 plots$plR
