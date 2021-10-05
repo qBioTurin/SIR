@@ -1,9 +1,9 @@
 library(dplyr)
 library(ggplot2)
 
-ModelAnalysisPlot=function(Stoch = F,print=T){
+ModelAnalysisPlot=function(solver_name,folder="./results_model_analysis/",Stoch = F,print=T){
   
-  trace <-read.csv("./results_model_analysis/model_analysis-1.trace",sep = "")
+  trace <-read.csv(paste0(folder,solver_name,"-analysys-1.trace"),sep = "")
   n_sim_tot<-table(trace$Time)
   n_sim <- n_sim_tot[1]
   time_delete<-as.numeric(names(n_sim_tot[n_sim_tot!=n_sim_tot[1]]))

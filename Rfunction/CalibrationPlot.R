@@ -1,7 +1,7 @@
 
 library(ggplot2)
 
-calibration.plot <- function(folder,solver_name,print=T)
+calibration.plot <- function(solver_name,folder="results_model_calibration",print=T)
 {
   load(paste0(folder,solver_name,"-calibration_optim.RData"))
   load(paste0(folder,solver_name,"-calibration.RData"))

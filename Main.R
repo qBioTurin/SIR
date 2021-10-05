@@ -11,8 +11,7 @@ end_time <- Sys.time()-start_time
 ### Model Analysis
 ### deterministic
 
-model_analysis(out_fname = "model_analysis",
-               solver_fname = "Net/SIR.solver",
+model_analysis(solver_fname = "Net/SIR.solver",
                parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
                solver_type = "LSODA",
                f_time = 100, # days
@@ -20,7 +19,7 @@ model_analysis(out_fname = "model_analysis",
 )
 
 source("Rfunction/ModelAnalysisPlot.R")
-AnalysisPlot = ModelAnalysisPlot(Ref = FALSE,Stoch = F)
+AnalysisPlot = ModelAnalysisPlot(solver_name = "SIR",Stoch = F)
 AnalysisPlot$plI
 AnalysisPlot$plS
 
