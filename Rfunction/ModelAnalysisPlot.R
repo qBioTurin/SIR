@@ -1,7 +1,7 @@
 library(dplyr)
 library(ggplot2)
 
-ModelAnalysisPlot=function(Ref = FALSE,Stoch = F){
+ModelAnalysisPlot=function(Stoch = F,print=T){
   
   trace <-read.csv("./results_model_analysis/model_analysis-1.trace",sep = "")
   n_sim_tot<-table(trace$Time)
@@ -48,31 +48,6 @@ ModelAnalysisPlot=function(Ref = FALSE,Stoch = F){
           legend.key.size = unit(1.3, "cm"),
           legend.key.width = unit(1.3,"cm") )+
     labs(x="Days", y="R")
-  
-  if(Ref){
-    
-    reference <- as.data.frame(read.csv("Input/reference_data.csv",
-                                        header = FALSE,
-                                        sep = ""))
-    plI<-plI+
-      geom_line(data=reference,
-                aes(x=V1,y=V2,
-                col="Ref"),linetype="dashed")+
-      labs(x="Days", y="I",col="")
-    
-    # plS<-plS+
-    #   geom_line(data=reference,
-    #             aes(x=V1,y=V2,
-    #             col="Ref"),linetype="dashed")+
-    #   labs(x="Days", y="S",col="")
-    # 
-    # plR<-plR+
-    #   geom_line(data=reference,
-    #             aes(x=V1,y=V4,
-    #             col="Ref"),linetype="dashed")+
-    #   labs(x="Days", y="R",col="")
-    
-  }
   
   if(Stoch){
     plIdens<-ggplot(trace[trace$Time==max(trace$Time),])+
@@ -126,11 +101,17 @@ ModelAnalysisPlot=function(Ref = FALSE,Stoch = F){
                 linetype="dashed")+
       labs(x="Days", y="R",col="")
     
-    return(list(plS = plS,plI = plI,plR = plR,
-                HistS = plSdens,HistI = plIdens,HistR = plRdens))
+    ListReturn<-list(plS = plS,plI = plI,plR = plR,
+                HistS = plSdens,HistI = plIdens,HistR = plRdens)
   }else{
-    return(list(plS = plS,plI = plI,plR = plR))
+    ListReturn<-list(plS = plS,plI = plI,plR = plR)
   }
   
+  if(print){
+    for(j in 1:length(ListReturn))
+      print(ListReturn[j])
+  }
+  
+  return(ListReturn)
 }
 

@@ -212,7 +212,7 @@ model_analysis(out_fname = "model_analysis",
 
 ```{r, fig.height = 4, fig.width = 6, fig.align = "center", fig.pos='H', fig.cap=c(" Stochastic Trajectories considering the S place."," Stochastic Trajectories considering the I place."  ), echo = F,message=F, results='hide'}
 source("Rfunction/ModelAnalysisPlot.R")
-AnalysisPlot = ModelAnalysisPlot(Ref = T,Stoch = T)
+AnalysisPlot = ModelAnalysisPlot(Ref = T,Stoch = T,print=F)
 AnalysisPlot$plS
 AnalysisPlot$plI
 ```
@@ -314,7 +314,7 @@ Let us observe that: the distance and target functions must have the same name o
 
 ```{r, fig.height = 4, fig.width = 6, fig.align = "center", fig.pos='H', fig.cap=c("\\label{fig:S_traces_cal}Trajectories considering the S place.","\\label{fig:I_traces_cal} Trajectories considering the I place.", "\\label{fig:R_traces_cal} Trajectories considering the R place."  ), echo = F}
 source("Rfunction/CalibrationPlot.R")
-plots <- calibration.plot(folder = "Results/results_model_calibration/",solver_name="SIR")
+plots <- calibration.plot(folder = "Results/results_model_calibration/",solver_name="SIR",print=F)
 plots$plS
 plots$plI
 plots$plR

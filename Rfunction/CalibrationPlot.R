@@ -1,7 +1,7 @@
 
 library(ggplot2)
 
-calibration.plot <- function(folder,solver_name)
+calibration.plot <- function(folder,solver_name,print=T)
 {
   load(paste0(folder,solver_name,"-calibration_optim.RData"))
   load(paste0(folder,solver_name,"-calibration.RData"))
@@ -78,6 +78,14 @@ calibration.plot <- function(folder,solver_name)
           legend.key.width = unit(1.3,"cm") )+
     labs(x="Weeks", y="R",col="Distance")
   
-  return(list(plS=plS,plI=plI,plR=plR))
+  ListReturn<-list(plS=plS,plI=plI,plR=plR)
+  
+  if(print){
+    for(j in 1:length(ListReturn))
+      print(ListReturn[j])
+  }
+
+  
+  return(ListReturn)
   
 }
