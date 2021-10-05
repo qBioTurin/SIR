@@ -25,8 +25,7 @@ AnalysisPlot$plS
 
 ### stochastic
 
-model_analysis(out_fname = "model_analysis",
-               solver_fname = "Net/SIR.solver",
+model_analysis(solver_fname = "Net/SIR.solver",
                parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
                solver_type = "SSA",
                n_run = 1000,
@@ -36,7 +35,8 @@ model_analysis(out_fname = "model_analysis",
 )
 
 source("Rfunction/ModelAnalysisPlot.R")
-AnalysisPlot = ModelAnalysisPlot(solverName_path = "./results_model_analysis/SIR",Stoch = T)
+AnalysisPlot = ModelAnalysisPlot(solverName_path = "./results_model_analysis/SIR",
+                                 Stoch = T)
 AnalysisPlot$plI
 AnalysisPlot$HistI
 AnalysisPlot$plS

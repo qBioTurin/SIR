@@ -159,8 +159,8 @@ A possible step is the model analysis, where the corresponding function *model_a
 
 model_analysis(solver_fname = "SIR.solver",
                parameters_fname = "Functions_list_ModelAnalysis.csv",
+               f_time = 100, # days
                s_time = 1,
-               f_time = 100 # days
                )
 
 ```
@@ -181,6 +181,21 @@ head(a[,1:3])
 
 This function solves the system given a specific parameters configuration which is passed through the function parameter, *parameters_fname*. 
 
+```{r, linewidth=80,echo=F,message=F, results='hide'}
+model_analysis(solver_fname = "Net/SIR.solver",
+               parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
+               f_time = 100, # days
+               s_time = 1
+)
+```
+
+
+```{r, fig.height = 4, fig.width = 6, fig.align = "center", fig.pos='H', fig.cap=c(" Deterministic Trajectory considering all places"  ), echo = F,message=F, results='hide'}
+source("Rfunction/ModelAnalysisPlot.R")
+AnalysisPlot = ModelAnalysisPlot(solverName_path = "./results_model_analysis/SIR",
+                                 Stoch = F,print=F)
+AnalysisPlot$plAll
+```
 
 It is possible also to simulate the stochastic behavior of the system exploiting the  Gillespie algorithm, namely **SSA**, which is an exact stochastic method widely used to simulate chemical systems whose behavior can be described by the Master equations.
 
@@ -196,8 +211,7 @@ model_analysis(solver_fname = "SIR.solver",
 ```
 
 ```{r, linewidth=80,echo=F,message=F, results='hide'}
-model_analysis(out_fname = "model_analysis",
-               solver_fname = "Net/SIR.solver",
+model_analysis(solver_fname = "Net/SIR.solver",
                parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
                solver_type = "SSA",
                n_run = 500,
@@ -212,9 +226,10 @@ model_analysis(out_fname = "model_analysis",
 
 ```{r, fig.height = 4, fig.width = 6, fig.align = "center", fig.pos='H', fig.cap=c(" Stochastic Trajectories considering the S place."," Stochastic Trajectories considering the I place."  ), echo = F,message=F, results='hide'}
 source("Rfunction/ModelAnalysisPlot.R")
-AnalysisPlot = ModelAnalysisPlot(Ref = T,Stoch = T,print=F)
-AnalysisPlot$plS
-AnalysisPlot$plI
+AnalysisPlot = ModelAnalysisPlot(solverName_path = "./results_model_analysis/SIR",
+                                 Stoch = T,print=F)
+AnalysisPlot$plAll
+AnalysisPlot$plAllMean
 ```
 
 #### What-if analysis
@@ -258,6 +273,7 @@ knitr::include_graphics("./Images/listCalib.png")
 ```
 
 where the rates of the *Recovery* and *Infection* transitions can be calibrated by using the R functions stored in the R script *functions_fname*;
+
 3. **functions_fname**: an R file storing the user defined functions to generate instances of the parameters summarized in the *parameters_fname* file. An example is given by *FunctionCalibration.R*, where the function *recovery.fun* introduced in *Functions_list_Calibration.csv* file is defined in order to return the value (or a linear transformation) of the vector of the unknown parameters generated from the optimization algorithm, namely **x**, whose size is equal to number of parameters in *parameters_fname*. Let us note that the output of these functions must return a value for each input parameter. For instance, to calibrate the transition rates associated with *Recovery* and *Infection*, the functions recovery and infection have to be defined, returning just the corresponding value from the vector **x**, where **x[1]** = *“Recovery rate”*, **x[2]** = * “Infection rate”*, since we do not want to change the vector generated from the optimization algorithm. The order of values in **x** is given by the order of the parameters in *parameters_fname*.
 
 ```{r, linewidth = 80 }
@@ -314,7 +330,9 @@ Let us observe that: the distance and target functions must have the same name o
 
 ```{r, fig.height = 4, fig.width = 6, fig.align = "center", fig.pos='H', fig.cap=c("\\label{fig:S_traces_cal}Trajectories considering the S place.","\\label{fig:I_traces_cal} Trajectories considering the I place.", "\\label{fig:R_traces_cal} Trajectories considering the R place."  ), echo = F}
 source("Rfunction/CalibrationPlot.R")
-plots <- calibration.plot(folder = "Results/results_model_calibration/",solver_name="SIR",print=F)
+plots <- calibration.plot(solverName_path = "Results/results_model_calibration/SIR",
+                          reference_path ="Input/reference_data.csv",
+                          print=F)
 plots$plS
 plots$plI
 plots$plR
