@@ -1,4 +1,4 @@
-msqd<-function(reference, output)
+mse<-function(reference, output)
 {
     reference[1,] -> times_ref
     reference[2,] -> infect_ref

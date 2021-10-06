@@ -52,7 +52,7 @@ model_calibration(parameters_fname = "Input/Functions_list_Calibration.csv",
                   functions_fname = "Rfunction/FunctionCalibration.R",
                   solver_fname = "Net/SIR.solver",
                   reference_data = "Input/reference_data.csv",
-                  distance_measure_fname = "Rfunction/msqd.R" ,
+                  distance_measure_fname = "Rfunction/mse.R" ,
                   f_time = 100, # days
                   s_time = 1, # day
                   # Vectors to control the optimization
@@ -89,7 +89,7 @@ sensitivity<-sensitivity_analysis(n_config = 500,
                                   parameters_fname = "Input/Functions_list.csv", 
                                   solver_fname = "Net/SIR.solver",
                                   reference_data = "Input/reference_data.csv",
-                                  distance_measure_fname = "Rfunction/msqd.R" ,
+                                  distance_measure_fname = "Rfunction/mse.R" ,
                                   target_value_fname = "Rfunction/Target.R" ,
                                   f_time = 100, # days 
                                   s_time = 1, # day      
