@@ -224,9 +224,7 @@ In details, the function *sensitivity_analysis()* takes in input
 5. **parameters_fname**: a textual file in which the  parameters to be studied are listed associated with their range of variability.
 This file is defined by three mandatory columns: (1) a tag representing the parameter type: *i* for the complete initial marking (or condition), *p* for a single parameter (either a single rate or initial marking), and *g* for a rate associated with general transitions [@Pernice19] (the user must define a file name coherently with the one used in the  general transitions file); (2) the name of the transition which is varying (this must correspond to name used in the PN draw in GreatSPN editor), if the complete initial marking is considered (i.e., with tag *i*) then by default the name *init*  is used; (3) the function used for sampling the value of the variable considered, it could be either a R function or an user-defined function (in this case it has to be implemented into the R script passed through the *functions_fname* input parameter). Let us note that the output of this function must have size equal to the length of the varying parameter, that is 1 when tags *p* or *g* are used, and the size of the marking (number of places) when *i* is used.  The remaining columns represent the input parameters needed by the functions defined in the third column. An example is given by the file *Functions_list.csv*, where we decided to vary the rates of the *Recovery* and *Infection* transitions by using the R function which generates values following the uniform probability distribution on the interval from *min* to *max*. We set *n=1* because we must generate one value for each sample.
 ```{r, echo= FALSE}
-a<-read.csv("Input/Functions_list.csv", header=FALSE,sep=";")
-colnames(a) <- c("Tag","Name","Function","Parameter1","Parameter2","Parameter3")
-a
+knitr::include_graphics("./Images/list1.png")
 ```
 Another example might be *Functions_list2.csv*, where we decide to vary the initial marking using the following function *init_generation* defined in the R script *Functions.R* (see *functions_fname* parameter). 
 ```{r, echo= FALSE}
@@ -255,17 +253,22 @@ Target<-function(output)
 8. **reference_data**: a csv file storing the data to be compared with the simulations' result. In *reference_data.csv* we report the SIR evolution starting with 10000 susceptible, one infected and zero recovered, with a recovery and infection rates equals to 0.1428 and 1.428 respectively. Notice that the **reference_data**'s rows must be the variable time serie, and so the colums the corresponding values at a specific time.
 ```{r, echo= FALSE}
 a<-read.csv("Input/reference_data.csv", header=FALSE,sep=" ")
-row.names(a) <- c("Time","S","I","R")
-colnames(a) <- paste0("TimeStep",1:701)
-a[,1:7]
+colnames(a) <- c("Time","S","I","R")
+row.names(a) <- paste0("TimeStep",1:length(a$Time))
+a[1:7,]
 ```
 9. **distance_measure_fname**: the R file storing the function to compute the distance (or error) between the model output and the reference dataset itself. The function defining the distance takes in input only the reference data and the simulation's output (i.e. a trajectory); an example is given by *msqd.R* where a distance measure (based on the squared error distance) as function of the infected individuals is defined:
 ```{r, linewidth = 80 }
 msqd<-function(reference, output)
 {
-    Infect <- output[,"I"]
+    reference[1,] -> times_ref
+    reference[3,] -> infect_ref
 
-    diff.Infect <- sum(( Infect - reference )^2 )
+    # We will consider the same time points
+    Infect <- output[which(output$Time %in% times_ref),"I"]
+    infect_ref <- infect_ref[which( times_ref %in% output$Time)]
+
+    diff.Infect <- 1/length(times_ref)*sum(( Infect - infect_ref )^2 )
 
     return(diff.Infect)
 }

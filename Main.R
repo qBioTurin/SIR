@@ -102,16 +102,33 @@ source("Rfunction/CalibrationPlot.R")
 plI
 
 ### Model Analysis
-
+# Deterministic:
 
 model_analysis(out_fname = "model_analysis",
                solver_fname = "Net/SIR.solver",
-               parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
+               parameters_fname = "Input/Functions_list_R0_ModelAnalysis.csv",
                solver_type = "LSODA",
-               f_time = 7*3, # weeks
+               f_time = 7*10, # weeks
                s_time = 1
                )
 
 source("Rfunction/ModelAnalysisPlot.R")
-plI
+
+AnalysisPlot = ModelAnalysisPlot(Ref = FALSE,Stoch = F)
+AnalysisPlot$plI
+
+model_analysis(out_fname = "model_analysis",
+               solver_fname = "Net/SIR.solver",
+               parameters_fname = "Input/Functions_list_R0_ModelAnalysis.csv",
+               solver_type = "SSA",
+               n_run = 5000,
+               parallel_processors = 2,
+               f_time = 7*3, # weeks
+               s_time = 1
+)
+
+AnalysisPlot = ModelAnalysisPlot(Ref = FALSE, Stoch = T)
+
+AnalysisPlot$plI
+AnalysisPlot$HistI
 plS
