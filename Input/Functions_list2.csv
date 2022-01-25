@@ -1,5 +1,5 @@
 # Tag |Name      |Function      |Parameter1 |Parameter2  |Parameter3
-  p;   Recovery;  recovery.fun;  n=1;        min = 0.01;   max=0.1
-  p;   Infection; runif;         n=1;        min = 0.0001; max=0.001
+  e;   Recovery;  recovery.fun;  n=1;        min = 0.01;   max=0.1
+  e;   Infection; runif;         n=1;        min = 0.0001; max=0.001
 
 

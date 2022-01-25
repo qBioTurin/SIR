@@ -14,7 +14,7 @@ calibration.plot <- function(solverName_path,reference_path,print=T)
   reference <- as.data.frame(read.csv(reference_path,
                                       header = FALSE,
                                       sep = ""))
-  calibration_optim_trace <-read.csv(paste0(solverName_path,"-calibration_optim-trace.csv"),sep = "")
+  calibration_optim_trace <-read.csv(paste0(solverName_path,"-calibration_optim-config.csv"),sep = "")
   
   
   # Then, we read all the trajectories generated saving them in a list called
