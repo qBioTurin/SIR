@@ -1,9 +1,9 @@
-fun.recovery<-function(x,n)
+fun.recovery<-function(optim_v,n)
 {
-    return(x[1])
+    return(optim_v[1])
 }
 
-fun.infection<-function(x,n)
+fun.infection<-function(optim_v,n)
 {
-    return(x[2])
+    return(optim_v[2])
 }
