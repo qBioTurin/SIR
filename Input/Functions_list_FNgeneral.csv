@@ -1,2 +1,2 @@
-p; Recovery; runif; n=1; min = 0; max=1
+e; Recovery; runif; n=1; min = 0; max=1
 g; Infection; InfectionValuesGeneration; min = 0; max=1
