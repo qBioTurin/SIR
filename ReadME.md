@@ -335,14 +335,14 @@ it takes in input only the reference data (defined in
 *reference\_data.csv*), and the *simulation output* with the following
 structure:
 
-    #>   Time         S        I          R
-    #> 1    1 1000.0000 1.000000 0.00000000
-    #> 2    2  999.5912 1.361692 0.04710383
-    #> 3    3  999.0349 1.853893 0.11123899
-    #> 4    4  998.2780 2.523436 0.19854708
-    #> 5    5  997.2489 3.433719 0.31736786
-    #> 6    6  995.8506 4.670411 0.47901755
-    #> 7    7  993.9523 6.348887 0.69882472
+    #>   Time         S         I          R
+    #> 1    1 1000.0000  1.000000 0.00000000
+    #> 2    2  999.3876  1.557168 0.05518834
+    #> 3    3  998.4350  2.423860 0.14110951
+    #> 4    4  996.9545  3.770735 0.27481357
+    #> 5    5  994.6566  5.860729 0.48271964
+    #> 6    6  991.0980  9.096360 0.80563460
+    #> 7    7  985.6060 14.087723 1.30628156
 
 Thus, an example of this function can be as follows:
 
@@ -651,45 +651,44 @@ distance provided by the user (**distance\_fname**).
     remaining columns represent the input parameters needed by the
     functions defined in the third column. An example is given by the
     file *Functions\_list\_Calibration.csv*:
-    <img src="./Images/listCalib.png" width="50%" /> where the rates of
-    the *Recovery* and *Infection* transitions can be calibrated by
-    using the R functions stored in the R script *functions\_fname*;
-3.  **functions\_fname**: an R file storing: 1) the user defined
-    functions to generate instances of the parameters summarized in the
-    *parameters\_fname* file, and 2) the function to compute the
-    distance (or error) between the model output and the reference
-    dataset itself. An example is given by *FunctionCalibration.R*,
-    where three functions are implemented: *fun.recovery*,
-    *fun.infection*, and *mse*. The first two are introduced in
-    *Functions\_list\_Calibration.csv* file, and they are defined in
-    order to return the value (or a linear transformation) of the vector
-    of the unknown parameters generated from the optimization algorithm,
-    namely **optim\_v**, whose size is equal to number of parameters in
-    *parameters\_fname*. Let us note that the output of these functions
-    must return a value for each input parameter. For instance, to
-    calibrate the transition rates associated with *Recovery* and
-    *Infection*, the functions recovery and infection have to be
-    defined, returning just the corresponding value from the vector
-    **optim\_v**, where **optim\_v\[1\]** = *“Recovery rate”*,
-    **optim\_v\[2\]** = *“Infection rate”*, since we do not want to
-    change the vector generated from the optimization algorithm. The
-    order of values in **optim\_v** is given by the order of the
-    parameters in *parameters\_fname*. Finally, the function *mse*
-    defines the distance measure (based on the squared error distance)
-    between the reference data and the simulations; it takes in input
-    only the reference data (defined in *reference\_data.csv*), and the
-    *simulation output* with the following structure:
 
-<!-- -->
+<img src="./Images/listCalib.png" width="50%" />
 
-    #>   Time         S        I          R
-    #> 1    1 1000.0000 1.000000 0.00000000
-    #> 2    2  999.5912 1.361692 0.04710383
-    #> 3    3  999.0349 1.853893 0.11123899
-    #> 4    4  998.2780 2.523436 0.19854708
-    #> 5    5  997.2489 3.433719 0.31736786
-    #> 6    6  995.8506 4.670411 0.47901755
-    #> 7    7  993.9523 6.348887 0.69882472
+where the rates of the *Recovery* and *Infection* transitions can be
+calibrated by using the R functions stored in the R script
+*functions\_fname*; 3. **functions\_fname**: an R file storing: 1) the
+user defined functions to generate instances of the parameters
+summarized in the *parameters\_fname* file, and 2) the function to
+compute the distance (or error) between the model output and the
+reference dataset itself. An example is given by
+*FunctionCalibration.R*, where three functions are implemented:
+*fun.recovery*, *fun.infection*, and *mse*. The first two are introduced
+in *Functions\_list\_Calibration.csv* file, and they are defined in
+order to return the value (or a linear transformation) of the vector of
+the unknown parameters generated from the optimization algorithm, namely
+**optim\_v**, whose size is equal to number of parameters in
+*parameters\_fname*. Let us note that the output of these functions must
+return a value for each input parameter. For instance, to calibrate the
+transition rates associated with *Recovery* and *Infection*, the
+functions recovery and infection have to be defined, returning just the
+corresponding value from the vector **optim\_v**, where
+**optim\_v\[1\]** = *“Recovery rate”*, **optim\_v\[2\]** = *“Infection
+rate”*, since we do not want to change the vector generated from the
+optimization algorithm. The order of values in **optim\_v** is given by
+the order of the parameters in *parameters\_fname*. Finally, the
+function *mse* defines the distance measure (based on the squared error
+distance) between the reference data and the simulations; it takes in
+input only the reference data (defined in *reference\_data.csv*), and
+the *simulation output* with the following structure:
+
+    #>   Time         S         I          R
+    #> 1    1 1000.0000  1.000000 0.00000000
+    #> 2    2  999.3876  1.557168 0.05518834
+    #> 3    3  998.4350  2.423860 0.14110951
+    #> 4    4  996.9545  3.770735 0.27481357
+    #> 5    5  994.6566  5.860729 0.48271964
+    #> 6    6  991.0980  9.096360 0.80563460
+    #> 7    7  985.6060 14.087723 1.30628156
 
 Thus, these three functions are defined as follows:
 
@@ -773,7 +772,7 @@ error w.r.t. reference trend are plotted. In this case, fixing a maximum
 number of objective function calls, we obtain the following optimal
 value for the two parameters:
 
-    #> [1] 0.0500000000 0.0002946183
+    #> [1] 0.0405449227 0.0004925221
 
 #### Calibration analysis with general transitions
 
