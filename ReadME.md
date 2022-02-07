@@ -270,13 +270,13 @@ In details, the function *model.sensitivity()* takes in input
     which generates values following the uniform probability
     distribution on the interval from *min* to *max*. We set *n=1*
     because we must generate one value for each sample.
-    <img src="./Images/list1.png" width="538" /> Another example might
-    be *FunctionsSensitivity\_list.csv*, where we decide to vary the
-    initial marking using the following function *init\_generation*
-    defined in the R script *Functions.R* (see *functions\_fname*
-    parameter).
 
-<!-- -->
+<img src="./Images/list1.png" width="538" />
+
+Another example might be *FunctionsSensitivity\_list.csv*, where we
+decide to vary the initial marking using the following function
+*init\_generation* defined in the R script *Functions.R* (see
+*functions\_fname* parameter).
 
     #>   Tag       Name         Function           Parameter1        Parameter2
     #> 1   i       init  init_generation  min_init = 10000*.8  max_init = 10000
@@ -363,23 +363,23 @@ Thus, an example of this function can be as follows:
 1.  **target\_value\_fname**: the function name to exploit for obtaining
     the PRCCs, which is implemented in *functions\_fname*;
 2.  **reference\_data**: a csv file storing the data to be compared with
-    the simulations’ result. In *reference\_data.csv* we report the SIR
-    evolution starting with 10000 susceptible, one infected and zero
-    recovered, with a recovery and infection rates equals to 0.1428 and
-    1.428 respectively. Notice that the **reference\_data**’s rows must
-    be the variable time serie, and so the colums the corresponding
-    values at a specific time.
+    the simulations’ result. In *reference\_data.csv* we report the
+    number of infected cases evolution starting with 10000 susceptible,
+    one infected and zero recovered, with a recovery and infection rates
+    equals to 0.1428 and 1.428 respectively. Notice that the
+    **reference\_data**’s rows must be the variable time serie, and so
+    the colums the corresponding values at a specific time.
 
 <!-- -->
 
-    #>           Time         S          I           R
-    #> TimeStep1    0 1000.0000   1.000000   0.0000000
-    #> TimeStep2    1  997.4275   2.713905   0.8586098
-    #> TimeStep3    2  990.5021   7.316812   3.1811040
-    #> TimeStep4    3  972.2298  19.382506   9.3877020
-    #> TimeStep5    4  926.4650  49.075295  25.4596744
-    #> TimeStep6    5  825.2638 111.718833  64.0173442
-    #> TimeStep7    6  651.3169 206.763633 142.9195156
+    #>           Time         I
+    #> TimeStep1    0  3.000000
+    #> TimeStep2    1  4.293673
+    #> TimeStep3    2  6.140960
+    #> TimeStep4    3  8.774355
+    #> TimeStep5    4 12.519415
+    #> TimeStep6    5 17.827326
+    #> TimeStep7    6 25.314077
 
 1.  **distance\_measure\_fname**: the distance function name to exploit
     for ranking the simulations, which is implemented in
