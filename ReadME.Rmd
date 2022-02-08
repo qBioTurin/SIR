@@ -239,7 +239,7 @@ colnames(Sensitivity_list) <- c("Tag","Name","Function","Parameter1","Parameter2
 Sensitivity_list
 ```
 
-6. **functions_fname**: an R file storing: 1) the user defined functions to generate instances of the parameters summarized in the *parameters_fname* file, and 2) the functions to compute the distance (or error) between the model output and the reference dataset itself (see *reference_data* and *distance_measure_fname*), to obtain the place or a combination of places from which the PRCCs over the time have to be calculated (see *target_value_fname*).
+6. **functions_fname**: an R file storing: 1) the user defined functions to generate instances of the parameters summarized in the *parameters_fname* file, and 2) the functions to compute the distance (or error) between the model output and the reference dataset itself (see *reference_data* and *distance_measure*), to obtain the place or a combination of places from which the PRCCs over the time have to be calculated (see *target_value*).
 An example is given by *FunctionSensitivity.R*, where three functions are implemented: *init_generation*, *target*, and *mse*.
 *init_generation* introduced in *FunctionsSensitivity_list.csv* file is defined in order to sample the initial number of susceptible between *min_init* and *max_init*, and fixing the number of infected and recovered to 1 and 0 respectively. 
 
@@ -288,7 +288,7 @@ mse<-function(reference, output)
 }
 ```
 
-7. **target_value_fname**: the function name to exploit for obtaining the PRCCs, which is implemented in *functions_fname*;
+7. **target_value**: the function name to exploit for obtaining the PRCCs, which is implemented in *functions_fname*;
 8. **reference_data**: a csv file storing the data to be compared with the simulations' result. In *reference_data.csv* we report the SIR evolution starting with 100 susceptible, one infected and zero recovered, with a recovery and infection rates equals to 0.04 and 0.004 respectively. Notice that the **reference_data**'s rows must correspond to the time serie variables (in our example: Susceptible, Infected and Recovered) , and so the columns the corresponding values at a specific time.
 
 ```{r, echo= FALSE}
@@ -298,9 +298,9 @@ row.names(a) <- paste0("TimeStep",1:length(a$Time))
 a[1:7,]
 ```
 
-9. **distance_measure_fname**: the distance function name to exploit for ranking the simulations, which is implemented in *functions_fname*;
+9. **distance_measure**: the distance function name to exploit for ranking the simulations, which is implemented in *functions_fname*;
 
-Let us observe that: (i) *model.sensitivity* exploits also the parallel processing capabilities, and (ii) if the user is not interested on the ranking calculation then the **distance_measure_fname** and **reference_data** are not necessary and can be omitted.
+Let us observe that: (i) *model.sensitivity* exploits also the parallel processing capabilities, and (ii) if the user is not interested on the ranking calculation then the **distance_measure** and **reference_data** are not necessary and can be omitted.
 
 ```{r, linewidth = 80,eval=FALSE}
 
@@ -595,7 +595,7 @@ row.names(a) <- paste0("TimeStep",1:length(a$Time))
 a[1:7,]
 ```
 
-5. **distance_measure_fname**: the distance function name to exploit for ranking the simulations, which is implemented in *functions_fname*;
+5. **distance_measure**: the distance function name to exploit for ranking the simulations, which is implemented in *functions_fname*;
 6. **f_time**: the final solution time, for instance 10 weeks (70 days);
 7. **s_time**: the time step defining the frequency at which explicit estimates for the system values are desired, in this case it could be set to 1 day;
 8. **ini_v**: Initial values for the parameters to be optimized.

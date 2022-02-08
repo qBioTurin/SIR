@@ -296,16 +296,15 @@ decide to vary the initial marking using the following function
     functions to generate instances of the parameters summarized in the
     *parameters\_fname* file, and 2) the functions to compute the
     distance (or error) between the model output and the reference
-    dataset itself (see *reference\_data* and
-    *distance\_measure\_fname*), to obtain the place or a combination of
-    places from which the PRCCs over the time have to be calculated (see
-    *target\_value\_fname*). An example is given by
-    *FunctionSensitivity.R*, where three functions are implemented:
-    *init\_generation*, *target*, and *mse*. *init\_generation*
-    introduced in *FunctionsSensitivity\_list.csv* file is defined in
-    order to sample the initial number of susceptible between
-    *min\_init* and *max\_init*, and fixing the number of infected and
-    recovered to 1 and 0 respectively.
+    dataset itself (see *reference\_data* and *distance\_measure*), to
+    obtain the place or a combination of places from which the PRCCs
+    over the time have to be calculated (see *target\_value*). An
+    example is given by *FunctionSensitivity.R*, where three functions
+    are implemented: *init\_generation*, *target*, and *mse*.
+    *init\_generation* introduced in *FunctionsSensitivity\_list.csv*
+    file is defined in order to sample the initial number of susceptible
+    between *min\_init* and *max\_init*, and fixing the number of
+    infected and recovered to 1 and 0 respectively.
 
 <!-- -->
 
@@ -365,8 +364,8 @@ Thus, an example of this function can be as follows:
         return(diff.Infect)
     }
 
-1.  **target\_value\_fname**: the function name to exploit for obtaining
-    the PRCCs, which is implemented in *functions\_fname*;
+1.  **target\_value**: the function name to exploit for obtaining the
+    PRCCs, which is implemented in *functions\_fname*;
 2.  **reference\_data**: a csv file storing the data to be compared with
     the simulations’ result. In *reference\_data.csv* we report the SIR
     evolution starting with 100 susceptible, one infected and zero
@@ -387,13 +386,12 @@ Thus, an example of this function can be as follows:
     #> TimeStep6    5  94.63085 5.817282 0.55186756
     #> TimeStep7    6  92.05065 8.121037 0.82831385
 
-1.  **distance\_measure\_fname**: the distance function name to exploit
-    for ranking the simulations, which is implemented in
-    *functions\_fname*;
+1.  **distance\_measure**: the distance function name to exploit for
+    ranking the simulations, which is implemented in *functions\_fname*;
 
 Let us observe that: (i) *model.sensitivity* exploits also the parallel
 processing capabilities, and (ii) if the user is not interested on the
-ranking calculation then the **distance\_measure\_fname** and
+ranking calculation then the **distance\_measure** and
 **reference\_data** are not necessary and can be omitted.
 
 
@@ -417,7 +415,7 @@ ranking calculation then the **distance\_measure\_fname** and
     #> 
     #> 
     #> Docker ID is:
-    #>  5aa4dee3814a 
+    #>  4599165d1b85 
     #> .....
     #> 
     #> 
@@ -658,8 +656,8 @@ distance provided by the user (**distance\_fname**).
     #> 
     #> 
     #> Docker ID is:
-    #>  b15e03e24e18 
-    #> ........
+    #>  090eae087a7d 
+    #> .......
     #> 
     #> 
     #> Docker exit status: 0
@@ -782,9 +780,8 @@ Thus, these three functions are defined as follows:
     #> TimeStep6    5  94.63085 5.817282 0.55186756
     #> TimeStep7    6  92.05065 8.121037 0.82831385
 
-1.  **distance\_measure\_fname**: the distance function name to exploit
-    for ranking the simulations, which is implemented in
-    *functions\_fname*;
+1.  **distance\_measure**: the distance function name to exploit for
+    ranking the simulations, which is implemented in *functions\_fname*;
 2.  **f\_time**: the final solution time, for instance 10 weeks (70
     days);
 3.  **s\_time**: the time step defining the frequency at which explicit
