@@ -345,8 +345,8 @@ source("./Rfunction/SensitivityPlot.R")
 
 pl = SensitivityPlot(folder = "SIR_sensitivity/")
 
-pl$TrajS
 pl$TrajI
+pl$TrajS
 pl$TrajR
 pl$Points
 ```

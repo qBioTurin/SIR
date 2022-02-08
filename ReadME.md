@@ -417,7 +417,7 @@ ranking calculation then the **distance\_measure\_fname** and
     #> 
     #> 
     #> Docker ID is:
-    #>  db45ecc77789 
+    #>  5aa4dee3814a 
     #> .....
     #> 
     #> 
@@ -658,8 +658,8 @@ distance provided by the user (**distance\_fname**).
     #> 
     #> 
     #> Docker ID is:
-    #>  f3a926d48b9d 
-    #> .......
+    #>  b15e03e24e18 
+    #> ........
     #> 
     #> 
     #> Docker exit status: 0
