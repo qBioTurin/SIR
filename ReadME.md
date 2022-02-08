@@ -417,7 +417,7 @@ ranking calculation then the **distance\_measure\_fname** and
     #> 
     #> 
     #> Docker ID is:
-    #>  cc9ba9e55878 
+    #>  db45ecc77789 
     #> .....
     #> 
     #> 
@@ -658,8 +658,8 @@ distance provided by the user (**distance\_fname**).
     #> 
     #> 
     #> Docker ID is:
-    #>  2b38409d1a5f 
-    #> ........
+    #>  f3a926d48b9d 
+    #> .......
     #> 
     #> 
     #> Docker exit status: 0
@@ -896,12 +896,17 @@ the diffusion process.
     remaining columns represent the input parameters needed by the
     functions defined in the third column.
 
-<img src="./Images/modelAnlaysis.png" width="50%" />
+<!-- -->
 
-This function solves the system given a specific parameters
-configuration which is passed through the function parameter,
-*parameters\_fname*. In details, we split in half the *Infection* rate
-(from 0.0004 to 0.0002).
+    Functions_list_ModelAnalysis<-read.csv("Input/Functions_list_ModelAnalysis.csv", header=FALSE,sep=";")
+    colnames(Functions_list_ModelAnalysis) <- c("Tag","Name","Function or fixed parameter")
+    Functions_list_ModelAnalysis
+    #>   Tag      Name Function or fixed parameter NA
+    #> 1   m         S                       1e+02 NA
+    #> 2   m         I                       1e+00 NA
+    #> 3   m         R                       0e+00 NA
+    #> 4   c  Recovery                       4e-02 NA
+    #> 5   c Infection                       4e-03 NA
 
     ## How to generate the plots
 
@@ -966,7 +971,15 @@ Stochastic Trajectories considering the I place.
 It is possible to change the place marking directly from the
 *parameters\_fname*:
 
-<img src="./Images/modelAnlaysis2.png" width="50%" />
+    Functions_list_ModelAnalysis<-read.csv("Input/Functions_list_ModelAnalysis2.csv", header=FALSE,sep=";")
+    colnames(Functions_list_ModelAnalysis) <- c("Tag","Name","Function or fixed parameter")
+    Functions_list_ModelAnalysis
+    #>   Tag      Name Function or fixed parameter NA
+    #> 1   m         S                       1e+02 NA
+    #> 2   m         I                       5e+00 NA
+    #> 3   m         R                       0e+00 NA
+    #> 4   c  Recovery                       4e-02 NA
+    #> 5   c Infection                       4e-03 NA
 
 # References
 
