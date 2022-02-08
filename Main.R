@@ -4,7 +4,7 @@ library(epimod)
 #downloadContainers()
 
 start_time <- Sys.time()
-model_generation(net_fname = "./Net/SIR.PNPRO")
+model.generation(net_fname = "./Net/SIR.PNPRO")
 end_time <- Sys.time()-start_time
 
 ###  Sensitivity analysis
@@ -13,80 +13,47 @@ end_time <- Sys.time()-start_time
 # execution time 4 mins
 
 start_time <- Sys.time()
-sensitivity<-sensitivity_analysis(n_config = 100,
-                                  parameters_fname = "Input/Functions_list.csv", 
-                                  solver_fname = "Net/SIR.solver",
-                                  reference_data = "Input/reference_data.csv",
-                                  distance_measure_fname = "Rfunction/msqd.R" ,
-                                  target_value_fname = "Rfunction/Target.R" ,
-                                  f_time = 7*3, # weeks
-                                  s_time = 1, # days      
-                                  parallel_processors = 2
-                                  )
+sensitivity<-model.sensitivity(n_config = 200,
+                               solver_fname = "Net/SIR.solver",
+                               parameters_fname = "Input/FunctionsSensitivity_list.csv", 
+                               reference_data = "Input/reference_data.csv",
+                               functions_fname = "Rfunction/FunctionSensitivity.R",
+                               distance_measure = "mse" ,
+                               target_value = "target" ,
+                               i_time = 0,
+                               f_time = 7*10, # weeks
+                               s_time = 1, # days  
+                               parallel_processors = 2
+)
 end_time <- Sys.time()-start_time
 
 ##############################
 ## Let draw the trajectories
 ##############################
 source("./Rfunction/SensitivityPlot.R")
-pl
-plS
-plI
-plR
 
+pl = SensitivityPlot(folder = "SIR_sensitivity/")
 
-## Version where only the PRCC is calculated
-# sensitivity<-sensitivity_analysis(n_config = 100,
-#                                   parameters_fname = "Input/Functions_list.csv", 
-#                                   functions_fname = "Rfunction/Functions.R",
-#                                   solver_fname = "Net/SIR.solver",
-#                                   target_value_fname = "Rfunction/Target.R" ,
-#                                   parallel_processors = 1,
-#                                   f_time = 7*10, # weeks
-#                                   s_time = 1 # days
-#                                   )
-
-## Version where only the ranking is calculated
-# sensitivity<-sensitivity_analysis(n_config = 100,
-#                                   parameters_fname = "Input/Functions_list.csv", 
-#                                   functions_fname = "Rfunction/Functions.R",
-#                                   solver_fname = "Net/SIR.solver",
-#                                   reference_data = "Input/reference_data.csv",
-#                                   distance_measure_fname = "Rfunction/msqd.R" ,
-#                                   parallel_processors = 1,
-#                                   f_time = 7*10, # weeks
-#                                   s_time = 1 # days
-#                                   )
-
-## Complete and more complex version where all the parameters for calculating
-## the PRCC and the ranking are considered, and the initial conditions vary too.
-# sensitivity<-sensitivity_analysis(n_config = 100,
-#                                   parameters_fname = "Input/Functions_list2.csv", 
-#                                   functions_fname = "Rfunction/Functions.R",
-#                                   solver_fname = "Net/SIR.solver",
-#                                   reference_data = "Input/reference_data.csv",
-#                                   distance_measure_fname = "Rfunction/msqd.R" ,
-#                                   target_value_fname = "Rfunction/Target.R" ,
-#                                   parallel_processors = 2,
-#                                   f_time = 7*10, # weeks
-#                                   s_time = 1 # days
-#                                   )
+pl$TrajS
+pl$TrajI
+pl$TrajR
+pl$Points
 
 ### Calibration analysis
 # Execution time 30 mins
 start_time <- Sys.time()
-model_calibration(parameters_fname = "Input/Functions_list_Calibration.csv",
+model.calibration(parameters_fname = "Input/Functions_list_Calibration.csv",
                   functions_fname = "Rfunction/FunctionCalibration.R",
                   solver_fname = "Net/SIR.solver",
                   reference_data = "Input/reference_data.csv",
-                  distance_measure_fname = "Rfunction/msqd.R" ,
-                  f_time = 7*3, # weeks
+                  distance_measure = "mse" ,
+                  f_time = 7*10, # weeks
                   s_time = 1, # days
                   # Vectors to control the optimization
-                  ini_v = c(0.4,0.0014),
-                  lb_v = c(0.3, 0.001),
-                  ub_v = c(0.6, 0.002),
-                  max.time = 1
+                  ini_v = c(0.02,0.001),
+                  lb_v = c(0.01, 0.0001),
+                  ub_v = c(0.05, 0.002),
+                  max.time = 2
                 )
 
 end_time <- Sys.time()-start_time
@@ -95,18 +62,20 @@ end_time <- Sys.time()-start_time
 ## Let draw the calibration results
 ##############################
 
-calibration_optim_trace <-read.csv("./results_model_calibration/SIR-calibration_optim-trace.csv",sep = "")
-load("./results_model_calibration/SIR-calibration_optim.RData")
-
 source("Rfunction/CalibrationPlot.R")
-plI
+plots <- calibration.plot(solverName_path = "SIR_calibration/SIR-calibration-1.trace",
+                          reference_path ="Input/reference_data.csv",
+                          print=F)
+plots$plS
+plots$plI
+plots$plR
+
 
 ### Model Analysis
 # Deterministic:
 
-model_analysis(out_fname = "model_analysis",
-               solver_fname = "Net/SIR.solver",
-               parameters_fname = "Input/Functions_list_R0_ModelAnalysis.csv",
+model.analysis(solver_fname = "Net/SIR.solver",
+               parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
                solver_type = "LSODA",
                f_time = 7*10, # weeks
                s_time = 1
@@ -114,21 +83,21 @@ model_analysis(out_fname = "model_analysis",
 
 source("Rfunction/ModelAnalysisPlot.R")
 
-AnalysisPlot = ModelAnalysisPlot(Ref = FALSE,Stoch = F)
+AnalysisPlot = ModelAnalysisPlot(Stoch = F ,print = F,
+                                 trace_path = "./SIR_analysis/SIR-analysis-1.trace")
 AnalysisPlot$plI
 
-model_analysis(out_fname = "model_analysis",
-               solver_fname = "Net/SIR.solver",
-               parameters_fname = "Input/Functions_list_R0_ModelAnalysis.csv",
+model_analysis(solver_fname = "Net/SIR.solver",
+               parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
                solver_type = "SSA",
-               n_run = 5000,
+               n_run = 500,
                parallel_processors = 2,
-               f_time = 7*3, # weeks
+               f_time = 7*10, # weeks
                s_time = 1
 )
 
-AnalysisPlot = ModelAnalysisPlot(Ref = FALSE, Stoch = T)
-
+AnalysisPlot = ModelAnalysisPlot(Stoch = T ,print = F,
+                                 trace_path = "./SIR_analysis/SIR-analysis-1.trace")
 AnalysisPlot$plI
 AnalysisPlot$HistI
 plS

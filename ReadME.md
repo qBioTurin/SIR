@@ -249,19 +249,19 @@ In details, the function *model.sensitivity()* takes in input
     file is defined by three mandatory columns (*which must separeted
     using ;*): (1) a tag representing the parameter type: *i* for the
     complete initial marking (or condition), *m* for the initial marking
-    of a specific place, *e* for a single rate, and *g* for a rate
-    associated with general transitions (Pernice et al. 2019) (the user
-    must define a file name coherently with the one used in the general
-    transitions file); (2) the name of the transition which is varying
-    (this must correspond to name used in the PN draw in GreatSPN
-    editor), if the complete initial marking is considered (i.e., with
-    tag *i*) then by default the name *init* is used; (3) the function
-    used for sampling the value of the variable considered, it could be
-    either a R function or an user-defined function (in this case it has
-    to be implemented into the R script passed through the
+    of a specific place, *c* for a single constant rate, and *g* for a
+    rate associated with general transitions (Pernice et al. 2019) (the
+    user must define a file name coherently with the one used in the
+    general transitions file); (2) the name of the transition which is
+    varying (this must correspond to name used in the PN draw in
+    GreatSPN editor), if the complete initial marking is considered
+    (i.e., with tag *i*) then by default the name *init* is used; (3)
+    the function used for sampling the value of the variable considered,
+    it could be either a R function or an user-defined function (in this
+    case it has to be implemented into the R script passed through the
     *functions\_fname* input parameter). Let us note that the output of
     this function must have size equal to the length of the varying
-    parameter, that is 1 when tags *m*, *e* or *g* are used, and the
+    parameter, that is 1 when tags *m*, *c* or *g* are used, and the
     size of the marking (number of places) when *i* is used. The
     remaining columns represent the input parameters needed by the
     functions defined in the third column. An example is given by the
@@ -271,21 +271,26 @@ In details, the function *model.sensitivity()* takes in input
     distribution on the interval from *min* to *max*. We set *n=1*
     because we must generate one value for each sample.
 
-<img src="./Images/list1.png" width="538" />
+<!-- -->
+
+    #>   Tag         Name Function Parameter1          Parameter2 Parameter3
+    #> 1   c     Recovery    runif        n=1           min = 0.1      max=1
+    #> 2   c    Infection    runif        n=1         min = 0.001   max=0.01
 
 Another example might be *FunctionsSensitivity\_list.csv*, where we
 decide to vary the initial marking using the following function
 *init\_generation* defined in the R script *Functions.R* (see
 *functions\_fname* parameter).
 
-    #>   Tag       Name         Function           Parameter1        Parameter2
-    #> 1   i       init  init_generation  min_init = 10000*.8  max_init = 10000
-    #> 2   e   Recovery            runif                  n=1           min = 0
-    #> 3   e  Infection            runif                  n=1       min = 1e-05
-    #>   Parameter3
-    #> 1           
-    #> 2      max=1
-    #> 3  max=2e-04
+    Sensitivity_list<-read.csv("Input/FunctionsSensitivity_list.csv", header=FALSE,sep=";")
+    colnames(Sensitivity_list) <- c("Tag","Name","Function","Parameter1","Parameter2","Parameter3")
+    Sensitivity_list
+    #>   Tag       Name Function Parameter1 Parameter2 Parameter3
+    #> 1   m          S      100                                 
+    #> 2   m          I        1                                 
+    #> 3   m          R        0                                 
+    #> 4   c   Recovery    runif        n=1    min = 0    max=0.1
+    #> 5   c  Infection    runif        n=1    min = 0    max=0.1
 
 1.  **functions\_fname**: an R file storing: 1) the user defined
     functions to generate instances of the parameters summarized in the
@@ -363,23 +368,24 @@ Thus, an example of this function can be as follows:
 1.  **target\_value\_fname**: the function name to exploit for obtaining
     the PRCCs, which is implemented in *functions\_fname*;
 2.  **reference\_data**: a csv file storing the data to be compared with
-    the simulations’ result. In *reference\_data.csv* we report the
-    number of infected cases evolution starting with 10000 susceptible,
-    one infected and zero recovered, with a recovery and infection rates
-    equals to 0.1428 and 1.428 respectively. Notice that the
-    **reference\_data**’s rows must be the variable time serie, and so
-    the colums the corresponding values at a specific time.
+    the simulations’ result. In *reference\_data.csv* we report the SIR
+    evolution starting with 100 susceptible, one infected and zero
+    recovered, with a recovery and infection rates equals to 0.04 and
+    0.004 respectively. Notice that the **reference\_data**’s rows must
+    correspond to the time serie variables (in our example: Susceptible,
+    Infected and Recovered) , and so the columns the corresponding
+    values at a specific time.
 
 <!-- -->
 
-    #>           Time         I
-    #> TimeStep1    0  3.000000
-    #> TimeStep2    1  4.293673
-    #> TimeStep3    2  6.140960
-    #> TimeStep4    3  8.774355
-    #> TimeStep5    4 12.519415
-    #> TimeStep6    5 17.827326
-    #> TimeStep7    6 25.314077
+    #>           Time         I       NA         NA
+    #> TimeStep1    0 100.00000 1.000000 0.00000000
+    #> TimeStep2    1  99.51983 1.432036 0.04813259
+    #> TimeStep3    2  98.83701 2.046008 0.11698044
+    #> TimeStep4    3  97.87113 2.913683 0.21518618
+    #> TimeStep5    4  96.51503 4.130258 0.35471543
+    #> TimeStep6    5  94.63085 5.817282 0.55186756
+    #> TimeStep7    6  92.05065 8.121037 0.82831385
 
 1.  **distance\_measure\_fname**: the distance function name to exploit
     for ranking the simulations, which is implemented in
@@ -394,36 +400,56 @@ ranking calculation then the **distance\_measure\_fname** and
     ## Simple version where only the transition rates vary.
     sensitivity<-model.sensitivity(n_config = 200,
                                    solver_fname = "Net/SIR.solver",
-                                   parameters_fname = "Input/Functions_list.csv", 
+                                   parameters_fname = "Input/FunctionsSensitivity_list.csv", 
                                    reference_data = "Input/reference_data.csv",
                                    functions_fname = "Rfunction/FunctionSensitivity.R",
                                    distance_measure = "mse" ,
                                    target_value = "target" ,
+                                   i_time = 0,
                                    f_time = 7*10, # weeks
                                    s_time = 1, # days  
                                    parallel_processors = 2
-                                   )
+    )
+
+    #> [1] "[experiment.env_setup] Setting up environment"
+    #> [1] "[experiment.env_setup] Done setting up environment"
+    #> docker run --privileged=true  --user=501:20 --cidfile=dockerID --volume /Users/simonepernice/Desktop/GIT/Modelli_GreatMod/SIR:/home/docker/data -d qbioturin/epimod-sensitivity:1.0.0 Rscript /usr/local/lib/R/site-library/epimod/R_scripts/sensitivity.mngr.R /home/docker/data/SIR_sensitivity/params_SIR-sensitivity.RDS
+    #> 
+    #> 
+    #> Docker ID is:
+    #>  cc9ba9e55878 
+    #> .....
+    #> 
+    #> 
+    #> Docker exit status: 0
 
 Hence, considering the SIR model we can run the *model.sensitivity*
 varying the *Infection* and *Recovery* transitions rates in order to
 characterized their effect on the number of infected individuals.
 
-<img src="./Images/RankI.png" alt="\label{fig:I_traces} The 200 trajectories considering the I place obtained from different parameters configurations." width="576" />
+<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-22-1.png" alt="\label{fig:I_traces} The 200 trajectories considering the I place obtained from different parameters configurations."  />
 <p class="caption">
 The 200 trajectories considering the I place obtained from different
 parameters configurations.
 </p>
 
-<img src="./Images/RankS.png" alt="\label{fig:S_traces}  The 200 trajectories considering the S place obtained from different parameters configurations." width="576" />
+<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-22-2.png" alt="\label{fig:S_traces}  The 200 trajectories considering the S place obtained from different parameters configurations."  />
 <p class="caption">
 The 200 trajectories considering the S place obtained from different
 parameters configurations.
 </p>
 
-<img src="./Images/RankR.png" alt="\label{fig:R_traces}  The 200 trajectories considering the R place obtained from different parameters configuration." width="576" />
+<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-22-3.png" alt="\label{fig:R_traces}  The 200 trajectories considering the R place obtained from different parameters configuration."  />
 <p class="caption">
 The 200 trajectories considering the R place obtained from different
 parameters configuration.
+</p>
+
+<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-22-4.png" alt="\label{fig:ScatterPlot} Scatter plot showing the squared error between the reference data and simulated number of infected. The dark blue points represent the parameters configuration with minimum error."  />
+<p class="caption">
+Scatter plot showing the squared error between the reference data and
+simulated number of infected. The dark blue points represent the
+parameters configuration with minimum error.
 </p>
 
 From the figures , , and , it is possible to observe the different
@@ -436,7 +462,7 @@ parameter (on the y-axis). Each point is colored according to a
 nonlinear gradient function starting from color dark blue (i.e., lower
 value) and moving to color light blue (i.e., higher values). From this
 plot we can observe that lower squared errors are obtained when
-*Recovery* is around 0.13 and *Infection* around 0.00015, thus we can
+*Recovery* is around 0.025 and *Infection* around 0.002, thus we can
 reduce the search space associated with the two parameters around these
 two values.
 
@@ -512,7 +538,7 @@ exploited by the respective function defined in the C++ file, called
 *trasition.cpp*.
 
     #>   Tag       Name                   Function Parameter1 Parameter2 Parameter3
-    #> 1   e   Recovery                      runif        n=1    min = 0      max=1
+    #> 1   c   Recovery                      runif        n=1    min = 0      max=1
     #> 2   g  Infection  InfectionValuesGeneration    min = 0      max=1
 
 Successively, we have to define the *InfectionValuesGeneration* in
@@ -612,20 +638,32 @@ and the reference data is minimized, according to the definition of
 distance provided by the user (**distance\_fname**).
 
 
-    model.calibration(solver_fname = "Net/SIR.solver",
-                      parameters_fname = "Input/Functions_list_Calibration.csv",
+    model.calibration(parameters_fname = "Input/Functions_list_Calibration.csv",
                       functions_fname = "Rfunction/FunctionCalibration.R",
+                      solver_fname = "Net/SIR.solver",
                       reference_data = "Input/reference_data.csv",
                       distance_measure = "mse" ,
-                      i_time = 1,
-                      f_time = 100, # days
-                      s_time = 1, # day
+                      f_time = 7*10, # weeks
+                      s_time = 1, # days
                       # Vectors to control the optimization
-                      ini_v = c(0.035,0.00035),
-                      ub_v = c(0.05, 0.0005),
-                      lb_v = c(0.025, 0.00025),
-                      max.time = 1
-                      )
+                      ini_v = c(0.02,0.001),
+                      lb_v = c(0.01, 0.0001),
+                      ub_v = c(0.05, 0.002),
+                      max.time = 2
+                    )
+
+    #> [1] "[experiment.env_setup] Setting up environment"
+    #> [1] "[experiment.env_setup] Done setting up environment"
+    #> docker run --privileged=true  --user=501:20 --cidfile=dockerID --volume /Users/simonepernice/Desktop/GIT/Modelli_GreatMod/SIR:/home/docker/data -d qbioturin/epimod-calibration:1.0.0 Rscript /usr/local/lib/R/site-library/epimod/R_scripts/calibration.mngr.R /home/docker/data/SIR_calibration/params_SIR-calibration.RDS
+    #> 
+    #> 
+    #> Docker ID is:
+    #>  2b38409d1a5f 
+    #> ........
+    #> 
+    #> 
+    #> Docker exit status: 0
+    #> [1] 0
 
 1.  **solver\_fname**: the file generated by the *model.generation*
     function, that is *SIR.solver*;
@@ -634,25 +672,32 @@ distance provided by the user (**distance\_fname**).
     file is defined by three mandatory columns (*which must separeted
     using ;*): (1) a tag representing the parameter type: *i* for the
     complete initial marking (or condition), *m* for the initial marking
-    of a specific place, *e* for a single rate, and *g* for a rate
-    associated with general transitions (Pernice et al. 2019) (the user
-    must define a file name coherently with the one used in the general
-    transitions file); (2) the name of the transition which is varying
-    (this must correspond to name used in the PN draw in GreatSPN
-    editor), if the complete initial marking is considered (i.e., with
-    tag *i*) then by default the name *init* is used; (3) the function
-    used for sampling the value of the variable considered, it could be
-    either a R function or an user-defined function (in this case it has
-    to be implemented into the R script passed through the
+    of a specific place, *c* for a single constant rate, and *g* for a
+    rate associated with general transitions (Pernice et al. 2019) (the
+    user must define a file name coherently with the one used in the
+    general transitions file); (2) the name of the transition which is
+    varying (this must correspond to name used in the PN draw in
+    GreatSPN editor), if the complete initial marking is considered
+    (i.e., with tag *i*) then by default the name *init* is used; (3)
+    the function used for sampling the value of the variable considered,
+    it could be either a R function or an user-defined function (in this
+    case it has to be implemented into the R script passed through the
     *functions\_fname* input parameter). Let us note that the output of
     this function must have size equal to the length of the varying
-    parameter, that is 1 when tags *m*, *e* or *g* are used, and the
+    parameter, that is 1 when tags *m*, *c* or *g* are used, and the
     size of the marking (number of places) when *i* is used. The
     remaining columns represent the input parameters needed by the
     functions defined in the third column. An example is given by the
     file *Functions\_list\_Calibration.csv*:
 
-<img src="./Images/listCalib.png" width="50%" />
+<!-- -->
+
+    #>   Tag       Name Function or fixed parameter NA
+    #> 1   m          S                         100 NA
+    #> 2   m          I                           1 NA
+    #> 3   m          R                           0 NA
+    #> 4   c   Recovery                fun.recovery NA
+    #> 5   c  Infection               fun.infection NA
 
 where the rates of the *Recovery* and *Infection* transitions can be
 calibrated by using the R functions stored in the R script
@@ -706,7 +751,7 @@ Thus, these three functions are defined as follows:
     mse<-function(reference, output)
     {
         reference[1,] -> times_ref
-        reference[2,] -> infect_ref
+        reference[3,] -> infect_ref
 
         # We will consider the same time points
         Infect <- output[which(output$Time %in% times_ref),"I"]
@@ -719,13 +764,23 @@ Thus, these three functions are defined as follows:
 
 1.  **reference\_data**: a csv file storing the data to be compared with
     the simulations’ result. In *reference\_data.csv* we report the SIR
-    evolution starting with 997 susceptible, three infected and zero
+    evolution starting with 100 susceptible, one infected and zero
     recovered, with a recovery and infection rates equals to 0.04 and
-    0.0004 respectively. Notice that the **reference\_data**’s rows must
-    be the variable time serie, and so the columns the corresponding
+    0.004 respectively. Notice that the **reference\_data**’s rows must
+    correspond to the time serie variables (in our example: Susceptible,
+    Infected and Recovered) , and so the columns the corresponding
     values at a specific time.
 
-<img src="./Images/reference.png" width="50%" />
+<!-- -->
+
+    #>           Time         I       NA         NA
+    #> TimeStep1    0 100.00000 1.000000 0.00000000
+    #> TimeStep2    1  99.51983 1.432036 0.04813259
+    #> TimeStep3    2  98.83701 2.046008 0.11698044
+    #> TimeStep4    3  97.87113 2.913683 0.21518618
+    #> TimeStep5    4  96.51503 4.130258 0.35471543
+    #> TimeStep6    5  94.63085 5.817282 0.55186756
+    #> TimeStep7    6  92.05065 8.121037 0.82831385
 
 1.  **distance\_measure\_fname**: the distance function name to exploit
     for ranking the simulations, which is implemented in
@@ -752,17 +807,17 @@ Thus, these three functions are defined as follows:
     plots$plI
     plots$plR
 
-<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-32-1.png" alt="\label{fig:S_traces_cal}Trajectories considering the S place."  />
+<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-34-1.png" alt="\label{fig:S_traces_cal}Trajectories considering the S place."  />
 <p class="caption">
 Trajectories considering the S place.
 </p>
 
-<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-32-2.png" alt="\label{fig:I_traces_cal} Trajectories considering the I place."  />
+<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-34-2.png" alt="\label{fig:I_traces_cal} Trajectories considering the I place."  />
 <p class="caption">
 Trajectories considering the I place.
 </p>
 
-<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-32-3.png" alt="\label{fig:R_traces_cal} Trajectories considering the R place."  />
+<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-34-3.png" alt="\label{fig:R_traces_cal} Trajectories considering the R place."  />
 <p class="caption">
 Trajectories considering the R place.
 </p>
@@ -772,7 +827,7 @@ error w.r.t. reference trend are plotted. In this case, fixing a maximum
 number of objective function calls, we obtain the following optimal
 value for the two parameters:
 
-    #> [1] 0.0405449227 0.0004925221
+    #> [1] 0.04462931 0.00200000
 
 #### Calibration analysis with general transitions
 
@@ -824,19 +879,19 @@ the diffusion process.
     file is defined by three mandatory columns (*which must separeted
     using ;*): (1) a tag representing the parameter type: *i* for the
     complete initial marking (or condition), *m* for the initial marking
-    of a specific place, *e* for a single rate, and *g* for a rate
-    associated with general transitions (Pernice et al. 2019) (the user
-    must define a file name coherently with the one used in the general
-    transitions file); (2) the name of the transition which is varying
-    (this must correspond to name used in the PN draw in GreatSPN
-    editor), if the complete initial marking is considered (i.e., with
-    tag *i*) then by default the name *init* is used; (3) the function
-    used for sampling the value of the variable considered, it could be
-    either a R function or an user-defined function (in this case it has
-    to be implemented into the R script passed through the
+    of a specific place, *c* for a single constant rate, and *g* for a
+    rate associated with general transitions (Pernice et al. 2019) (the
+    user must define a file name coherently with the one used in the
+    general transitions file); (2) the name of the transition which is
+    varying (this must correspond to name used in the PN draw in
+    GreatSPN editor), if the complete initial marking is considered
+    (i.e., with tag *i*) then by default the name *init* is used; (3)
+    the function used for sampling the value of the variable considered,
+    it could be either a R function or an user-defined function (in this
+    case it has to be implemented into the R script passed through the
     *functions\_fname* input parameter). Let us note that the output of
     this function must have size equal to the length of the varying
-    parameter, that is 1 when tags *m*, *e* or *g* are used, and the
+    parameter, that is 1 when tags *m*, *c* or *g* are used, and the
     size of the marking (number of places) when *i* is used. The
     remaining columns represent the input parameters needed by the
     functions defined in the third column.
@@ -852,12 +907,12 @@ configuration which is passed through the function parameter,
 
     source("Rfunction/ModelAnalysisPlot.R")
 
-    AnalysisPlot = ModelAnalysisPlot(solverName_path = "./SIR_analysis/SIR-analysys-1.trace",
+    AnalysisPlot = ModelAnalysisPlot(trace_path = "./SIR_analysis/SIR-analysys-1.trace",
                                      Stoch = F,
                                      print=F)
     AnalysisPlot$plAll
 
-<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-39-1.png" alt=" Deterministic Trajectory considering all places"  />
+<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-41-1.png" alt=" Deterministic Trajectory considering all places"  />
 <p class="caption">
 Deterministic Trajectory considering all places
 </p>
@@ -891,17 +946,17 @@ behavior can be described by the Master equations.
 
     source("Rfunction/ModelAnalysisPlot.R")
 
-    AnalysisPlot = ModelAnalysisPlot(solverName_path = "./SIR_analysis/SIR-analysis-1.trace",
+    AnalysisPlot = ModelAnalysisPlot(trace_path = "./SIR_analysis/SIR-analysis-1.trace",
                                      Stoch = T)
     AnalysisPlot$plAll
     AnalysisPlot$plAllMean
 
-<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-43-1.png" alt=" Stochastic Trajectories considering the S place."  />
+<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-45-1.png" alt=" Stochastic Trajectories considering the S place."  />
 <p class="caption">
 Stochastic Trajectories considering the S place.
 </p>
 
-<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-43-2.png" alt=" Stochastic Trajectories considering the I place."  />
+<img src="ReadME_files/figure-markdown_strict/unnamed-chunk-45-2.png" alt=" Stochastic Trajectories considering the I place."  />
 <p class="caption">
 Stochastic Trajectories considering the I place.
 </p>

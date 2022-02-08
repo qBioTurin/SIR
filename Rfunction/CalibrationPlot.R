@@ -44,7 +44,7 @@ calibration.plot <- function(solverName_path,reference_path,print=T)
     geom_line(data=traces,
               aes(x=Time,y=I,group=ID,col=ID))+
     geom_line(data=reference,
-              aes(x=V1,y=V2),
+              aes(x=V1,y=V3),
               col="red")+
     theme(axis.text=element_text(size=18),
           axis.title=element_text(size=20,face="bold"),
@@ -58,6 +58,9 @@ calibration.plot <- function(solverName_path,reference_path,print=T)
   plS<-ggplot( )+
     geom_line(data=traces,
               aes(x=Time,y=S,group=ID,col=ID))+
+    geom_line(data=reference,
+              aes(x=V1,y=V2),
+              col="red")+
     theme(axis.text=element_text(size=18),
           axis.title=element_text(size=20,face="bold"),
           legend.text=element_text(size=18),
@@ -70,6 +73,9 @@ calibration.plot <- function(solverName_path,reference_path,print=T)
   plR<-ggplot( )+
     geom_line(data=traces,
               aes(x=Time,y=R,group=ID,col=ID))+
+    geom_line(data=reference,
+              aes(x=V1,y=V4),
+              col="red")+
     theme(axis.text=element_text(size=18),
           axis.title=element_text(size=20,face="bold"),
           legend.text=element_text(size=18),

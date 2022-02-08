@@ -1,2 +1,5 @@
-e; Recovery;  fun.recovery; 
-e; Infection; fun.infection; 
+m;S;100;
+m;I;1;
+m;R;0;
+c; Recovery;  fun.recovery; 
+c; Infection; fun.infection; 

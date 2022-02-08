@@ -35,15 +35,21 @@ SensitivityPlot <-function(rank=T,folder){
                         folder,"/SIR-sensitivity-",
                          x,
                          ".trace"), sep = "")
-                       trace.tmp=data.frame(trace.tmp,ID= x, rank = rank[which(rank[,2]==x),1])
+                       trace.tmp=data.frame(trace.tmp,ID= x,
+                                            rank = rank[which(rank[,2]==paste0("SIR-sensitivity-",
+                                                                               x,
+                                                                               ".trace")),1])
                        return(trace.tmp)
                      })
   
   rank2<-lapply(id.traces,
                 function(x){
-                  recovery<-config[[1]][[x]][[3]]
-                  infection<-config[[2]][[x]][[3]]
-                  rnk.tmp=data.frame(ID=x,distance = rank$measure[which(rank[,2]==x)],rec_rate=recovery, inf_rate=infection)
+                  recovery<-config[[4]][[x]][[3]]
+                  infection<-config[[5]][[x]][[3]]
+                  rnk.tmp=data.frame(ID=x,distance = rank[which(rank[,2]==paste0("SIR-sensitivity-",
+                                                                                 x,
+                                                                                 ".trace")),1],
+                                     rec_rate=recovery, inf_rate=infection)
                   return(rnk.tmp)
                 })
   

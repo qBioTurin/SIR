@@ -11,7 +11,7 @@ fun.infection<-function(optim_v,n)
 mse<-function(reference, output)
 {
   reference[1,] -> times_ref
-  reference[2,] -> infect_ref
+  reference[3,] -> infect_ref
   
   # We will consider the same time points
   Infect <- output[which(output$Time %in% times_ref),"I"]
