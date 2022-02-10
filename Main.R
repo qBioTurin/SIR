@@ -9,7 +9,7 @@ model.analysis("SIR.solver",
                s_time=1)
 
 #Plot the result computed by the model analysis
-#Source the code in ModelAnalysisPlot.R This file can be download here: 
+#Source the code in ModelAnalysisPlot.R This file can be downloaded here: 
 #https://github.com/qBioTurin/SIR/blob/MasterLesson/Rfunction/ModelAnalysisPlot.R
 source("./Rfunction/ModelAnalysisPlot.R")
 #Execute the function ModelAnalysisPlot
