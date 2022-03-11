@@ -1,0 +1,14 @@
+#PLACE  ID
+S_a1	0
+S_a2	1
+I_a1	2
+I_a2	3
+R_a1	4
+R_a2	5
+#TRANSITION  ID
+Infection_v0_a1_v1_a1	0
+Infection_v0_a1_v1_a2	1
+Infection_v0_a2_v1_a1	2
+Infection_v0_a2_v1_a2	3
+Recovery_v0_a1	4
+Recovery_v0_a2	5
