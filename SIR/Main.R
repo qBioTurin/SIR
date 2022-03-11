@@ -4,8 +4,9 @@ downloadContainers()
 model.generation(net_fname = "./Net/SIR.PNPRO")
 
 #Execute model_analysis to derive the model behaviors
-model.analysis("SIR.solver",
-               f_time = 100,
+model.analysis(solver_fname = "SIR.solver",
+							 i_time = 1,
+               f_time = 100, # days
                s_time = 1)
 
 #Plot the result computed by the model analysis
@@ -13,7 +14,9 @@ model.analysis("SIR.solver",
 #https://github.com/qBioTurin/SIR/blob/MasterLesson/Rfunction/ModelAnalysisPlot.R
 source("./Rfunction/ModelAnalysisPlot.R")
 #Execute the function ModelAnalysisPlot
-ModelAnalysisPlot("SIR_analysis/SIR-analysis-1.trace")
+AnalysisPlots = ModelAnalysisPlot("SIR_analysis/SIR-analysis-1.trace",
+																	Stoch = F,
+																	print = T)
 
 
 #Execute model_analysis to derive the model behaviors using SSA
@@ -24,7 +27,7 @@ model.analysis("SIR.solver",
                n_run = 500)
 
 #Execute the function ModelAnalysisPlot
-ModelAnalysisPlot("./SIR_analysis/SIR-analysis-1.trace", Stoch = TRUE)
+AnalysisPlots = ModelAnalysisPlot("./SIR_analysis/SIR-analysis-1.trace", Stoch = TRUE)
 
 
 #Execute model_analysis to derive the model behaviors updating parameters
@@ -34,7 +37,7 @@ model.analysis("SIR.solver",
                parameters_fname = "./Input/Functions_list_ModelAnalysis.csv")
 
 #Execute the function ModelAnalysisPlot
-ModelAnalysisPlot("./SIR_analysis/SIR-analysis-1.trace")
+AnalysisPlots = ModelAnalysisPlot("./SIR_analysis/SIR-analysis-1.trace")
 
 
 #Execute model_analysis to derive the model behaviors using SSA
@@ -46,7 +49,7 @@ model.analysis(solver_fname = "SIR.solver",
                parameters_fname = "./Input/Functions_list_ModelAnalysis.csv")
 
 #Execute the function ModelAnalysisPlot
-ModelAnalysisPlot("./SIR_analysis/SIR-analysis-1.trace", Stoch = TRUE)
+AnalysisPlots = ModelAnalysisPlot("./SIR_analysis/SIR-analysis-1.trace", Stoch = TRUE)
 
 
 #Execute model_calibration to derive those parameter values fitting an input data.
@@ -63,12 +66,11 @@ model.calibration(solver_fname = "./Net/SIR.solver",
                   ini_v = c(0.035,0.00035),
                   ub_v = c(0.05, 0.0005),
                   lb_v = c(0.025, 0.00025),
-                  max.time = 1
-)
+                  max.time = 1)
 
 #Plot the result computed by the model calibration
 #Source the code in CalibrationPlot.R This file can be download here:
 #https://raw.githubusercontent.com/qBioTurin/SIR/MasterLesson/Rfunction/CalibrationPlot.R
 source("./Rfunction/CalibrationPlot.R")
 #Execute the function ModelAnalysisPlot
-calibration.plot("SIR_calibration/SIR","./Input/reference_data.csv")
+CalibrationPlots = calibration.plot("SIR_calibration/SIR", "./Input/reference_data.csv")
