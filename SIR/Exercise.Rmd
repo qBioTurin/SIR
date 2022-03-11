@@ -87,7 +87,7 @@ The R package *devtools* has to be installed to run *epimod*:
 ```{r,eval=F}
 install.packages("devtools")
 library(devtools)
-install_github("https://github.com/qBioTurin/epimod", ref="master", dependencies=TRUE)
+install_github("https://github.com/qBioTurin/epimod", ref = "master", dependencies = TRUE)
 ``` 
 
 Now we need to include the *epimod* library:
@@ -166,7 +166,7 @@ model.analysis(solver_fname = "SIR.solver",
 2. **i_time**: the initial solution time, for instance day 1;
 2. **f_time**: the final solution time, for instance 100 days;
 3. **s_time**: the time step defining the frequency at which explicit estimates for the system values are desired, in this case it could be set to 1 day.
-\newpage
+
 ```{r, eval=F}
 ## How to generate the plots
 source("Rfunction/ModelAnalysisPlot.R")
@@ -181,28 +181,28 @@ It is also possible to simulate the stochastic behavior of the system exploiting
 ```{r, linewidth=80,eval=F }
 model.analysis(solver_fname = "SIR.solver",
                solver_type = "SSA",
-               n_run = 500,
-               parallel_processors = 2,
                i_time = 1,
                f_time = 100, # days
-               s_time = 1)
+               s_time = 1,
+               n_run = 500,
+               parallel_processors = 2)
 ```
 
 1. **solver_type**: type of solver to use;
-2. **n_run**: number of stochastic simulations to run.
+2. **n_run**: number of stochastic simulations to run;
+3. **parallel_processors**: number of processors to use for parallelize the simulations.
 
 ```{r, eval=F}
 ## How to generate the plots
-
 source("Rfunction/ModelAnalysisPlot.R")
-
 AnalysisPlot = ModelAnalysisPlot(solverName_path = "./SIR_analysis/SIR-analysys-1.trace",
-                                 Stoch = T)
+                                 Stoch = T,
+                                 print = F)
 AnalysisPlot$plAll
 AnalysisPlot$plAllMean
 ```
 
-```{r, fig.height = 4, fig.width = 6, fig.align = "center", fig.pos='H', fig.cap=c(" Stochastic Trajectories considering the S place."," Stochastic Trajectories considering the I place."  ), echo = F,message=F, results='hide'}
+```{r, fig.height = 3, fig.width = 5, fig.align = "center", fig.pos='H', fig.cap=c("Stochastic trajectories.", "Average of the stochastic trajectories."  ), echo = F,message=F, results='hide'}
 
 model.analysis(solver_fname = "Net/SIR.solver",
                solver_type = "SSA",
@@ -210,35 +210,31 @@ model.analysis(solver_fname = "Net/SIR.solver",
                parallel_processors = 2,
                i_time = 1,
                f_time = 100, # days
-               s_time = 1
-)
+               s_time = 1)
+
 source("Rfunction/ModelAnalysisPlot.R")
 AnalysisPlot = ModelAnalysisPlot(solverName_path = "./SIR_analysis/SIR-analysis-1.trace",
                                  Stoch = T,
-                                 print=F)
+                                 print = F)
 AnalysisPlot$plAll
 AnalysisPlot$plAllMean
 ```
 
 A further feature is given by the possibility to change the transition rates without modifying the Petri Net model, but directly from R.
 
-
 ```{r, linewidth=80,eval=F }
-
 model.analysis(solver_fname = "SIR.solver",
                parameters_fname = "Functions_list_ModelAnalysis.csv",
                i_time = 1,
                f_time = 100, # days
-               s_time = 1,
-               )
-
+               s_time = 1)
 ```
 
 1. **parameters_fname**: a textual file in which the  parameters to be studied are listed associated with their range of variability.
-This file is defined by three mandatory columns (*which must separeted using ;*): (1) a tag representing the parameter type: *i* for the complete initial marking (or condition), *m* for the initial marking of a specific place, *c* for a single constant rate, and *g* for a rate associated with general transitions [@Pernice19] (the user must define a file name coherently with the one used in the  general transitions file); (2) the name of the transition which is varying (this must correspond to name used in the PN draw in GreatSPN editor), if the complete initial marking is considered (i.e., with tag *i*) then by default the name *init*  is used; (3) the function used for sampling the value of the variable considered, it could be either a R function or an user-defined function (in this case it has to be implemented into the R script passed through the *functions_fname* input parameter). Let us note that the output of this function must have size equal to the length of the varying parameter, that is 1 when tags *m*, *c* or *g* are used, and the size of the marking (number of places) when *i* is used.
-The remaining columns represent the input parameters needed by the functions defined in the third column. 
+This file is defined by three mandatory columns (*which must separeted using ;*): (1) a tag representing the parameter type: *i* for the complete initial marking (or condition), *m* for the initial marking of a specific place, *c* for a single constant rate, and *g* for a rate associated with general transitions [@Pernice19] (the user must define a file name coherently with the one used in the  general transitions file); (2) the name of the transition which is varying (this must correspond to the name used in the PN draw in GreatSPN editor), if the complete initial marking is considered (i.e., with tag *i*) then by default the name *init*  is used; (3) the function used for sampling the value of the variable considered, it could be either a R function or an user-defined function (in this case it has to be implemented into the R script passed through the *functions_fname* input parameter). Let us note that the output of this function must have size equal to the length of the varying parameter, that is 1 when tags *m*, *c* or *g* are used, and the size of the marking (number of places) when *i* is used.
+The remaining columns represent the input parameters needed by the functions defined in the third column.
 
-```{r, echo= FALSE,out.width="50%"}
+```{r, echo= FALSE,out.width="50%", fig.align="center"}
 knitr::include_graphics("./Images/modelAnlaysis.png")
 ```
 
@@ -249,25 +245,23 @@ model.analysis(solver_fname = "Net/SIR.solver",
                parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
                i_time = 1,
                f_time = 100, # days
-               s_time = 1
-)
+               s_time = 1)
 ```
 
 ```{r, eval=F}
 ## How to generate the plots
-
 source("Rfunction/ModelAnalysisPlot.R")
-
 AnalysisPlot = ModelAnalysisPlot(solverName_path = "./SIR_analysis/SIR-analysys-1.trace",
                                  Stoch = F,
-                                 print=F)
+                                 print = F)
 AnalysisPlot$plAll
 ```
 
-```{r, fig.height = 4, fig.width = 6, fig.align = "center", fig.pos='H', fig.cap=c(" Deterministic Trajectory considering all places"  ), echo = F,message=F, results='hide'}
+```{r, fig.height = 4, fig.width = 6, fig.align = "center", fig.pos='H', fig.cap=c("Deterministic Trajectory considering all places"  ), echo = F,message=F, results='hide'}
 source("Rfunction/ModelAnalysisPlot.R")
 AnalysisPlot = ModelAnalysisPlot(solverName_path = "./SIR_analysis/SIR-analysis-1.trace",
-                                 Stoch = F,print=F)
+                                 Stoch = F,
+																 print = F)
 AnalysisPlot$plAll
 ```
 
@@ -275,47 +269,42 @@ Considering the stochastic simulations, we can obtain the following results.
 
 ```{r, linewidth=80,eval=F }
 model.analysis(solver_fname = "SIR.solver",
-               parameters_fname = "Functions_list_ModelAnalysis.csv",
+               parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
                solver_type = "SSA",
-               n_run = 500,
-               parallel_processors = 2,
                i_time = 1,
                f_time = 100, # days
-               s_time = 1
-)
+               s_time = 1,
+               n_run = 500,
+               parallel_processors = 2)
 ```
 
 ```{r, linewidth=80,echo=F,message=F, results='hide'}
 model.analysis(solver_fname = "Net/SIR.solver",
                parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
                solver_type = "SSA",
-               n_run = 500,
-               parallel_processors = 2,
+               i_time = 1,
                f_time = 100, # days
-               s_time = 1
-)
+               s_time = 1,
+							 n_run = 500,
+               parallel_processors = 2)
 ```
-
-1. **solver_type**: type of solver to use;
-2. **n_run**: number of stochastic simulations to run.
 
 ```{r, eval=F}
 ## How to generate the plots
-
 source("Rfunction/ModelAnalysisPlot.R")
-
 AnalysisPlot = ModelAnalysisPlot(solverName_path = "./SIR_analysis/SIR-analysis-1.trace",
-                                 Stoch = T)
+                                 Stoch = T,
+                                 print = F)
 AnalysisPlot$plAll
 AnalysisPlot$plAllMean
 ```
 
-```{r, fig.height = 4, fig.width = 6, fig.align = "center", fig.pos='H', fig.cap=c(" Stochastic Trajectories considering the S place."," Stochastic Trajectories considering the I place."  ), echo = F,message=F, results='hide'}
+```{r, fig.height = 3, fig.width = 5, fig.align = "center", fig.pos='H', fig.cap=c("Stochastic trajectories.","Average of the stochastic trajectories."  ), echo = F,message=F, results='hide'}
 
 source("Rfunction/ModelAnalysisPlot.R")
 AnalysisPlot = ModelAnalysisPlot(solverName_path = "./SIR_analysis/SIR-analysis-1.trace",
                                  Stoch = T,
-                                 print=F)
+                                 print = F)
 AnalysisPlot$plAll
 AnalysisPlot$plAllMean
 ```
@@ -324,22 +313,21 @@ AnalysisPlot$plAllMean
 
 It is possible to change the place marking directly from the  *parameters_fname*:
 
-```{r, echo= FALSE,out.width="50%"}
+```{r, echo= FALSE,out.width="50%", fig.align="center"}
 knitr::include_graphics("./Images/modelAnlaysis2.png")
 ```
 
 
 ### Calibration analysis
 
-The aim of this phase is to optimize the fit of the simulated behavior to the reference data by adjusting the parameters associated with both Recovery and Infection transitions. This step is performed by the function *model.calibration()*, characterized by the solution of an optimization problem in which the distance between the simulated data and the reference data is minimized, according to the definition of distance provided by the user (**distance_fname**).
+The aim of this phase is to optimize the fit of the simulated behavior to the reference data by adjusting the parameters associated with both *Recovery* and *Infection transitions*. This step is performed by the function *model.calibration()*, characterized by the solution of an optimization problem in which the distance between the simulated data and the reference data is minimized, according to the definition of distance provided by the user (**distance_fname**).
 
 ```{r, linewidth = 80,eval=FALSE }
-
-model.calibration(solver_fname = "SIR.solver",
-                  parameters_fname = "Input/Functions_list_Calibration.csv",
-                  functions_fname = "Rfunction/FunctionCalibration.R",
-                  reference_data = "Input/reference_data.csv",
-                  distance_measure = "mse" ,
+model.calibration(solver_fname = "./Net/SIR.solver",
+                  parameters_fname = "./Input/Functions_list_Calibration.csv",
+                  functions_fname = "./Rfunction/FunctionCalibration.R",
+                  reference_data = "./Input/reference_data.csv",
+                  distance_measure = "mse",
                   i_time = 1,
                   f_time = 100, # days
                   s_time = 1, # day
@@ -347,78 +335,75 @@ model.calibration(solver_fname = "SIR.solver",
                   ini_v = c(0.035,0.00035),
                   ub_v = c(0.05, 0.0005),
                   lb_v = c(0.025, 0.00025),
-                  max.time = 1
-                  )
-
+                  max.time = 1)
 ```
 
 1. **solver_fname**: the \emph{.solver} file generated by the *model.generation* function, that is *SIR.solver*;
 2. **parameters_fname**: a textual file in which the  parameters to be studied are listed associated with their range of variability.
-This file is defined by three mandatory columns (*which must separeted using ;*): (1) a tag representing the parameter type: *i* for the complete initial marking (or condition), *m* for the initial marking of a specific place, *c* for a single constant rate, and *g* for a rate associated with general transitions [@Pernice19] (the user must define a file name coherently with the one used in the  general transitions file); (2) the name of the transition which is varying (this must correspond to name used in the PN draw in GreatSPN editor), if the complete initial marking is considered (i.e., with tag *i*) then by default the name *init*  is used; (3) the function used for sampling the value of the variable considered, it could be either a R function or an user-defined function (in this case it has to be implemented into the R script passed through the *functions_fname* input parameter). Let us note that the output of this function must have size equal to the length of the varying parameter, that is 1 when tags *m*, *c* or *g* are used, and the size of the marking (number of places) when *i* is used.  The remaining columns represent the input parameters needed by the functions defined in the third column. An example is given by the file *Functions_list_Calibration.csv*: 
-```{r, echo= FALSE,out.width="50%"}
+This file is defined by three mandatory columns (*which must separeted using ;*): (1) a tag representing the parameter type: *i* for the complete initial marking (or condition), *m* for the initial marking of a specific place, *c* for a single constant rate, and *g* for a rate associated with general transitions [@Pernice19] (the user must define a file name coherently with the one used in the  general transitions file); (2) the name of the transition which is varying (this must correspond to the name used in the PN draw in GreatSPN editor), if the complete initial marking is considered (i.e., with tag *i*) then by default the name *init*  is used; (3) the function used for sampling the value of the variable considered, it could be either a R function or an user-defined function (in this case it has to be implemented into the R script passed through the *functions_fname* input parameter). Let us note that the output of this function must have size equal to the length of the varying parameter, that is 1 when tags *m*, *c* or *g* are used, and the size of the marking (number of places) when *i* is used.
+The remaining columns represent the input parameters needed by the functions defined in the third column. An example is given by the file *Functions_list_Calibration.csv* where the rates of the *Recovery* and *Infection* transitions can be calibrated by using the R functions stored in the R script *functions_fname*:
+```{r, echo= FALSE,out.width="50%", fig.align="center"}
 knitr::include_graphics("./Images/listCalib.png")
 ```
-where the rates of the *Recovery* and *Infection* transitions can be calibrated by using the R functions stored in the R script *functions_fname*;
+
 3. **functions_fname**: an R file storing: 1) the user defined functions to generate instances of the parameters summarized in the *parameters_fname* file, and 2) the function to compute the distance (or error) between the model output and the reference dataset itself. An example is given by *FunctionCalibration.R*, where three functions are implemented:  *fun.recovery*, *fun.infection*, and *mse*. The first two are introduced in *Functions_list_Calibration.csv* file, and they are defined in order to return the value (or a linear transformation) of the vector of the unknown parameters generated from the optimization algorithm, namely **optim_v**, whose size is equal to number of parameters in *parameters_fname*. Let us note that the output of these functions must return a value for each input parameter. For instance, to calibrate the transition rates associated with *Recovery* and *Infection*, the functions recovery and infection have to be defined, returning just the corresponding value from the vector **optim_v**, where **optim_v[1]** = *“Recovery rate”*, **optim_v[2]** = *“Infection rate”*, since we do not want to change the vector generated from the optimization algorithm. The order of values in **optim_v** is given by the order of the parameters in *parameters_fname*. Finally, the function *mse* defines the distance measure (based on the squared error distance) between the reference data and the simulations; it takes in input only the reference data (defined in *reference_data.csv*), and the *simulation output* with the following structure:
-```{r, echo= FALSE}
-a<-read.csv("Results/SIR_calibration/SIR-calibration-10.trace", header=TRUE,sep=" ")
+```{r, echo=FALSE}
+a <- read.csv("Results/SIR_calibration/SIR-calibration-10.trace", header = TRUE, sep = " ")
 a[1:7,]
 ```
-Thus, these three functions are defined as follows: 
-```{r, linewidth = 80 }
-
-fun.recovery<-function(optim_v)
+\hskip 0.8cm Thus, these three functions are defined as follows:
+```{r, linewidth = 80}
+fun.recovery <- function(optim_v)
 {
     return(optim_v[1])
 }
 
-fun.infection<-function(optim_v)
+fun.infection <- function(optim_v)
 {
     return(optim_v[2])
 }
 
-mse<-function(reference, output)
+mse <- function(reference, output)
 {
     reference[1,] -> times_ref
     reference[2,] -> infect_ref
 
     # We will consider the same time points
-    Infect <- output[which(output$Time %in% times_ref),"I"]
-    infect_ref <- infect_ref[which( times_ref %in% output$Time)]
+    Infect <- output[which(output$Time %in% times_ref), "I"]
+    infect_ref <- infect_ref[which(times_ref %in% output$Time)]
 
-    diff.Infect <- 1/length(times_ref)*sum(( Infect - infect_ref )^2 )
+    diff.Infect <- 1/length(times_ref) * sum((Infect - infect_ref)^2)
 
     return(diff.Infect)
 }
 ```
-4. **reference_data**: a csv file storing the data to be compared with the simulations' result. In *reference_data.csv* we report the SIR evolution starting with 997 susceptible, three infected and zero recovered, with a recovery and infection rates equals to 0.04 and 0.0004 respectively. Notice that the **reference_data**'s rows must be the variable time serie, and so the columns the corresponding values at a specific time.
 
-```{r, echo= FALSE,out.width="50%"}
+4. **reference_data**: a csv file storing the data to be compared with the simulations' results. In *reference_data.csv* we report the SIR evolution starting with 997 susceptible, three infected and zero recovered, with a recovery and infection rates equals to 0.04 and 0.0004 respectively. Notice that the **reference_data**'s rows must be the variable time serie, and so the columns the corresponding values at a specific time.
+
+```{r, echo= FALSE,out.width="50%", fig.align="center"}
 knitr::include_graphics("./Images/reference.png")
 ```
 
 5. **distance_measure_fname**: the distance function name to exploit for ranking the simulations, which is implemented in *functions_fname*;
-6. **f_time**: the final solution time, for instance 10 weeks (70 days);
-7. **s_time**: the time step defining the frequency at which explicit estimates for the system values are desired, in this case it could be set to 1 day;
-8. **ini_v**: Initial values for the parameters to be optimized.
-9. **lb_v, ub_v**: Vectors with length equal to the number of parameters which are varying. Lower/Upper bounds for each parameter.
-10. **max_time**: maximum running time.
-
+6. **i_time**: the initial solution time, for instance day 1;
+7. **f_time**: the final solution time, for instance 10 weeks (70 days);
+8. **s_time**: the time step defining the frequency at which explicit estimates for the system values are desired, in this case it could be set to 1 day;
+9. **ini_v**: initial values for the parameters to be optimized.
+10. **lb_v, ub_v**: vectors with length equal to the number of parameters which are varying. Lower/Upper bounds for each parameter.
+11. **max_time**: maximum running time.
 
 ```{r,eval=F}
 # How to generate the plots
-
 source("Rfunction/CalibrationPlot.R")
-
 plots <- calibration.plot(solverName_path = "./SIR_calibration/SIR-calibration-1.trace",
-                          reference_path ="reference_data.csv")
+                          reference_path = "reference_data.csv")
 plots$plS
 plots$plI
 plots$plR
 
 ```
 
-```{r, fig.height = 4, fig.width = 6, fig.align = "center", fig.pos='H', fig.cap=c("\\label{fig:S_traces_cal}Trajectories considering the S place.","\\label{fig:I_traces_cal} Trajectories considering the I place.", "\\label{fig:R_traces_cal} Trajectories considering the R place."  ), echo = F}
+```{r, fig.height = 3, fig.width = 5, fig.align = "center", fig.pos='H', fig.cap=c("\\label{fig:S_traces_cal}Trajectories considering the S place.","\\label{fig:I_traces_cal} Trajectories considering the I place.", "\\label{fig:R_traces_cal} Trajectories considering the R place."  ), echo = F}
 source("Rfunction/CalibrationPlot.R")
 plots <- calibration.plot(solverName_path = "Results/SIR_calibration/SIR-calibration-1.trace",
                           reference_path ="Input/reference_data.csv",
@@ -429,7 +414,7 @@ plots$plR
 
 ```
 
-In figures \ref{fig:I_traces_cal},\ref{fig:S_traces_cal} and \ref{fig:R_traces_cal} the trajectories with color depending on the squared error w.r.t. reference trend are plotted.
+In Figures \ref{fig:S_traces_cal}, \ref{fig:I_traces_cal} and \ref{fig:R_traces_cal} the trajectories with color depending on the squared error w.r.t. reference trend are plotted.
 In this case, fixing a maximum number of objective function calls, we obtain the following optimal value for the two parameters:
 ```{r, echo= FALSE}
 load("./Results/SIR_calibration/SIR-calibration_optim.RData")
