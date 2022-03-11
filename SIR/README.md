@@ -1,4 +1,4 @@
-#SIR
+## SIR
 In this branch we describe how to use the new general modeling framework GreatMod, especially the R library *epimod*, to study one of the simplest epidemiological system: SIR.
 
 The purpose of this guide is to help beginner users to fraternize with the R packaage *epimod*, by following an easy step by step guide. We suggest to download the pdf called "Exercise.pdf" by clicking on it and successively on the button "download".
