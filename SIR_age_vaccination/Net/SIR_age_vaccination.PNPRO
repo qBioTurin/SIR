@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- This project file has been saved by the New GreatSPN Editor, v.100 --><project name="SIR_age_vaccination" version="121">
+  <gspn name="Vaccination" show-fluid-cmd="false" show-timed-cmd="false" view-rates="false" zoom="125">
+    <nodes>
+      <color-class definition="a{1..2}" name="age" x="4.5" y="4.0"/>
+      <color-var domain="age" name="v0" x="4.9375" y="6.0"/>
+      <place domain="age" label-x="2.0" label-y="0.0" marking="50&lt;a1&gt;+50&lt;a2&gt;" name="S" superpos-x="-3.0" superpos-y="2.0" x="30.0" y="11.0"/>
+      <place domain="age" label-x="-0.5" label-y="-1.5" marking="1&lt;a1&gt;" name="I" superpos-x="-2.5" superpos-y="-1.5" x="40.0" y="11.0"/>
+      <place domain="age" label-x="-0.5" name="R" x="51.0" y="11.0"/>
+      <transition delay="If[v0 == a1 &amp;&amp; v1==a1, rate11,If[(v0 == a1 &amp;&amp; v1==a2)||(v0 == a2 &amp;&amp; v1==a1) , rate12,rate22]] " delay-x="-13.5" delay-y="3.5" label-x="0.5" label-y="2.0" name="Infection" nservers-x="0.5" type="EXP" x="35.55" y="17.0"/>
+      <transition delay-x="-0.5" delay-y="-1.5" label-y="2.0" name="Recovery" nservers-x="0.5" type="EXP" x="45.55" y="11.0"/>
+      <transition delay="If[v0 == a1, rate1, rate2]" delay-x="1.5" delay-y="0.0" name="Vaccination" nservers-x="0.5" rotation="1.5707963267948966" type="EXP" x="30.55" y="4.0"/>
+      <place domain="age" label-x="-3.5" label-y="0.0" name="V" x="25.0" y="4.0"/>
+      <transition delay-x="-0.5" delay-y="2.0" label-x="-4.5" label-y="0.0" name="ImmunityLoss" nservers-x="0.5" type="EXP" x="25.55" y="11.0"/>
+      <color-var domain="age" name="v1" x="10.9375" y="6.0"/>
+      <constant consttype="REAL" name="rate11" value="1.5" x="4.6875" y="8.0"/>
+      <constant consttype="REAL" name="rate12" value="0.45" x="4.75" y="10.0"/>
+      <constant consttype="REAL" name="rate22" value="0.89" x="4.8125" y="12.0"/>
+      <constant consttype="REAL" name="rate1" value="1.5" x="4.75" y="15.0"/>
+      <constant consttype="REAL" name="rate2" value="3" x="4.75" y="17.0"/>
+      <text-box bold="true" border-color="#000000" fill-color="none" height="1.0" name="__textBox0" shadow="true" shape="ROUND_RECTANGLE" text-color="#000000" x="4.0" y="2.5">Vaccination
+</text-box>
+    </nodes>
+    <edges>
+      <arc head="Infection" kind="INPUT" mult="&lt;v0&gt;" mult-k="0.9856445312500001" mult-x="-1.1136054602804997" mult-y="-0.7215680948803982" tail="S">
+        <point x="31.009765625" y="18.0146484375"/>
+      </arc>
+      <arc head="Infection" kind="INPUT" mult="&lt;v1&gt;" mult-k="0.57685546875" mult-x="-1.0003903475314928" mult-y="-0.5" tail="I">
+        <point x="36.0" y="12.0"/>
+      </arc>
+      <arc head="I" kind="OUTPUT" mult="&lt;v0&gt;+&lt;v1&gt;" mult-k="1.1901367187500003" mult-x="2.5" mult-y="-3.2683791640586435E-4" tail="Infection">
+        <point x="41.0" y="18.0"/>
+      </arc>
+      <arc head="Recovery" kind="INPUT" mult="&lt;v0&gt;" mult-x="0.0" mult-y="-0.5" tail="I"/>
+      <arc head="R" kind="OUTPUT" mult="&lt;v0&gt;" mult-x="-0.5" mult-y="-0.5" tail="Recovery"/>
+      <arc head="Vaccination" kind="INPUT" mult="&lt;v0&gt;" mult-y="0.0" tail="S"/>
+      <arc head="V" kind="OUTPUT" mult="&lt;v0&gt;" mult-x="0.0" mult-y="-0.5" tail="Vaccination"/>
+      <arc head="ImmunityLoss" kind="INPUT" mult="&lt;v0&gt;" mult-y="0.0" tail="V"/>
+      <arc head="S" kind="OUTPUT" mult="&lt;v0&gt;" mult-x="-0.5" mult-y="-0.5" tail="ImmunityLoss"/>
+    </edges>
+  </gspn>
+  <measures gspn-name="Vaccination" name="Measures" simplified-UI="false">
+    <assignments/>
+    <greatspn/>
+    <formulas>
+      <formula comment="Basic statistics of the toolchain execution." language="STAT"/>
+    </formulas>
+  </measures>
+</project>
