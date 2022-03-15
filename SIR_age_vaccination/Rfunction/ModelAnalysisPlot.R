@@ -35,7 +35,7 @@ ModelAnalysisPlot=function(trace_path,Stoch = F,print=T){
 					legend.position="right",
 					legend.key.size = unit(1.3, "cm"),
 					legend.key.width = unit(1.3,"cm") )+
-		labs(x="Days", y="I", color="Age class", title="Infected (Age stratification + Vaccination)")
+		labs(x="Days", y="I", color="Age class")
 
 	plS<-ggplot( )+
 		geom_line(data=trace,
@@ -163,12 +163,14 @@ ModelAnalysisPlot=function(trace_path,Stoch = F,print=T){
 
 		plI<-plI+
 			geom_line(data=meanTrace,
-								aes(x=Time,y=I_a1,col="Mean"),
-								linetype="dashed")+
+								aes(x=Time,y=I_a1),
+								color="black",
+								linetype="dotted")+
 			geom_line(data=meanTrace,
-								aes(x=Time,y=I_a2,col="Mean"),
-								linetype="dashed")+
-			labs(x="Days", y="I",col="")
+								aes(x=Time,y=I_a2),
+								color="black",
+								linetype="dotted")+
+			labs(x="Days", y="I")
 
 		plS<-plS+
 			geom_line(data=meanTrace,

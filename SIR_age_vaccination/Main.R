@@ -1,14 +1,10 @@
 library(epimod)
+downloadContainers()
 
-#downloadContainers()
-
-start_time <- Sys.time()
 model.generation(net_fname = "./Net/SIR_age_vaccination.PNPRO")
-end_time <- Sys.time()-start_time
+
 
 ### Sensitivity analysis
-
-start_time <- Sys.time()
 sensitivity<-model.sensitivity(n_config = 50,
 															 solver_fname = "Net/SIR_age_vaccination.solver",
 															 parameters_fname = "Input/FunctionsSensitivity_list.csv",
@@ -16,13 +12,8 @@ sensitivity<-model.sensitivity(n_config = 50,
 															 f_time = 7*10, # weeks
 															 s_time = 1, # days
 															 parallel_processors = 2)
-end_time <- Sys.time()-start_time
 
-##############################
-## Let draw the trajectories
-##############################
 source("./Rfunction/SensitivityPlot.R")
-
 pl = SensitivityPlot(rank=F, folder = "SIR_age_vaccination_sensitivity/")
 
 pl$TrajS_a1
@@ -36,7 +27,6 @@ pl$TrajV_a2
 
 
 ### Model Analysis
-
 #Deterministic
 model.analysis(solver_fname = "Net/SIR_age_vaccination.solver",
 							 parameters_fname = "Input/FunctionsModelAnalysis_list.csv",
@@ -48,7 +38,9 @@ source("Rfunction/ModelAnalysisPlot.R")
 
 AnalysisPlot = ModelAnalysisPlot(Stoch = F, print = F,
 																 trace_path = "./SIR_age_vaccination_analysis/SIR_age_vaccination-analysis-1.trace")
+AnalysisPlot$plI <- AnalysisPlot$plI + labs(title="SIR with age stratification and vaccination (deterministic)")
 AnalysisPlot$plI
+ggsave("./Images/I_analysis_SIR_age_vaccination_LSODA.png", dpi = 300)
 
 #Stochastic
 model.analysis(solver_fname = "Net/SIR_age_vaccination.solver",
@@ -63,4 +55,6 @@ source("Rfunction/ModelAnalysisPlot.R")
 
 AnalysisPlot = ModelAnalysisPlot(Stoch = T, print = F,
 																 trace_path = "./SIR_age_vaccination_analysis/SIR_age_vaccination-analysis-1.trace")
+AnalysisPlot$plI <- AnalysisPlot$plI + labs(title="SIR with age stratification and vaccination (stochastic)")
 AnalysisPlot$plI
+ggsave("./Images/I_analysis_SIR_age_vaccination_SSA.png", dpi = 300)
