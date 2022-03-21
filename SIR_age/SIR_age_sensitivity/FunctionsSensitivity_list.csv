@@ -1,6 +1,0 @@
-c; Recovery_v0_a1; 0.04;
-c; Recovery_v0_a2; 0.04;
-c; Infection_v0_a1_v1_a1; runif; n=1; min = 0; max=0.1
-c; Infection_v0_a1_v1_a2; runif; n=1; min = 0; max=0.001
-c; Infection_v0_a2_v1_a1; runif; n=1; min = 0; max=0.001
-c; Infection_v0_a2_v1_a2; runif; n=1; min = 0; max=0.0001
