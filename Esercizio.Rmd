@@ -96,7 +96,7 @@ library(epimod)
 Then, the following function must be used to download all the docker images used by *epimod*:
 
 ```{r,eval=F}
-downloadContainers()
+downloadContainers(tag = "2.0.0")
 ``` 
 
 ## Something to know
@@ -454,6 +454,17 @@ In this case, fixing a maximum number of objective function calls, we obtain the
 ```{r, echo= FALSE}
 load("./Results/SIR_calibration/SIR-calibration_optim.RData")
 ret$par
+```
+
+
+
+## General functions as transition rates
+
+It is possible to associate the transitions with a costumed mathematical function (continuous function) from the GreatSPN editor tool directly. For instance, if we consider a SIR model with a dynamic size of the population, which can be modeled by simply adding a mortality event connected to the infected place I.
+Then, we can manually write the velocity formula of the infection transition dependent by the size of the population in the *Rate* slot of the transition proprieties, as represented in figure \ref{fig:SIR_PN_gen}. In particular, the notation "#IDplace" is used to represent the marking of specific place with ID defined as "IDplace".
+
+```{r , echo = FALSE, message=FALSE, fig.align='center', fig.cap='\\label{fig:SIR_PN_gen} Petri Net representation of the SIR model.', fig.pos='H',out.width="90%"}
+knitr::include_graphics("./Images/SIRgeneralPNPRO.png")
 ```
 
 

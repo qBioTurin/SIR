@@ -1,5 +1,5 @@
 library(epimod)
-downloadContainers()
+downloadContainers(tag = "2.0.0")
 
 model.generation(net_fname = "./Net/SIR.PNPRO")
 

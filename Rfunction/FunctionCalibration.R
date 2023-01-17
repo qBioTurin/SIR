@@ -1,11 +1,11 @@
 fun.recovery<-function(optim_v,n)
 {
-  return(optim_v[1])
+  return(optim_v[n])
 }
 
 fun.infection<-function(optim_v,n)
 {
-  return(optim_v[2])
+  return(optim_v[n])
 }
 
 mse<-function(reference, output)

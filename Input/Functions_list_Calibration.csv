@@ -1,2 +1,2 @@
-c; Recovery;  fun.recovery; 
-c; Infection; fun.infection; 
+c; Recovery;  fun.recovery; n = 1 ;
+c; Infection; fun.infection; n = 2;
