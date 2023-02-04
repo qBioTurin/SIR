@@ -2,9 +2,6 @@ if(!require(ggplot2)) install.packages("ggplot2")
 if(!require(dplyr)) install.packages("dplyr")
 if(!require(patchwork)) install.packages("patchwork")
 
-library(dplyr)
-library(ggplot2)
-library(patchwork)
 
 ModelAnalysisPlot=function(solverName_path,Stoch = F,print=T,ncol=2){
   
