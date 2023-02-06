@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- This project file has been saved by the New GreatSPN Editor, v.100 --><project name="New project" version="121">
+  <gspn name="PetriNet" zoom="400">
+    <nodes>
+      <place marking="1087045" name="S" x="1.0" y="3.0"/>
+      <place marking="257274" name="I" x="16.0" y="3.0"/>
+      <place marking="212662" name="R" x="30.0" y="3.0"/>
+      <transition delay="1.80e-08" delay-x="-1.0" delay-y="2.0" name="Infection" nservers-x="0.5" type="EXP" x="5.55" y="3.0"/>
+      <transition delay="1.80e-2" delay-x="-0.5" delay-y="2.0" name="Recovery" nservers-x="0.5" type="EXP" x="23.55" y="3.0"/>
+      <place name="Exposed" x="10.0" y="8.0"/>
+      <transition delay="2.38e-01" name="BecomeInf" nservers-x="0.5" type="EXP" x="16.55" y="8.0"/>
+    </nodes>
+    <edges>
+      <arc head="Infection" kind="INPUT" tail="S"/>
+      <arc head="Infection" kind="INPUT" mult-k="0.48642578125" tail="I"/>
+      <arc head="I" kind="OUTPUT" mult-k="1.02783203125" mult-x="0.4998298257265432" mult-y="0.6668665837218093" tail="Infection">
+        <point x="12.5" y="4.0"/>
+      </arc>
+      <arc head="Recovery" kind="INPUT" tail="I">
+        <point x="21.0" y="2.5"/>
+      </arc>
+      <arc head="R" kind="OUTPUT" tail="Recovery">
+        <point x="27.5" y="2.5"/>
+      </arc>
+      <arc head="Exposed" kind="OUTPUT" tail="Infection"/>
+      <arc head="BecomeInf" kind="INPUT" tail="Exposed">
+        <point x="13.5" y="9.0"/>
+      </arc>
+      <arc head="I" kind="OUTPUT" tail="BecomeInf"/>
+    </edges>
+  </gspn>
+  <measures gspn-name="PetriNet" name="Measures" simplified-UI="false">
+    <assignments/>
+    <greatspn/>
+    <formulas>
+      <formula comment="Basic statistics of the toolchain execution." language="STAT"/>
+      <formula comment="All the basic Petri net measures" language="ALL"/>
+    </formulas>
+  </measures>
+</project>
