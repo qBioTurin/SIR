@@ -105,12 +105,12 @@ ModelAnalysisPlot=function(solverName_path,Stoch = F,print=T,ncol=2){
       print(all_plot_line_mean)
       print(all_plot_hist)
     }
-    return(c(all_plot_line_mean,all_plot_hist))
+    return(c(l_plot_line_mean,l_plot_hist))
   }else{
     all_plot_line=wrap_plots(l_plot_line,ncol = ncol)
     if (print){
       print( all_plot_line)
     }
-    return(all_plot_line)
+    return(l_plot_line)
   }
 }
