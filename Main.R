@@ -4,7 +4,7 @@ install_github("https://github.com/qBioTurin/epimod", ref="master",force = T)
 
 #To load epimod and prepare containers
 library(epimod)
-downloadContainers(tag = "2.0.0")
+downloadContainers()
 
 #Before executing the following command please set the correct working directory
 #Create the underlying models
