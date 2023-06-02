@@ -1,6 +1,13 @@
+#To install epimod
+library(devtools)
+install_github("https://github.com/qBioTurin/epimod", ref="master",force = T)
+
+#To load epimod and prepare containers
 library(epimod)
 downloadContainers(tag = "2.0.0")
 
+#Before executing the following command please set the correct working directory
+#Create the underlying models
 model.generation(net_fname = "./Net/SIR.PNPRO")
 
 #Execute model_analysis to derive the model behaviors
@@ -67,3 +74,7 @@ model.calibration(solver_fname = "./Net/SIR.solver",
 source("./Rfunction/CalibrationPlot.R")
 #Execute the function ModelAnalysisPlot
 calibration.plot("SIR_calibration/SIR","./Input/reference_data.csv")
+
+#To see the results from calibration
+load("~/SIR/SIR_calibration/SIR-calibration_optim.RData")
+ret$par
