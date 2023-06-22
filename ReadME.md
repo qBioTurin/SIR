@@ -129,6 +129,73 @@ PN model as a file with extension *.PNPRO* .
 Petri Net representation of the SIR model.
 </p>
 
+To define a general transition there are other feature which allow o read 
+from a file constants in list or matrix form. The functionalities are:
+
+
+
+-   *FromList*: This function allows to extract a single constant from a list
+of real numbers separated by a newline and written on a file. It takes as parameters 1) a string which
+ represents the name of the file and 2) an integer representing
+the index of the position of the constant in the file.
+
+        BirthPredator:
+        3
+        5
+        16
+        8
+        9
+        1
+
+        FromList["BirthPredator", 1] = 5
+
+
+-   *FromTable*: This function allows to extract a single constant from a
+real number matrix written on a file where each number is separated
+by a comma and each row is separated by a newline. It takes as
+parameters 1) a string which represents the name of the file 2) an integer, the index of the row where
+the number is located, 3) a second integer that is the index of the column.
+
+
+        BirthPredator:
+        3,9,13
+        5,56,7		
+        16,0,1		
+        8,90,23	
+        1,44,88	
+
+        FromTable["BirthPredator", 3,2] = 23
+
+    
+-    *FromTimeTable*: This function is similar to FromTable, but it works
+on a file which contain a numeric matrix where the first column symbolize
+a list of time steps as a list of numbers sorting in ascending order. The
+function takes as parameters 1) a string which represents the name
+of the file 2) an integer that is the time we are interested in and based on which
+we will extract the index of the row. The exact value of time
+may not be present in the first column so the index of the row is
+selected as the position of the first value lower than the one passed
+as parameter. 3) An integer representing the index of the
+column of the matrix.
+
+            BirthPredator:
+            3,9,13
+            5,56,7		
+            8,0,1		
+            16,90,23	
+            33,44,88	
+
+            FromTimeTable["BirthPredator", 1,1] = 13
+            FromTimeTable["BirthPredator", 10,1] = 1	
+            FromTimeTable["BirthPredator", 50,1] = 88
+
+<img src="./Images/SIRPNPRO.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model." width="1327" />
+<p class="caption">
+Petri Net with Infection's rate defined with FromList
+</p>
+  
+
+
 Having constructed the model, the generation of both the stochastic (the
 Continuous Time Markov Chain) and deterministic (ODEs) processes
 underlying the model is implemented by the *model.generation()*
@@ -158,7 +225,7 @@ written by the user on a file. It takes as parameters:
 As showed in figure , where the delay (i.e., the rate) is set as **Call["InfectionFunction"]**
 
 
-<img src="./Images/SIRPNPRO_FNen.png" alt="\label{fig:SIR_PN_general} Petri Net representation of the SIR model, modelling the Infection transition as a general transition." width="1625" />
+<img src="./Images/SIR_Call_readme.png" alt="\label{fig:SIR_PN_general} Petri Net representation of the SIR model, modelling the Infection transition as a general transition." width="1625" />
 <p class="caption">
 Petri Net representation of the SIR model, modelling the Infection
 transition as a general transition.
