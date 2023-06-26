@@ -191,7 +191,7 @@ column of the matrix.
 
 <img src="./Images/SIR_FromList.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model." width="1327" />
 <p class="caption">
-Petri Net with Infection's rate defined with FromList
+Petri Net with Infection's rate defined with FromList.
 </p>
   
 
@@ -218,7 +218,7 @@ instruction **Call**. This function allows one to call an external function
 written by the user on a file. It takes as parameters:
 <ol>
   <li>A string which is the name of the function.</li>
-  <li>A set of real numbers; they will be passed to the function as its parameters
+  <li>A set of real numbers; they will be passed to the function as its parameters.
       in the same order they are written, and the user can write as many values he needs</li>
 </ol> 
 
