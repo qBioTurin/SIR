@@ -139,7 +139,7 @@ of real numbers separated by a newline and written on a file. It takes as parame
  represents the name of the file and 2) an integer representing
 the index of the position of the constant in the file.
 
-        BirthPredator:
+        SIRFile:
         3
         5
         16
@@ -147,7 +147,7 @@ the index of the position of the constant in the file.
         9
         1
 
-        FromList["BirthPredator", 1] = 5
+        FromList["SIRFile", 1] = 5
 
 
 -   *FromTable*: This function allows to extract a single constant from a
@@ -157,14 +157,14 @@ parameters 1) a string which represents the name of the file 2) an integer, the 
 the number is located, 3) a second integer that is the index of the column.
 
 
-        BirthPredator:
+        SIRFile:
         3,9,13
         5,56,7		
         16,0,1		
         8,90,23	
         1,44,88	
 
-        FromTable["BirthPredator", 3,2] = 23
+        FromTable["SIRFile", 3,2] = 23
 
     
 -    *FromTimeTable*: This function is similar to FromTable, but it works
@@ -178,18 +178,18 @@ selected as the position of the first value lower than the one passed
 as parameter. 3) An integer representing the index of the
 column of the matrix.
 
-            BirthPredator:
+            SIRFile:
             3,9,13
             5,56,7		
             8,0,1		
             16,90,23	
             33,44,88	
 
-            FromTimeTable["BirthPredator", 1,1] = 13
-            FromTimeTable["BirthPredator", 10,1] = 1	
-            FromTimeTable["BirthPredator", 50,1] = 88
+            FromTimeTable["SIRFile", 1,1] = 13
+            FromTimeTable["BSIRFile", 10,1] = 1	
+            FromTimeTable["SIRFile", 50,1] = 88
 
-<img src="./Images/SIRPNPRO.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model." width="1327" />
+<img src="./Images/SIR_FromList.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model." width="1327" />
 <p class="caption">
 Petri Net with Infection's rate defined with FromList
 </p>
@@ -225,7 +225,7 @@ written by the user on a file. It takes as parameters:
 As showed in figure , where the delay (i.e., the rate) is set as **Call["InfectionFunction"]**
 
 
-<img src="./Images/SIR_Call_readme.png" alt="\label{fig:SIR_PN_general} Petri Net representation of the SIR model, modelling the Infection transition as a general transition." width="1625" />
+<img src="./Images/SIR_call_readme.png" alt="\label{fig:SIR_PN_general} Petri Net representation of the SIR model, modelling the Infection transition as a general transition." width="1625" />
 <p class="caption">
 Petri Net representation of the SIR model, modelling the Infection
 transition as a general transition.
