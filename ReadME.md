@@ -280,7 +280,7 @@ column of the matrix.
             FromTimeTable["BSIRFile", 10,1] = 1	
             FromTimeTable["SIRFile", 50,1] = 88
 
-<img src="./Images/SIR_FromList.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model." width="1327" />
+<img src="./Images/SIR_FromList2.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model." width="1327" />
 <p class="caption">
 Petri Net with Infection's rate defined with FromList.
 </p>
