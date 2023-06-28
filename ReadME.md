@@ -49,6 +49,7 @@ commands must be executed.
 The R package *devtools* has to be installed to run *epimod*:
 
     install.packages("devtools")
+    install.packages("fdatest")
     library(devtools)
     install_github("qBioTurin/epimod", dependencies=TRUE)
 
@@ -145,13 +146,19 @@ Notice that *model.generation()* might take as input parameter a C++
 file defining the functions characterizing the behavior of general
 transitions (Pernice et al. 2019), namely *transitions\_fname*. For
 instance, if we want to define the transition *Infection* as a general
-transition then we have to set the transition as *General* and name the
-corresponding rate name as **FN:NameGeneralFN**, where in this case the
-*NameGeneralFN* is **InfectionFunction**. As showed in figure , where
-the transition type is set to *General* and the delay (i.e., the rate)
-to **FN:InfectionFunction**.
+transition then we have to set as the rate of the transition the
+instruction **Call**. This function allows one to call an external function
+written by the user on a file. It takes as parameters:
+<ol>
+  <li>A string which is the name of the function.</li>
+  <li>A set of real numbers; they will be passed to the function as its parameters.
+      in the same order they are written, and the user can write as many values he needs</li>
+</ol> 
 
-<img src="./Images/SIRPNPRO_FNen.png" alt="\label{fig:SIR_PN_general} Petri Net representation of the SIR model, modelling the Infection transition as a general transition." width="1625" />
+As showed in figure , where the delay (i.e., the rate) is set as **Call["InfectionFunction"]**
+
+
+<img src="./Images/SIR_call_readme.png" alt="\label{fig:SIR_PN_general} Petri Net representation of the SIR model, modelling the Infection transition as a general transition." width="1625" />
 <p class="caption">
 Petri Net representation of the SIR model, modelling the Infection
 transition as a general transition.
@@ -207,10 +214,76 @@ where the fixed input parameters are:
     (*Trans\[T\].InPlaces\[k\].Card*). (2) ….
 -   **const int T**: index of the firing transition;
 -   **const double& time** : time.
+-   Any **additional parameters** must be added at the end of these standards, in the same order as written within the call.
 
-Notice that the function name has to correspond to the rate name
-associated with the general transition, in this case
+Notice that the function name has to correspond to the function name
+passed inside the **Call**, in this case
 *InfectionFunction*.
+
+There are other feature to define the rate of a general transition, which allow to read 
+a constant from a file where the numbers are written in list or matrix form. The functionalities are:
+
+
+
+-   *FromList*: This function allows to extract a single constant from a list
+of real numbers separated by a newline and written on a file. It takes as parameters 1) a string which
+ represents the name of the file and 2) an integer representing
+the index of the position of the constant in the file.
+
+        SIRFile:
+        3
+        5
+        16
+        8
+        9
+        1
+
+        FromList["SIRFile", 1] = 5
+
+
+-   *FromTable*: This function allows to extract a single constant from a
+real number matrix written on a file where each number is separated
+by a comma and each row is separated by a newline. It takes as
+parameters 1) a string which represents the name of the file 2) an integer, the index of the row where
+the number is located, 3) a second integer that is the index of the column.
+
+
+        SIRFile:
+        3,9,13
+        5,56,7		
+        16,0,1		
+        8,90,23	
+        1,44,88	
+
+        FromTable["SIRFile", 3,2] = 23
+
+    
+-    *FromTimeTable*: This function is similar to FromTable, but it works
+on a file which contain a numeric matrix where the first column symbolize
+a list of time steps as a list of numbers sorting in ascending order. The
+function takes as parameters 1) a string which represents the name
+of the file 2) an integer that is the time we are interested in and based on which
+we will extract the index of the row. The exact value of time
+may not be present in the first column so the index of the row is
+selected as the position of the first value lower than the one passed
+as parameter. 3) An integer representing the index of the
+column of the matrix.
+
+            SIRFile:
+            3,9,13
+            5,56,7		
+            8,0,1		
+            16,90,23	
+            33,44,88	
+
+            FromTimeTable["SIRFile", 1,1] = 13
+            FromTimeTable["BSIRFile", 10,1] = 1	
+            FromTimeTable["SIRFile", 50,1] = 88
+
+<img src="./Images/SIR_FromList2.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model." width="1327" />
+<p class="caption">
+Petri Net with Infection's rate defined with FromList.
+</p>
 
 Finally, the process can be derived be the *model.generation()* function
 as follow.
