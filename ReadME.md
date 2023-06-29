@@ -118,11 +118,22 @@ are the possible events happening in the system. Variables and events
 variable(s) is (are) affected by a specific event. For more details we
 refer to (Marsan et al. 1995).
 
-Therefore, as represented in figure , we add one place for each variable
+To define the rate of the transition there are different way that differentiate transitions into two groups. 
+
+
+
+
+
+#### Standard Transition
+
+As represented in figure, we add one place for each variable
 of the system (i.e., S, I, and R represent the susceptible, infected,
 and recovered individuals respectively), and one transition for each
-possible event (i.e., *Infection* and *Recovery*). Finally, we save the
-PN model as a file with extension *.PNPRO* .
+possible event (i.e., *Infection* and *Recovery*). At each transition is associated
+a negative exponential distribution which represent the firing rate of the transition, and
+its rate is expressed with the Mass Action law. 
+The rate of the Mass Action can be written directly inside the GUI as shown in the figure.
+Finally, we save the PN model as a file with extension *.PNPRO* .
 
 <img src="./Images/SIRPNPRO.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model." width="1327" />
 <p class="caption">
@@ -142,86 +153,20 @@ derives the processes.
 The binary file *SIR.solver* is generated in which the derived processes
 and the library used for their simulation are packaged.
 
-Notice that *model.generation()* might take as input parameter a C++
-file defining the functions characterizing the behavior of general
-transitions (Pernice et al. 2019), namely *transitions\_fname*. For
-instance, if we want to define the transition *Infection* as a general
-transition then we have to set as the rate of the transition the
-instruction **Call**. This function allows one to call an external function
-written by the user on a file. It takes as parameters:
-<ol>
-  <li>A string which is the name of the function.</li>
-  <li>A set of real numbers; they will be passed to the function as its parameters.
-      in the same order they are written, and the user can write as many values he needs</li>
-</ol> 
+#### More complex transition
 
-As showed in figure , where the delay (i.e., the rate) is set as **Call["InfectionFunction"]**
+There are other feature to define the rate of a transition, apart of the Mass Action.
+
+It is possible to write direclty in the GUI simple expression so that the rate of the exponential 
+distribution will be defined by the general function. These will be general transitions (Pernice et al. 2019).
+The functionalities allow to read a constant from a file
+where the numbers are written in list or matrix form and to directly use the marking of the places.
+Specifically, the avaialable features are:
 
 
-<img src="./Images/SIR_call_readme.png" alt="\label{fig:SIR_PN_general} Petri Net representation of the SIR model, modelling the Infection transition as a general transition." width="1625" />
-<p class="caption">
-Petri Net representation of the SIR model, modelling the Infection
-transition as a general transition.
-</p>
+-    *#*:  This function allows to use the marking value of a place.
 
-Then, we have to properly define a C++ function implementing the
-specific behavior of the transition and save it, for instance in a file
-named *transition.cpp*, which has to be structured as follow:
-
-
-    static double Infection_rate = 1.428;
-
-    double InfectionFunction(double *Value,
-                             map <string,int>& NumTrans,
-                             map <string,int>& NumPlaces,
-                             const vector<string> & NameTrans,
-                             const struct InfTr* Trans,
-                             const int T,
-                             const double& time)
-    {
-
-        // Definition of the function exploited to calculate the rate,
-        // in this case for semplicity we define it throught the Mass Action  law
-     
-        double intensity = 1.0;
-        
-        for (unsigned int k=0; k<Trans[T].InPlaces.size(); k++)
-        {
-            intensity *= pow(Value[Trans[T].InPlaces[k].Id],Trans[T].InPlaces[k].Card);
-        }
-        
-        double rate = Infection_rate * intensity;
-
-        return(rate);
-    }
-
-where the fixed input parameters are:
-
--   **double \*Value**: marking of the Petri Net at time *time*;
--   **map &lt;string,int>& NumTrans**: association between the
-    transition name and the corresponding index of the *NameTrans*
-    vector;
--   **map &lt;string,int>& NumPlaces**: association between the place’s
-    name and the corresponding index of the *Value* vector;
--   **const vector<string> & NameTrans**: transition names;
--   **const struct InfTr\* Trans**: array of *InfTr* structures
-    (implemented in GreatSPN) which is indexed using the transition
-    index. The structure *InfTr* has the following fileds: (1)
-    *InPlaces*: the input places to a transition, which is characterized
-    by the input place index position in the *Value* vector
-    (*Trans\[T\].InPlaces\[k\].Id*) and the arc (linking the *k* place
-    with the *T* transition) molteplicity
-    (*Trans\[T\].InPlaces\[k\].Card*). (2) ….
--   **const int T**: index of the firing transition;
--   **const double& time** : time.
--   Any **additional parameters** must be added at the end of these standards, in the same order as written within the call.
-
-Notice that the function name has to correspond to the function name
-passed inside the **Call**, in this case
-*InfectionFunction*.
-
-There are other feature to define the rate of a general transition, which allow to read 
-a constant from a file where the numbers are written in list or matrix form. The functionalities are:
+          #S * #I * #R
 
 
 
@@ -280,10 +225,92 @@ column of the matrix.
             FromTimeTable["BSIRFile", 10,1] = 1	
             FromTimeTable["SIRFile", 50,1] = 88
 
-<img src="./Images/SIR_FromList2.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model." width="1327" />
+<img src="./Images/SIR_FromFile_place.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model." width="1327" />
 <p class="caption">
-Petri Net with Infection's rate defined with FromList.
+Petri Net with Infection's rate defined with FromList and the marking of the place S.
 </p>
+
+
+
+
+
+
+Notice that *model.generation()* might take as input parameter a C++
+file defining the functions characterizing the behavior of general transitions, namely *transitions\_fname*. For
+instance, if we want to define the transition *Infection* with an external function
+then we have to set as the rate of the transition the
+instruction **Call**. This function allows one to call an external function
+written by the user on a file. It takes as parameters:
+<ol>
+  <li>A string which is the name of the function.</li>
+  <li>A set of real numbers; they will be passed to the function as its parameters.
+      in the same order they are written, and the user can write as many values he needs</li>
+</ol> 
+
+As showed in figure , where the delay (i.e., the rate) is set as **Call["InfectionFunction"]**
+
+
+<img src="./Images/SIR_Call_FromList.png" alt="\label{fig:SIR_PN_general} Petri Net representation of the SIR model, modelling the Infection transition as a general transition." width="1625" />
+<p class="caption">
+Petri Net representation of the SIR model, modelling the Infection
+transition with an external function and the additional parameter as FromList.
+</p>
+
+Then, we have to properly define a C++ function implementing the
+specific behavior of the transition and save it, for instance in a file
+named *transition.cpp*, which has to be structured as follow:
+
+
+    double InfectionFunction(double *Value,
+                             map <string,int>& NumTrans,
+                             map <string,int>& NumPlaces,
+                             const vector<string> & NameTrans,
+                             const struct InfTr* Trans,
+                             const int T,
+                             const double& time,
+                             double Infection_rate)
+    {
+
+        // Definition of the function exploited to calculate the rate,
+        // in this case for semplicity we define it throught the Mass Action  law
+     
+        double intensity = 1.0;
+        
+        for (unsigned int k=0; k<Trans[T].InPlaces.size(); k++)
+        {
+            intensity *= pow(Value[Trans[T].InPlaces[k].Id],Trans[T].InPlaces[k].Card);
+        }
+        
+        double rate = Infection_rate * intensity;
+
+        return(rate);
+    }
+
+where the fixed input parameters are:
+
+-   **double \*Value**: marking of the Petri Net at time *time*;
+-   **map &lt;string,int>& NumTrans**: association between the
+    transition name and the corresponding index of the *NameTrans*
+    vector;
+-   **map &lt;string,int>& NumPlaces**: association between the place’s
+    name and the corresponding index of the *Value* vector;
+-   **const vector<string> & NameTrans**: transition names;
+-   **const struct InfTr\* Trans**: array of *InfTr* structures
+    (implemented in GreatSPN) which is indexed using the transition
+    index. The structure *InfTr* has the following fileds: (1)
+    *InPlaces*: the input places to a transition, which is characterized
+    by the input place index position in the *Value* vector
+    (*Trans\[T\].InPlaces\[k\].Id*) and the arc (linking the *k* place
+    with the *T* transition) molteplicity
+    (*Trans\[T\].InPlaces\[k\].Card*). (2) ….
+-   **const int T**: index of the firing transition;
+-   **const double& time** : time.
+-   Any **additional parameters** must be added at the end of these standards, in the same order as written within the call (in the example the double Infection_rate)
+
+Notice that the function name has to correspond to the function name
+passed inside the **Call**, in this case
+*InfectionFunction*.
+
 
 Finally, the process can be derived be the *model.generation()* function
 as follow.
@@ -481,9 +508,7 @@ ranking calculation then the **distance\_measure** and
                                    s_time = 1, # days  
                                    parallel_processors = 2
     )
-
-    #> [1] "[experiment.env_setup] Setting up environment"
-    #> [1] "[experiment.env_setup] Done setting up environment"
+t] Setting up environment"    #> [1] "[experiment.env_setup] Done setting up environment"
     #> docker run --privileged=true  --user=501:20 --cidfile=dockerID --volume /Users/simonepernice/Desktop/GIT/Modelli_GreatMod/SIR:/home/docker/data -d qbioturin/epimod-sensitivity:1.0.0 Rscript /usr/local/lib/R/site-library/epimod/R_scripts/sensitivity.mngr.R /home/docker/data/SIR_sensitivity/params_SIR-sensitivity.RDS
     #> 
     #> 
@@ -625,78 +650,8 @@ Successively, we have to define the *InfectionValuesGeneration* in
 
 Notice that the value (or values) generated are temporarily saved in a
 file named as the corresponding name in the *Functions\_list*, in this
-case *Infection*. Hence, the file *transition.cpp* has to be modified in
-order to read and use the value generated from the R function
-*InfectionValuesGeneration*. An example of implementation is the
-following, where two functions are defined: (1) *read\_constant()* in
-order to read the generated value, which is associated with the right
-variable, and (2) *init\_data\_structures()* in order to read the file
-only the first time that the function is called.
+case *Infection*.
 
-
-    static double Flag = -1; 
-    static double Infection_rate = 1.428;
-
-    void read_constant(string fname, double& Infection_rate)
-    {
-        ifstream f (fname);
-        string line;
-        if(f.is_open())
-        {
-            int i = 1;
-            while (getline(f,line))
-            {
-                switch(i)
-                {
-                    case 1:
-                        Infection_rate = stod(line);
-                        //cout << "p" << i << ": " << line << "\t" << p1 << endl;
-                        break;
-                }
-                ++i;
-            }
-            f.close();
-        }
-        else
-        {
-            std::cerr<<"\nUnable to open " << fname << 
-                    ": file do not exists\": file do not exists\n";
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    void init_data_structures()
-    {
-        read_constant("./Infection", Infection_rate);
-        Flag = 1; 
-
-    }
-
-    double InfectionFunction(double *Value,
-                             map <string,int>& NumTrans,
-                             map <string,int>& NumPlaces,
-                             const vector<string> & NameTrans,
-                             const struct InfTr* Trans,
-                             const int T,
-                             const double& time)
-    {
-
-        // Definition of the function exploited to calculate the rate,
-        // in this case for semplicity we define it throught the Mass Action  law
-     
-        if( Flag == -1)   init_data_structures();
-     
-        double intensity = 1.0;
-        
-        for (unsigned int k=0; k<Trans[T].InPlaces.size(); k++)
-        {
-            intensity *= pow(Value[Trans[T].InPlaces[k].Id],Trans[T].InPlaces[k].Card);
-        }
-        
-        double rate = Infection_rate * intensity;
-
-        return(rate);
-    }
 
 ### Calibration analysis
 
