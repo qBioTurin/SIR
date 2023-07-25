@@ -228,7 +228,7 @@ as parameter.
             Time step: 10
             FromTimeTable["SIRFile",1] = 1
             Time step: 50
-            FromTimeTable["SIRFile", 50,0] = 44
+            FromTimeTable["SIRFile",0] = 44
 
 <img src="./Images/SIR_FromFile_place.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model." width="1327" />
 <p class="caption">
