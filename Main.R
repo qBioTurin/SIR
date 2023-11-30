@@ -32,7 +32,7 @@ end_time <- Sys.time()-start_time
 ##############################
 source("./Rfunction/SensitivityPlot.R")
 
-pl = SensitivityPlot(folder = "SIR_sensitivity/")
+pl = SensitivityPlot(folder = "SIR_sensitivity/", scd_folder = "SIR_analysis/")
 
 pl$TrajS
 pl$TrajI
@@ -85,9 +85,9 @@ source("Rfunction/ModelAnalysisPlot.R")
 
 AnalysisPlot = ModelAnalysisPlot(Stoch = F ,print = F,
                                  trace_path = "./SIR_analysis/SIR-analysis-1.trace")
-AnalysisPlot$plI
+AnalysisPlot$plAll
 
-model_analysis(solver_fname = "Net/SIR.solver",
+model.analysis(solver_fname = "Net/SIR.solver",
                parameters_fname = "Input/Functions_list_ModelAnalysis.csv",
                solver_type = "SSA",
                n_run = 500,
@@ -98,6 +98,6 @@ model_analysis(solver_fname = "Net/SIR.solver",
 
 AnalysisPlot = ModelAnalysisPlot(Stoch = T ,print = F,
                                  trace_path = "./SIR_analysis/SIR-analysis-1.trace")
-AnalysisPlot$plI
-AnalysisPlot$HistI
-plS
+
+AnalysisPlot$plAll
+AnalysisPlot$plAllMean 
