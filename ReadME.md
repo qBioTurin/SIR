@@ -207,12 +207,14 @@ the number is located, 3) a second integer that is the index of the column.
 on a file which contain a numeric matrix where the first column symbolize
 a list of time steps as a list of numbers sorting in ascending order. The
 function takes as parameters 1) a string which represents the name
-of the file 2) an integer that is the time we are interested in and based on which
+of the file 2) An integer representing the index of the
+column of the matrix, which goes from 0 to n-2 where n is the total number of columns.
+The *i-th* time step representing the index of the row
+we are interested in is automatically passed inside the process as an integer; thanks to it
 we will extract the index of the row. The exact value of time
 may not be present in the first column so the index of the row is
 selected as the position of the first value lower than the one passed
-as parameter. 3) An integer representing the index of the
-column of the matrix.
+as parameter.
 
             SIRFile:
             3,9,13
@@ -221,9 +223,12 @@ column of the matrix.
             16,90,23	
             33,44,88	
 
-            FromTimeTable["SIRFile", 1,1] = 13
-            FromTimeTable["BSIRFile", 10,1] = 1	
-            FromTimeTable["SIRFile", 50,1] = 88
+            Time step: 1
+            FromTimeTable["SIRFile",1] = 13
+            Time step: 10
+            FromTimeTable["SIRFile",1] = 1
+            Time step: 50
+            FromTimeTable["SIRFile",0] = 44
 
 <img src="./Images/SIR_FromFile_place.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model." width="1327" />
 <p class="caption">
