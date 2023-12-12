@@ -45,7 +45,7 @@ calibration.plot <- function(solverName_path,reference_path,print=T)
               aes(x=Time,y=I,group=ID,col=ID))+
     geom_line(data=reference,
               aes(x=V1,y=V2),
-              col="red")+
+              col="red",linetype="dashed")+
     theme(axis.text=element_text(size=18),
           axis.title=element_text(size=20,face="bold"),
           legend.text=element_text(size=18),
