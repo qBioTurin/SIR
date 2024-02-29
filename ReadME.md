@@ -232,6 +232,8 @@ selected as the position of the first value lower.
 Petri Net with Infection's rate defined with FromList and the marking of the place S.
 </p>
 
+The file is written inside the docker and the name and the values inside it are defined and written using the .csv in input and
+the R functions. This will be better explained in the next sessions.
 
 
 
@@ -637,7 +639,7 @@ exploited by the respective function defined in the C++ file, called
 
     #>   Tag       Name                   Function Parameter1 Parameter2 Parameter3
     #> 1   c   Recovery                      runif        n=1    min = 0      max=1
-    #> 2   g  Infection  InfectionValuesGeneration    min = 0      max=1
+    #> 2   g  InfectionFile  InfectionValuesGeneration    min = 0      max=1
 
 Successively, we have to define the *InfectionValuesGeneration* in
 *Functions.R*.
@@ -652,7 +654,7 @@ Successively, we have to define the *InfectionValuesGeneration* in
 
 Notice that the value (or values) generated are temporarily saved in a
 file named as the corresponding name in the *Functions\_list*, in this
-case *Infection*.
+case *InfectionFile*.
 
 
 ### Calibration analysis
