@@ -224,7 +224,7 @@ selected as the position of the first value lower.
 
             
             If the time of the execution has value 1 then FromTimeTable["SIRFile", 1] = 13
-            If the time of the execution has value 10 then FromTimeTable["BSIRFile",1] = 1	
+            If the time of the execution has value 10 then FromTimeTable["SIRFile",1] = 1	
             If the time of the execution has value 50 then FromTimeTable["SIRFile",1] = 88
 
 <img src="./Images/SIR_FromFile_place.png" alt="\label{fig:SIR_PN} Petri Net representation of the SIR model." width="1327" />
