@@ -323,6 +323,25 @@ as follow.
     model.generation(net_fname = "./Net/SIR_generalFN.PNPRO",
                      transitions_fname = "./Cpp/transition.cpp")
 
+
+#### General transition
+
+With the new expansion of the GreatMod modeling framework it is now possible to associate the firing delay
+of the transitions not only to the exponential distribution, but also to general distribution. An example
+can be seen in the image below.
+
+To define a transition as *general* simply place it in the gui and select the type general from the drop-down menu.
+Now you must associate a general distribution from the ones avaiable in the tool, that are:
+
+- Uniform (representated inside the GUI like Uniform[a,b])
+- Binomial (representated inside the GUI like Binomial[a,b])
+- Gamma (representated inside the GUI like Earlang[a,b]) 
+- Dirac (representated inside the GUI like I[a])
+- Truncated exponential (representated inside the GUI like TruncatedExp[a])
+
+
+
+
 ### Sensitivity analysis
 
 The second step is represented by the sensitivity analysis, in which the
