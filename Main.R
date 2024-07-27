@@ -101,3 +101,22 @@ AnalysisPlot = ModelAnalysisPlot(Stoch = T ,print = F,
 
 AnalysisPlot$plAll
 AnalysisPlot$plAllMean 
+
+##using the general distribution - example
+
+model.generation(net_fname = "./Net/SIR_generalFN.PNPRO")
+
+model.analysis(solver_fname = "./SIR_generalFN.solver",
+               solver_type = "SSA",
+               n_run = 500,
+               parallel_processors = 2,
+               f_time = 7*10, # weeks
+               s_time = 1
+)
+
+AnalysisPlot = ModelAnalysisPlot(Stoch = T ,print = F,
+                                  trace_path = "./SIR_generalFN_analysis/SIR_generalFN-analysis-1.trace")
+                                 
+AnalysisPlot$plAll
+AnalysisPlot$plAllMean 
+                                 

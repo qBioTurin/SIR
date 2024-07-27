@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- This project file has been saved by the New GreatSPN Editor, v.100 --><project name="New project" version="121">
-  <gspn name="PetriNet">
+  <gspn name="PetriNet" zoom="200">
     <nodes>
-      <place marking="10000" name="S" x="6.0" y="3.0"/>
+      <place marking="300" name="S" x="6.0" y="3.0"/>
       <place marking="1" name="I" x="16.0" y="3.0"/>
       <place name="R" x="30.0" y="3.0"/>
-      <transition delay="FN:InfectionFunction" delay-x="-3.5" delay-y="2.5" name="Infection" type="GEN" x="10.55" y="3.0"/>
+      <transition delay="TruncatedExp[1,1428]" delay-x="-3.5" delay-y="3.0" name="Infection" type="GEN" x="10.55" y="3.0"/>
       <transition delay="0.1428571" delay-x="-0.5" delay-y="2.0" name="Recovery" nservers-x="0.5" type="EXP" x="23.55" y="3.0"/>
     </nodes>
     <edges>
