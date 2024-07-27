@@ -254,7 +254,7 @@ written by the user on a file. It takes as parameters:
 As showed in figure, where the delay (i.e., the rate) is set as **Call["InfectionFunction"]**
 
 
-<img src="./Images/SIR_Call_FromList.png" alt="\label{fig:SIR_PN_general} Petri Net representation of the SIR model, modelling the Infection transition as a general transition." width="1625" />
+<img src="./Images/SIR_Call_FromList.png" alt="\label{fig:SIR_PN_generalFrom} Petri Net representation of the SIR model, modelling the Infection transition as a exponential general transition." width="1625" />
 <p class="caption">
 Petri Net representation of the SIR model, modelling the Infection
 transition with an external function and the additional parameter as FromList.
@@ -330,6 +330,12 @@ With the new expansion of the GreatMod modeling framework it is now possible to 
 of the transitions not only to the exponential distribution, but also to general distribution. An example
 can be seen in the image below.
 
+<img src="./Images/SIR_general_example.png" alt="\label{fig:SIR_PN_general} Petri Net representation of the SIR model, modelling the Infection transition as a general transition." width="1625" />
+<p class="caption">
+Petri Net representation of the SIR model, modelling the Infection
+transition as a general transition using a general distribution
+</p>
+
 To define a transition as *general* simply place it in the gui and select the type general from the drop-down menu.
 Now you must associate a general distribution from the ones avaiable in the tool, that are:
 
@@ -338,8 +344,6 @@ Now you must associate a general distribution from the ones avaiable in the tool
 - Gamma (representated inside the GUI like Earlang[a,b]) 
 - Dirac (representated inside the GUI like I[a])
 - Truncated exponential (representated inside the GUI like TruncatedExp[a])
-
-
 
 
 ### Sensitivity analysis
