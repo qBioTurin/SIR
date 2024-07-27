@@ -345,6 +345,18 @@ Now you must associate a general distribution from the ones avaiable in the tool
 - Dirac (representated inside the GUI like I[a])
 - Truncated exponential (representated inside the GUI like TruncatedExp[a])
 
+The only solver that can handle, for now, the non exponential general transition is the Stochastic Simulation Alghoritm (SSA),
+using the model analysis as follows (having generated the proper solver file):
+
+    model.analysis(solver_fname = "./SIR_generalFN.solver",
+                   solver_type = "SSA",
+                   n_run = 500,
+                   parallel_processors = 2,
+                   f_time = 7*10, # weeks
+                   s_time = 1
+    )
+
+
 
 ### Sensitivity analysis
 
