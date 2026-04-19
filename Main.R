@@ -1,6 +1,6 @@
 #To install epimod
 library(devtools)
-install_github("https://github.com/qBioTurin/epimod", ref="master",force = T)
+install_github("https://github.com/qBioTurin/epimod", ref="epimod_pFBA")
 
 #To load epimod and prepare containers
 library(epimod)
